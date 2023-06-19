@@ -1,0 +1,1000 @@
+  2  WHERE DEPTNO=(SELECT MGR FROM EMP
+  3  WHERE EMPNO=(SELECT MGR FROM EMP
+  4* WHERE ENAME='MILLER'))
+SQL> SELECT * FROM EMP;
+
+     EMPNO ENAME      JOB              MGR HIRED
+---------- ---------- --------- ---------- -----
+      7369 SMITH      CLERK           7902 17-DE
+      7499 ALLEN      SALESMAN        7698 20-FE
+      7521 WARD       SALESMAN        7698 22-FE
+      7566 JONES      MANAGER         7839 02-AP
+      7654 MARTIN     SALESMAN        7698 28-SE
+      7698 BLAKE      MANAGER         7839 01-MA
+      7782 CLARK      MANAGER         7839 09-JU
+      7788 SCOTT      ANALYST         7566 19-AP
+      7839 KING       PRESIDENT            17-NO
+      7844 TURNER     SALESMAN        7698 08-SE
+      7876 ADAMS      CLERK           7788 23-MA
+      7900 JAMES      CLERK           7698 03-DE
+      7902 FORD       ANALYST         7566 03-DE
+      7934 MILLER     CLERK           7782 23-JA
+
+14 rows selected.
+
+SQL> SELECT * FROM DEPT/
+  2  /
+SELECT * FROM DEPT/
+                  *
+ERROR at line 1:
+ORA-00933: SQL command not properly ended
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* SELECT * FROM DEPT
+SQL> /
+
+    DEPTNO DNAME          LOC
+---------- -------------- -------------
+        10 ACCOUNTING     NEW YORK
+        20 RESEARCH       DALLAS
+        30 SALES          CHICAGO
+        40 OPERATIONS     BOSTON
+
+SQL> 
+SQL> SELECT LOC FROM DEPT
+  2  WHERE DEPTNO=(SELECT MGR FROM EMP
+  3  WHERE EMPNO=(SELECT MGR FROM EMP
+  4  WHERE ENAME='MILLER')).
+  5  ;
+WHERE ENAME='MILLER')).
+                      *
+ERROR at line 4:
+ORA-00933: SQL command not properly ended
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT LOC FROM DEPT
+  2  WHERE DEPTNO=(SELECT MGR FROM EMP
+  3  WHERE MGR=(SELECT MGR FROM EMP
+  4* WHERE ENAME='MILLER'))
+  5  /
+
+no rows selected
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT LOC FROM DEPT
+  2  WHERE DEPTNO=(SELECT MGR FROM EMP
+  3  WHERE EMPNO=(SELECT MGR FROM EMP
+  4* WHERE ENAME='ADAMS'))
+SQL> /
+
+no rows selected
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT ENAME FROM EMP
+  2  WHERE EMPNO=(SELECT MGR FROM EMP
+  3  WHERE EMPNO=(SELECT MGR FROM EMP
+  4* WHERE ENAME='ADAMS'))
+SQL> /
+
+ENAME
+----------
+JONES
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT ENAME,MGR FROM EMP
+  2  WHERE EMPNO=(SELECT MGR FROM EMP
+  3  WHERE EMPNO=(SELECT MGR FROM EMP
+  4* WHERE ENAME='MILLLER'))
+SQL> /
+
+no rows selected
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT ENAME,MGR FROM EMP
+  2  WHERE EMPNO=(SELECT MGR FROM EMP
+  3  WHERE EMPNO=(SELECT MGR FROM EMP
+  4* WHERE ENAME='MILLER'))
+SQL> /
+
+ENAME             MGR
+---------- ----------
+KING
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT LOC FROM DEPT
+  2  WHERE DEPTNO=(SELECT DEPTNO FROM EMP
+  3     WHERE EMPNO=(SELECT MGR FROM EMP
+  4             WHERE EMPNO =(SELECT MGR FROM EM
+  5*            WHERE  ENAME ='ADAMS')))
+SQL> /
+
+LOC
+-------------
+DALLAS
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT ENAME FROM EMP
+  2  WHERE MGR=(SELECT EMPNO FROM EMP
+  3     WHERE EMPNO=(SELECT MGR FROM EMP
+  4             WHERE EMPNO =(SELECT MGR FROM EM
+  5*            WHERE  ENAME ='ADAMS')))
+SQL> /
+
+ENAME
+----------
+SCOTT
+FORD
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  SELECT ENAME FROM EMP
+  2  WHERE MGR=(SELECT EMPNO FROM EMP
+  3*        where       ENAME ='KING')
+SQL> /
+
+ENAME
+----------
+JONES
+BLAKE
+CLARK
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT ENAME FROM EMP
+  2  WHERE MGR=(SELECT EMPNO FROM EMP
+  3*        WHERE       ENAME ='BLAKE')
+SQL> /
+
+ENAME
+----------
+ALLEN
+WARD
+MARTIN
+TURNER
+JAMES
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT ENAME,MGR,EMPNO FROM EMP
+  2  WHERE MGR=(SELECT EMPNO FROM EMP
+  3*        WHERE       ENAME ='BLAKE')
+SQL> /
+
+ENAME             MGR      EMPNO
+---------- ---------- ----------
+ALLEN            7698       7499
+WARD             7698       7521
+MARTIN           7698       7654
+TURNER           7698       7844
+JAMES            7698       7900
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT ENAME,MGR,EMPNO FROM EMP
+  2  WHERE MGR=(SELECT EMPNO FROM EMP
+  3*        WHERE ENAME ='BLAKE')
+SQL> /
+
+ENAME             MGR      EMPNO
+---------- ---------- ----------
+ALLEN            7698       7499
+WARD             7698       7521
+MARTIN           7698       7654
+TURNER           7698       7844
+JAMES            7698       7900
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT * FROM DEPT
+  2  WHERE DEPTNO =(SELECT DEPTNO FROM EMP
+  3  WHERE MGR=(SELECT EMPNO FROM EMP
+  4*        WHERE ENAME ='MILLER') )
+SQL> /
+
+no rows selected
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT DNAME FROM DEPT
+  2  WHERE DEPTNO =(SELECT DEPTNO FROM EMP
+  3  WHERE MGR=(SELECT EMPNO FROM EMP
+  4*    WHERE JOB ='PRESIDENT') )
+SQL> /
+WHERE DEPTNO =(SELECT DEPTNO FROM EMP
+               *
+ERROR at line 2:
+ORA-01427: single-row subquery returns more than
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT DNAME FROM DEPT
+  2  WHERE DEPTNO IN (SELECT DEPTNO FROM EMP
+  3  WHERE MGR IN (SELECT EMPNO FROM EMP
+  4*    WHERE JOB ='PRESIDENT') )
+SQL> /
+
+DNAME
+--------------
+SALES
+RESEARCH
+ACCOUNTING
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT DNAME FROM DEPT
+  2  WHERE DEPTNO IN (SELECT DEPTNO FROM EMP
+  3     WHERE MGR IN (SELECT EMPNO FROM EMP
+  4             WHERE EMPNO IN (SELECT MGR FROM 
+  5*            WHERE ENAME ='PRESIDENT') )  )
+SQL> /
+
+no rows selected
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT DNAME FROM DEPT
+  2  WHERE DEPTNO IN (SELECT DEPTNO FROM EMP
+  3     WHERE MGR IN (SELECT EMPNO FROM EMP
+  4             WHERE EMPNO IN (SELECT MGR FROM 
+  5*            WHERE ENAME ='PRESIDENT') )  )
+SQL> /
+
+no rows selected
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT DNAME FROM DEPT
+  2  WHERE DEPTNO IN (SELECT DEPTNO FROM EMP
+  3     WHERE MGR IN (SELECT EMPNO FROM EMP
+  4             WHERE EMPNO IN (SELECT MGR FROM 
+  5*            WHERE ENAME ='BLAKE') )  )
+SQL> /
+
+DNAME
+--------------
+SALES
+RESEARCH
+ACCOUNTING
+
+SQL> SELECT E.ENAME,M.ENAME 
+  2  FROM EMP,DEPT
+  3  WHERE E.EMP=M.DEPT AND E.JOB ='CLERK';
+WHERE E.EMP=M.DEPT AND E.JOB ='CLERK'
+                       *
+ERROR at line 3:
+ORA-00904: "E"."JOB": invalid identifier
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT E.ENAME,M.ENAME
+  2  FROM EMP E,DEPT M
+  3* WHERE E.EMP=M.DEPT AND E.JOB ='CLERK'
+SQL> /
+WHERE E.EMP=M.DEPT AND E.JOB ='CLERK'
+            *
+ERROR at line 3:
+ORA-00904: "M"."DEPT": invalid identifier
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT E.ENAME,M.ENAME
+  2  FROM EMP E,DEPT M
+  3* WHERE E.EMP=M.DEPT AND M.JOB ='CLERK'
+SQL> /
+WHERE E.EMP=M.DEPT AND M.JOB ='CLERK'
+                       *
+ERROR at line 3:
+ORA-00904: "M"."JOB": invalid identifier
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT E1.ENAME,E2.ENAME
+  2  FROM EMP E1,EMP E2
+  3* WHERE E1.MGR=E2.EMPNO AND E2.JOB ='CLERK'
+SQL> /
+
+no rows selected
+
+SQL> \ED
+SP2-0042: unknown command "\ED" - rest of line i
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT E1.ENAME,E2.ENAME
+  2  FROM EMP E1,EMP E2
+  3* WHERE E1.MGR=E2.EMPNO
+SQL> /
+
+ENAME      ENAME
+---------- ----------
+SMITH      FORD
+ALLEN      BLAKE
+WARD       BLAKE
+JONES      KING
+MARTIN     BLAKE
+BLAKE      KING
+CLARK      KING
+SCOTT      JONES
+TURNER     BLAKE
+ADAMS      SCOTT
+JAMES      BLAKE
+FORD       JONES
+MILLER     CLARK
+
+13 rows selected.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT E1.ENAME,E2.ENAME
+  2  FROM EMP E1,EMP E2
+  3* WHERE E1.MGR=E2.EMPNO  AND E2.JOB ='CLERK'
+SQL> /
+
+no rows selected
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT E1.ENAME,E2.ENAME
+  2  FROM EMP E1,EMP E2
+  3* WHERE E1.MGR=E2.EMPNO  AND E2.DEPTNO IN (10
+SQL> /
+
+ENAME      ENAME
+---------- ----------
+ALLEN      BLAKE
+WARD       BLAKE
+JONES      KING
+MARTIN     BLAKE
+BLAKE      KING
+CLARK      KING
+TURNER     BLAKE
+JAMES      BLAKE
+MILLER     CLARK
+
+9 rows selected.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT E1.ENAME,E2.SAL
+  2  FROM EMP E1,EMP E2
+  3* WHERE E1.MGR=E2.EMPNO AND E1.SAL>2300 AND E
+SQL> /
+
+ENAME             SAL
+---------- ----------
+JONES            5000
+BLAKE            5000
+CLARK            5000
+SCOTT            2975
+FORD             2975
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT E.ENAME,M.HIREDATE
+  2  FROM EMP E,EMP M
+  3* WHERE E.MGR=M.EMPNO AND E.HIREDATE<'01JAN82
+SQL> /
+
+ENAME      HIREDATE
+---------- ---------
+SMITH      03-DEC-81
+ALLEN      01-MAY-81
+WARD       01-MAY-81
+JONES      17-NOV-81
+MARTIN     01-MAY-81
+BLAKE      17-NOV-81
+CLARK      17-NOV-81
+TURNER     01-MAY-81
+JAMES      01-MAY-81
+FORD       02-APR-81
+
+10 rows selected.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT E.ENAME,M.HIREDATE AS MANAGERHIREDAT
+  2  FROM EMP E,EMP M
+  3* WHERE E.MGR=M.EMPNO AND E.HIREDATE<'01JAN82
+SQL> /
+
+ENAME      MANAGERHI
+---------- ---------
+SMITH      03-DEC-81
+ALLEN      01-MAY-81
+WARD       01-MAY-81
+JONES      17-NOV-81
+MARTIN     01-MAY-81
+BLAKE      17-NOV-81
+CLARK      17-NOV-81
+TURNER     01-MAY-81
+JAMES      01-MAY-81
+FORD       02-APR-81
+
+10 rows selected.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT E.ENAME,M.COMM
+  2  FROM EMP E,EMP M
+  3* WHERE E.MGR=M.EMPNO AND E.JOB='SALESMAN' AN
+SQL> /
+
+ENAME            COMM
+---------- ----------
+ALLEN
+WARD
+MARTIN
+TURNER
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT E.ENAME,M.COMM ,M.DEPTNO
+  2  FROM EMP E,EMP M
+  3* WHERE E.MGR=M.EMPNO AND E.JOB='SALESMAN' AN
+SQL> /
+
+ENAME            COMM     DEPTNO
+---------- ---------- ----------
+ALLEN                         30
+WARD                          30
+MARTIN                        30
+TURNER                        30
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT E.ENAME,M.ENAME ,M.SAL
+  2  FROM EMP E,EMP M
+  3  WHERE E.MGR=M.EMPNO AND E.SAL>(SELECT E.SAL
+  4*                            WHERE E.SAL>M.SA
+SQL> /
+WHERE E.MGR=M.EMPNO AND E.SAL>(SELECT E.SAL FROM
+                                                
+ERROR at line 3:
+ORA-00942: table or view does not exist
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT E.ENAME,M.ENAME ,M.SAL
+  2  FROM EMP E,EMP M
+  3* WHERE E.MGR=M.EMPNO AND E.SAL>M.SAL
+  4  /
+
+ENAME      ENAME             SAL
+---------- ---------- ----------
+SCOTT      JONES            2975
+FORD       JONES            2975
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT E.ENAME,E.HIREDATE ,M.ENAME,M.HIREDA
+  2  FROM EMP E,EMP M
+  3* WHERE E.MGR=M.EMPNO AND E.HIREDATE>M.HIREDA
+SQL> /
+
+ENAME      HIREDATE  ENAME      HIREDATE
+---------- --------- ---------- ---------
+MARTIN     28-SEP-81 BLAKE      01-MAY-81
+SCOTT      19-APR-87 JONES      02-APR-81
+TURNER     08-SEP-81 BLAKE      01-MAY-81
+ADAMS      23-MAY-87 SCOTT      19-APR-87
+JAMES      03-DEC-81 BLAKE      01-MAY-81
+FORD       03-DEC-81 JONES      02-APR-81
+MILLER     23-JAN-82 CLARK      09-JUN-81
+
+7 rows selected.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT E.ENAME ,E.HIREDATE ,M.ENAME MNAME,M
+  2  FROM EMP E,EMP M
+  3* WHERE E.MGR=M.EMPNO AND E.HIREDATE>M.HIREDA
+SQL> /
+
+ENAME      HIREDATE  MNAME      MHIREDATE
+---------- --------- ---------- ---------
+MARTIN     28-SEP-81 BLAKE      01-MAY-81
+SCOTT      19-APR-87 JONES      02-APR-81
+TURNER     08-SEP-81 BLAKE      01-MAY-81
+ADAMS      23-MAY-87 SCOTT      19-APR-87
+JAMES      03-DEC-81 BLAKE      01-MAY-81
+FORD       03-DEC-81 JONES      02-APR-81
+MILLER     23-JAN-82 CLARK      09-JUN-81
+
+7 rows selected.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT E.ENAME ,E.HIREDATE ,M.ENAME MNAME,M
+  2  FROM EMP E,EMP M
+  3* WHERE E.MGR=M.EMPNO AND E.HIREDATE<M.HIREDA
+SQL> /
+
+ENAME      HIREDATE  MNAME      MHIREDATE
+---------- --------- ---------- ---------
+SMITH      17-DEC-80 FORD       03-DEC-81
+ALLEN      20-FEB-81 BLAKE      01-MAY-81
+WARD       22-FEB-81 BLAKE      01-MAY-81
+JONES      02-APR-81 KING       17-NOV-81
+BLAKE      01-MAY-81 KING       17-NOV-81
+CLARK      09-JUN-81 KING       17-NOV-81
+
+6 rows selected.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT E.ENAME ,M.ENAME,E.JOB,M.JOB
+  2  FROM EMP E,EMP M
+  3* WHERE E.MGR=M.EMPNO AND E.JOB=M.JOB
+SQL> /
+
+no rows selected
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT E.ENAME ,M.ENAME,E.JOB,M.JOB
+  2  FROM EMP E,EMP M
+  3* WHERE E.MGR=M.EMPNO
+SQL> /
+
+ENAME      ENAME      JOB       JOB
+---------- ---------- --------- ---------
+SMITH      FORD       CLERK     ANALYST
+ALLEN      BLAKE      SALESMAN  MANAGER
+WARD       BLAKE      SALESMAN  MANAGER
+JONES      KING       MANAGER   PRESIDENT
+MARTIN     BLAKE      SALESMAN  MANAGER
+BLAKE      KING       MANAGER   PRESIDENT
+CLARK      KING       MANAGER   PRESIDENT
+SCOTT      JONES      ANALYST   MANAGER
+TURNER     BLAKE      SALESMAN  MANAGER
+ADAMS      SCOTT      CLERK     ANALYST
+JAMES      BLAKE      CLERK     MANAGER
+FORD       JONES      ANALYST   MANAGER
+MILLER     CLARK      CLERK     MANAGER
+
+13 rows selected.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT E.ENAME ,M.ENAME,E.JOB,M.JOB
+  2  FROM EMP E,EMP M
+  3* WHERE E.MGR=M.EMPNO AND E.JOB=M.JOB
+SQL> /
+
+no rows selected
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT E.ENAME ,M.ENAME,E.MGR,M.EMPNO
+  2  FROM EMP E,EMP M
+  3* WHERE E.MGR=M.EMPNO
+SQL> /
+
+ENAME      ENAME             MGR      EMPNO
+---------- ---------- ---------- ----------
+SMITH      FORD             7902       7902
+ALLEN      BLAKE            7698       7698
+WARD       BLAKE            7698       7698
+JONES      KING             7839       7839
+MARTIN     BLAKE            7698       7698
+BLAKE      KING             7839       7839
+CLARK      KING             7839       7839
+SCOTT      JONES            7566       7566
+TURNER     BLAKE            7698       7698
+ADAMS      SCOTT            7788       7788
+JAMES      BLAKE            7698       7698
+FORD       JONES            7566       7566
+MILLER     CLARK            7782       7782
+
+13 rows selected.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT E.ENAME ,M.ENAME,E.SAL*12 AS EANNUAL
+  2  FROM EMP E,EMP M
+  3* WHERE E.MGR=M.EMPNO AND E.DEPTNO IN (10,20)
+SQL> /
+
+ENAME      ENAME      EANNUALSAL  ANNUALSAL     
+---------- ---------- ---------- ---------- ----
+SMITH      FORD             9600      36000     
+JONES      KING            35700      60000     
+CLARK      KING            29400      60000     
+ADAMS      SCOTT           13200      36000     
+MILLER     CLARK           15600      29400     
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT E.ENAME ,M.ENAME,E.SAL,E.SAL*12 AS E
+  2  MSAL,M.SAL*12 AS ANNUALSAL,E.DEPTNO
+  3  FROM EMP E,EMP M
+  4* WHERE E.MGR=M.EMPNO AND E.DEPTNO IN (10,20)
+SQL> /
+
+ENAME      ENAME             SAL EANNUALSAL     
+---------- ---------- ---------- ---------- ----
+SMITH      FORD              800       9600     
+JONES      KING             2975      35700     
+CLARK      KING             2450      29400     
+ADAMS      SCOTT            1100      13200     
+MILLER     CLARK            1300      15600     
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT E.ENAME ,M.JOB
+  2  FROM EMP E,EMP M
+  3* WHERE E.MGR=M.EMPNO
+SQL> /
+
+ENAME      JOB
+---------- ---------
+SMITH      ANALYST
+ALLEN      MANAGER
+WARD       MANAGER
+JONES      PRESIDENT
+MARTIN     MANAGER
+BLAKE      PRESIDENT
+CLARK      PRESIDENT
+SCOTT      MANAGER
+TURNER     MANAGER
+ADAMS      ANALYST
+JAMES      MANAGER
+FORD       MANAGER
+MILLER     MANAGER
+
+13 rows selected.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT E.ENAME ,M.SAL
+  2  FROM EMP E,EMP M
+  3* WHERE E.MGR=M.EMPNO AND M.SAL LIKE '%50'
+SQL> /
+
+ENAME             SAL
+---------- ----------
+ALLEN            2850
+WARD             2850
+MARTIN           2850
+TURNER           2850
+JAMES            2850
+MILLER           2450
+
+6 rows selected.
+
+SQL>   SELECT E.ENAME ,M.ENAME,E.MGR,M.EMPNO
+  2   FROM EMP E,EMP M
+  3   WHERE E.MGR=M.EMPNO AND M.JOB IN 'MANAGER'
+
+ENAME      ENAME             MGR      EMPNO
+---------- ---------- ---------- ----------
+ALLEN      BLAKE            7698       7698
+WARD       BLAKE            7698       7698
+MARTIN     BLAKE            7698       7698
+SCOTT      JONES            7566       7566
+TURNER     BLAKE            7698       7698
+JAMES      BLAKE            7698       7698
+FORD       JONES            7566       7566
+MILLER     CLARK            7782       7782
+
+8 rows selected.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1    SELECT E.ENAME ,M.ENAME,M.JOB
+  2   FROM EMP E,EMP M
+  3*  WHERE E.MGR=M.EMPNO AND M.JOB IN 'MANAGER'
+SQL> /
+
+ENAME      ENAME      JOB
+---------- ---------- ---------
+ALLEN      BLAKE      MANAGER
+WARD       BLAKE      MANAGER
+MARTIN     BLAKE      MANAGER
+SCOTT      JONES      MANAGER
+TURNER     BLAKE      MANAGER
+JAMES      BLAKE      MANAGER
+FORD       JONES      MANAGER
+MILLER     CLARK      MANAGER
+
+8 rows selected.
+
+SQL> SELECT MAX(SAL) FROMM EMP
+  2  WHERE SAL<(SELECT MAX(SAL) FROM EMP
+  3  ) and  SELECT E.ENAME ,M.ENAME,E.MGR,M.EMPN
+  4   FROM EMP E,EMP M
+  5  /
+SELECT MAX(SAL) FROMM EMP
+                      *
+ERROR at line 1:
+ORA-00923: FROM keyword not found where expected
+
+
+SQL>                                            
+                                                
+                                                
+                                                
+Wrote file afiedt.buf
+
+  1  SELECT DNAME,LOC
+  2  FROM EMP ,DEPT
+  3  WHERE DEPTNO=(SELECT DEPTNO FROM EMP
+  4                  WHERE JOB IN 'ANALYST')
+  5  AND MGR=(SELECT EMPNO FROM EMP
+  6*    WHERE ENAME IN 'KING')
+SQL> /
+WHERE DEPTNO=(SELECT DEPTNO FROM EMP
+      *
+ERROR at line 3:
+ORA-00918: column ambiguously defined
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT DNAME,LOC
+  2  FROM EMP ,DEPT
+  3  WHERE EMP.DEPTNO=(SELECT EMP.DEPTNO FROM EM
+  4                  WHERE JOB IN 'ANALYST')
+  5  AND EMP.MGR=(SELECT EMPNO FROM EMP
+  6*    WHERE ENAME IN 'KING')
+SQL> /
+WHERE EMP.DEPTNO=(SELECT EMP.DEPTNO FROM EMP
+                  *
+ERROR at line 3:
+ORA-01427: single-row subquery returns more than
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT DNAME,LOC  FROM DEPT
+  2  WHERE EMP.DEPTNO=(SELECT EMP.DEPTNO FROM EM
+  3                  WHERE JOB IN 'ANALYST')
+  4  AND EMP.MGR=(SELECT EMPNO FROM EMP
+  5*    WHERE ENAME IN 'KING')
+SQL> /
+AND EMP.MGR=(SELECT EMPNO FROM EMP
+    *
+ERROR at line 4:
+ORA-00904: "EMP"."MGR": invalid identifier
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT DNAME,LOC  FROM DEPT
+  2  WHERE DEPTNO=(SELECT DEPTNO FROM EMP
+  3                 WHERE MGR=(SELECT EMPNO FROM
+  4*            WHERE ENAME IN 'KING'))
+  5  /
+WHERE DEPTNO=(SELECT DEPTNO FROM EMP
+              *
+ERROR at line 2:
+ORA-01427: single-row subquery returns more than
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT DNAME,LOC  FROM DEPT
+  2  WHERE DEPTNO IN (SELECT DEPTNO FROM EMP
+  3                 WHERE MGR IN (SELECT EMPNO F
+  4*            WHERE ENAME IN 'KING'))
+SQL> /
+
+DNAME          LOC
+-------------- -------------
+SALES          CHICAGO
+RESEARCH       DALLAS
+ACCOUNTING     NEW YORK
+
+SQL> SELECT * FROM EMP
+  2  /
+
+     EMPNO ENAME      JOB              MGR HIRED
+---------- ---------- --------- ---------- -----
+      7369 SMITH      CLERK           7902 17-DE
+      7499 ALLEN      SALESMAN        7698 20-FE
+      7521 WARD       SALESMAN        7698 22-FE
+      7566 JONES      MANAGER         7839 02-AP
+      7654 MARTIN     SALESMAN        7698 28-SE
+      7698 BLAKE      MANAGER         7839 01-MA
+      7782 CLARK      MANAGER         7839 09-JU
+      7788 SCOTT      ANALYST         7566 19-AP
+      7839 KING       PRESIDENT            17-NO
+      7844 TURNER     SALESMAN        7698 08-SE
+      7876 ADAMS      CLERK           7788 23-MA
+      7900 JAMES      CLERK           7698 03-DE
+      7902 FORD       ANALYST         7566 03-DE
+      7934 MILLER     CLERK           7782 23-JA
+
+14 rows selected.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* SELECT * FROM EMP
+SQL> SELECT DNAME,LOC  FROM DEPT
+  2  WHERE DEPTNO IN (SELECT DEPTNO FROM EMP
+  3                 WHERE MGR IN (SELECT EMPNO F
+  4             WHERE ENAME IN 'KING'))/
+  5  /
+           WHERE ENAME IN 'KING'))/
+                                  *
+ERROR at line 4:
+ORA-00933: SQL command not properly ended
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT DNAME,LOC  FROM DEPT
+  2  WHERE DEPTNO IN (SELECT DEPTNO FROM EMP
+  3                 WHERE MGR IN (SELECT EMPNO F
+  4*            WHERE ENAME IN 'KING' AND JOB IN
+SQL> /
+
+no rows selected
+
+SQL>                                            
+                           ED
+Wrote file afiedt.buf
+
+  1  SELECT DNAME,LOC
+  2  FROM EMP,DEPT
+  3  WHERE EMP.DEPTNO=DEPT.DEPTNO AND JOB='ANALY
+  4* AND EMP.MGR='KING'
+SQL> /
+AND EMP.MGR='KING'
+            *
+ERROR at line 4:
+ORA-01722: invalid number
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT DNAME,LOC
+  2  FROM EMP,DEPT
+  3  WHERE EMP.DEPTNO=DEPT.DEPTNO AND JOB='ANALY
+  4* AND EMP.MGR=7902
+SQL> /
+
+no rows selected
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT DNAME,LOC
+  2  FROM EMP,DEPT
+  3  WHERE EMP.DEPTNO=DEPT.DEPTNO AND JOB='ANALY
+  4* AND EMP.MGR=7839
+SQL> 
+SQL> /
+
+no rows selected
+
+SQL> E
+SP2-0042: unknown command "E" - rest of line ign
+SQL> DED
+SP2-0042: unknown command "DED" - rest of line i
+SQL> DE
+SP2-0042: unknown command "DE" - rest of line ig
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT DNAME,LOC
+  2  FROM EMP,DEPT
+  3  WHERE EMP.DEPTNO=DEPT.DEPTNO AND JOB='ANALY
+  4  AND EMP.MGR=(SELECT EMPNO FROM EMP
+  5*            WHERE ENAME='KING')
+SQL> /
+
+no rows selected
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT DNAME,LOC
+  2  FROM EMP,DEPT
+  3  WHERE EMP.DEPTNO=DEPT.DEPTNO AND JOB='ANALY
+  4  AND EMP.MGR=(SELECT EMPNO FROM EMP
+  5*            WHERE ENAME='KING')
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT DISTINCT SAL
+  2  FROM EMP E1
+  3  WHERE (SELECT COUNT (DISTINCT E2.SAL)
+  4                 FROM EMP E2
+  5*    WHERE E1.SAL<E2.SAL=4)
+SQL> /
+        WHERE E1.SAL<E2.SAL=4)
+                           *
+ERROR at line 5:
+ORA-00936: missing expression
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT DISTINCT SAL
+  2  FROM EMP E1
+  3  WHERE (SELECT COUNT (DISTINCT E2.SAL)
+  4                 FROM EMP E2
+  5*    WHERE E1.SAL<E2.SAL)
+SQL> /
+        WHERE E1.SAL<E2.SAL)
+                           *
+ERROR at line 5:
+ORA-00936: missing expression
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT DISTINCT SAL
+  2  FROM EMP E1
+  3  WHERE (SELECT COUNT (DISTINCT E2.SAL)
+  4                 FROM EMP E2
+  5*    WHERE E1.SAL<E2.SAL)
+SQL> 
+SQL> 

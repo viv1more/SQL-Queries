@@ -1,0 +1,1201 @@
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2  A NUMBER(20):=&A;
+  3  B NUMBER(20):=&B;
+  4  BEGIN
+  5  IF A>B  THEN
+  6  DBMS_OUTPUT.PUT_LINE("A IS bIG");
+  7  ELSE
+  8  DBMS_OUTPUT.PUT_LINE("B IS bIG");
+  9* END
+SQL> /
+Enter value for a: 23
+old   2: A NUMBER(20):=&A;
+new   2: A NUMBER(20):=23;
+Enter value for b: 63
+old   3: B NUMBER(20):=&B;
+new   3: B NUMBER(20):=63;
+END
+  *
+ERROR at line 9:
+ORA-06550: line 9, column 3:
+PLS-00103: Encountered the symbol "end-of-file" when expecting one of the following:
+if
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2  A NUMBER(20):=&A;
+  3  B NUMBER(20):=&B;
+  4  BEGIN
+  5  IF A>B  THEN
+  6  DBMS_OUTPUT.PUT_LINE("A IS bIG");
+  7  ELSE
+  8  DBMS_OUTPUT.PUT_LINE("B IS bIG");
+  9* END;
+SQL> /
+Enter value for a: 45+
+old   2: A NUMBER(20):=&A;
+new   2: A NUMBER(20):=45+;
+Enter value for b: 63
+old   3: B NUMBER(20):=&B;
+new   3: B NUMBER(20):=63;
+A NUMBER(20):=45+;
+                 *
+ERROR at line 2:
+ORA-06550: line 2, column 18:
+PLS-00103: Encountered the symbol ";" when expecting one of the following:
+( - + case mod new null <an identifier>
+<a double-quoted delimited-identifier> <a bind variable> avg
+count current max min prior sql stddev sum variance execute
+forall merge time timestamp interval date
+<a string literal with character set specification>
+<a number> <a single-quoted SQL string> pipe
+<an alternatively-quoted string literal with character set specification>
+<an alternatively-quoted SQL string>
+ORA-06550: line 9, column 4:
+PLS-00103: Encountered the symbol ";" when expecting one of the following:
+if
+
+
+SQL> /
+Enter value for a: 23
+old   2: A NUMBER(20):=&A;
+new   2: A NUMBER(20):=23;
+Enter value for b: 63
+old   3: B NUMBER(20):=&B;
+new   3: B NUMBER(20):=63;
+END;
+   *
+ERROR at line 9:
+ORA-06550: line 9, column 4:
+PLS-00103: Encountered the symbol ";" when expecting one of the following:
+if
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2  A NUMBER(20):=&A;
+  3  B NUMBER(20):=&B;
+  4  BEGIN
+  5  IF A>B  THEN
+  6  DBMS_OUTPUT.PUT_LINE("A IS bIG");
+  7  ELSE
+  8  DBMS_OUTPUT.PUT_LINE("B IS bIG");
+  9* END;;
+SQL> /
+Enter value for a: 23
+old   2: A NUMBER(20):=&A;
+new   2: A NUMBER(20):=23;
+Enter value for b: 32
+old   3: B NUMBER(20):=&B;
+new   3: B NUMBER(20):=32;
+END;;
+   *
+ERROR at line 9:
+ORA-06550: line 9, column 4:
+PLS-00103: Encountered the symbol ";" when expecting one of the following:
+if
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2  A NUMBER(20):=&A;
+  3  B NUMBER(20):=&B;
+  4  BEGIN
+  5  IF A>B  THEN
+  6  DBMS_OUTPUT.PUT_LINE("A IS bIG");
+  7  ELSE
+  8  DBMS_OUTPUT.PUT_LINE("B IS bIG");
+  9* END IF;
+SQL> /
+Enter value for a: 23
+old   2: A NUMBER(20):=&A;
+new   2: A NUMBER(20):=23;
+Enter value for b: 63
+old   3: B NUMBER(20):=&B;
+new   3: B NUMBER(20):=63;
+END IF;
+      *
+ERROR at line 9:
+ORA-06550: line 9, column 7:
+PLS-00103: Encountered the symbol "end-of-file" when expecting one of the following:
+begin case declare end exception exit for goto if loop mod
+null pragma raise return select update while with
+<an identifier> <a double-quoted delimited-identifier>
+<a bind variable> << close current delete fetch lock insert
+open rollback savepoint set sql execute commit forall merge
+pipe
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2  A NUMBER(20):=&A;
+  3  B NUMBER(20):=&B;
+  4  BEGIN
+  5  IF A>B  THEN
+  6  DBMS_OUTPUT.PUT_LINE("A IS bIG");
+  7  ELSE
+  8  DBMS_OUTPUT.PUT_LINE("B IS bIG");
+  9* END ;
+ 10  ED
+ 11  
+ 12  /
+Enter value for a: ED
+old   2: A NUMBER(20):=&A;
+new   2: A NUMBER(20):=ED;
+Enter value for b: E
+old   3: B NUMBER(20):=&B;
+new   3: B NUMBER(20):=E;
+END ;
+    *
+ERROR at line 9:
+ORA-06550: line 9, column 5:
+PLS-00103: Encountered the symbol ";" when expecting one of the following:
+if
+
+
+SQL> DED
+SP2-0042: unknown command "DED" - rest of line ignored.
+SQL> ED
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2  A NUMBER(20):=&A;
+  3  B NUMBER(20):=&B;
+  4  BEGIN
+  5  IF A>B  THEN
+  6  DBMS_OUTPUT.PUT_LINE("A IS bIG");
+  7  ELSE
+  8  DBMS_OUTPUT.PUT_LINE("B IS bIG");
+  9  END IF ;
+ 10* END;
+ 11  /
+Enter value for a: 23
+old   2: A NUMBER(20):=&A;
+new   2: A NUMBER(20):=23;
+Enter value for b: 63
+old   3: B NUMBER(20):=&B;
+new   3: B NUMBER(20):=63;
+DBMS_OUTPUT.PUT_LINE("A IS bIG");
+                     *
+ERROR at line 6:
+ORA-06550: line 6, column 22:
+PLS-00201: identifier 'A IS bIG' must be declared
+ORA-06550: line 6, column 1:
+PL/SQL: Statement ignored
+ORA-06550: line 8, column 22:
+PLS-00201: identifier 'B IS bIG' must be declared
+ORA-06550: line 8, column 1:
+PL/SQL: Statement ignored
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2  A NUMBER(20):=&A;
+  3  B NUMBER(20):=&B;
+  4  BEGIN
+  5  IF A>B  THEN
+  6  DBMS_OUTPUT.PUT_LINE("A IS bIG "||A);
+  7  ELSE
+  8  DBMS_OUTPUT.PUT_LINE("B IS bIG"||B);
+  9  END IF ;
+ 10* END;
+SQL> /
+Enter value for a: 23
+old   2: A NUMBER(20):=&A;
+new   2: A NUMBER(20):=23;
+Enter value for b: 56
+old   3: B NUMBER(20):=&B;
+new   3: B NUMBER(20):=56;
+DBMS_OUTPUT.PUT_LINE("A IS bIG "||A);
+                     *
+ERROR at line 6:
+ORA-06550: line 6, column 22:
+PLS-00201: identifier 'A IS bIG ' must be declared
+ORA-06550: line 6, column 1:
+PL/SQL: Statement ignored
+ORA-06550: line 8, column 22:
+PLS-00201: identifier 'B IS bIG' must be declared
+ORA-06550: line 8, column 1:
+PL/SQL: Statement ignored
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2  A NUMBER(20):=56;
+  3  B NUMBER(20):=59;
+  4  BEGIN
+  5  IF A>B  THEN
+  6  DBMS_OUTPUT.PUT_LINE("A IS bIG "||A);
+  7  ELSE
+  8  DBMS_OUTPUT.PUT_LINE("B IS bIG"||B);
+  9  END IF ;
+ 10* END;
+SQL> /
+DBMS_OUTPUT.PUT_LINE("A IS bIG "||A);
+                     *
+ERROR at line 6:
+ORA-06550: line 6, column 22:
+PLS-00201: identifier 'A IS bIG ' must be declared
+ORA-06550: line 6, column 1:
+PL/SQL: Statement ignored
+ORA-06550: line 8, column 22:
+PLS-00201: identifier 'B IS bIG' must be declared
+ORA-06550: line 8, column 1:
+PL/SQL: Statement ignored
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2  A NUMBER(20):=56;
+  3  B NUMBER(20):=59;
+  4  BEGIN
+  5  DBMS_OUTPUT.PUT_LINE('A IS bIG"||AS);
+  6  ELSE
+  7  DBMS_OUTPUT.PUT_LINE("B IS bIG"||B);
+  8  END IF ;
+  9* END;
+SQL> /
+ERROR:
+ORA-01756: quoted string not properly terminated
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2  A NUMBER(20):=56;
+  3  B NUMBER(20):=59;
+  4  BEGIN
+  5  DBMS_OUTPUT.PUT_LINE('A IS bIG"||A);
+  6  ELSE
+  7  DBMS_OUTPUT.PUT_LINE("B IS bIG"||B);
+  8  END IF ;
+  9* END;
+SQL> /
+ERROR:
+ORA-01756: quoted string not properly terminated
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2  A NUMBER(20):=56;
+  3  B NUMBER(20):=59;
+  4  BEGIN
+  5  DBMS_OUTPUT.PUT_LINE('A IS bIG");
+  6  ELSE
+  7  DBMS_OUTPUT.PUT_LINE("B IS bIG");
+  8  END IF ;
+  9* END;
+SQL> /
+ERROR:
+ORA-01756: quoted string not properly terminated
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2  A NUMBER(20):=56;
+  3  B NUMBER(20):=59;
+  4  BEGIN
+  5  IF A>B THEN
+  6  DBMS_OUTPUT.PUT_LINE('A IS bIG");
+  7  ELSE
+  8  DBMS_OUTPUT.PUT_LINE("B IS bIG");
+  9  END IF ;
+ 10* END;
+SQL> /
+ERROR:
+ORA-01756: quoted string not properly terminated
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2  A NUMBER(20):=56;
+  3  B NUMBER(20):=59;
+  4  BEGIN
+  5  IF A>B THEN
+  6  DBMS_OUTPUT.PUT_LINE("A IS bIG");
+  7  ELSE
+  8  DBMS_OUTPUT.PUT_LINE("B IS bIG");
+  9  END IF ;
+ 10* END;
+SQL> /
+DBMS_OUTPUT.PUT_LINE("A IS bIG");
+                     *
+ERROR at line 6:
+ORA-06550: line 6, column 22:
+PLS-00201: identifier 'A IS bIG' must be declared
+ORA-06550: line 6, column 1:
+PL/SQL: Statement ignored
+ORA-06550: line 8, column 22:
+PLS-00201: identifier 'B IS bIG' must be declared
+ORA-06550: line 8, column 1:
+PL/SQL: Statement ignored
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2  A NUMBER(20):=56;
+  3  B NUMBER(20):=59;
+  4  BEGIN
+  5  IF A>B THEN
+  6  DBMS_OUTPUT.PUT_LINE('A IS bIG');
+  7  ELSE
+  8  DBMS_OUTPUT.PUT_LINE('B IS bIG');
+  9  END IF ;
+ 10* END;
+SQL> /
+B IS bIG
+
+PL/SQL procedure successfully completed.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2  A NUMBER(20):&A;
+  3  B NUMBER(20):=&B;
+  4  BEGIN
+  5  IF A>B THEN
+  6  DBMS_OUTPUT.PUT_LINE('A IS bIG');
+  7  ELSE
+  8  DBMS_OUTPUT.PUT_LINE('B IS bIG');
+  9  END IF ;
+ 10* END;
+SQL> /
+Enter value for a: 23
+old   2: A NUMBER(20):&A;
+new   2: A NUMBER(20):23;
+Enter value for b: 63
+old   3: B NUMBER(20):=&B;
+new   3: B NUMBER(20):=63;
+SP2-0552: Bind variable "23" not declared.
+SQL> ED
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2  A NUMBER(20):=&A;
+  3  B NUMBER(20):=&B;
+  4  BEGIN
+  5  IF A>B THEN
+  6  DBMS_OUTPUT.PUT_LINE('A IS bIG');
+  7  ELSE
+  8  DBMS_OUTPUT.PUT_LINE('B IS bIG');
+  9  END IF ;
+ 10* END;
+SQL> /
+Enter value for a: 56
+old   2: A NUMBER(20):=&A;
+new   2: A NUMBER(20):=56;
+Enter value for b: 36
+old   3: B NUMBER(20):=&B;
+new   3: B NUMBER(20):=36;
+A IS bIG
+
+PL/SQL procedure successfully completed.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2  A NUMBER(20):=&A;
+  3  B NUMBER(20):=&B;
+  4  BEGIN
+  5  IF (A>B) THEN
+  6  DBMS_OUTPUT.PUT_LINE('A IS bIG');
+  7  ELSE
+  8  DBMS_OUTPUT.PUT_LINE('B IS bIG');
+  9  END IF ;
+ 10* END;
+SQL> /
+Enter value for a: 46
+old   2: A NUMBER(20):=&A;
+new   2: A NUMBER(20):=46;
+Enter value for b: 23
+old   3: B NUMBER(20):=&B;
+new   3: B NUMBER(20):=23;
+A IS bIG
+
+PL/SQL procedure successfully completed.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2  A NUMBER(20):=&A;
+  3  BEGIN
+  4  IF (A%2:=0) THEN
+  5  DBMS_OUTPUT.PUT_LINE('A IS evEN');
+  6  ELSE
+  7  DBMS_OUTPUT.PUT_LINE('A IS ODD');
+  8  END IF ;
+  9* END;
+SQL> /
+Enter value for a: 56
+old   2: A NUMBER(20):=&A;
+new   2: A NUMBER(20):=56;
+IF (A%2:=0) THEN
+      *
+ERROR at line 4:
+ORA-06550: line 4, column 7:
+PLS-00103: Encountered the symbol "2" when expecting one of the following:
+( type <an identifier> <a double-quoted delimited-identifier>
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2  A NUMBER(20):=&A;
+  3  BEGIN
+  4  IF (A%2:=0) THEN
+  5  DBMS_OUTPUT.PUT_LINE('A IS evEN');
+  6  ELSE
+  7  DBMS_OUTPUT.PUT_LINE('A IS ODD');
+  8  END IF ;
+  9* END;
+SQL>  DECLARE
+  2   A NUMBER(20):=&A;
+  3   B NUMBER(20):=&B;
+  4   BEGIN
+  5   IF (A>B) THEN
+  6   DBMS_OUTPUT.PUT_LINE('A IS bIG');
+  7   ELSE
+  8   DBMS_OUTPUT.PUT_LINE('B IS bIG');
+  9   END IF ;
+ 10   END;
+ 11  /
+Enter value for a: 78
+old   2:  A NUMBER(20):=&A;
+new   2:  A NUMBER(20):=78;
+Enter value for b: 52
+old   3:  B NUMBER(20):=&B;
+new   3:  B NUMBER(20):=52;
+A IS bIG
+
+PL/SQL procedure successfully completed.
+
+SQL> MMMMMMMMMMMMMMMMMMM8IIIIIIIIII8888888888888888888888888888888888888888888888888888888888
+8888888888888888888888888888888888888888888888888888888880000000.
+SP2-0734: unknown command beginning "MMMMMMMMMM..." - rest of line ignored.
+SQL> ED
+Wrote file afiedt.buf
+
+  1   DECLARE
+  2   A NUMBER(20):=&A;
+  3   B NUMBER(20):=&B;
+  4  C NUMBER (20):=&C;
+  5   BEGIN
+  6   IF (A>B >C) THEN
+  7   DBMS_OUTPUT.PUT_LINE('A IS bIG');
+  8   ELSE IF (B>A>C) THEN
+  9   DBMS_OUTPUT.PUT_LINE('B IS bIG');
+ 10  ELSE
+ 11   DBMS_OUTPUT.PUT_LINE('C IS bIG');
+ 12   END IF ;
+ 13*  END;
+SQL> /
+Enter value for a: 12
+old   2:  A NUMBER(20):=&A;
+new   2:  A NUMBER(20):=12;
+Enter value for b: 36
+old   3:  B NUMBER(20):=&B;
+new   3:  B NUMBER(20):=36;
+Enter value for c: 63
+old   4: C NUMBER (20):=&C;
+new   4: C NUMBER (20):=63;
+ IF (A>B >C) THEN
+         *
+ERROR at line 6:
+ORA-06550: line 6, column 10:
+PLS-00103: Encountered the symbol ">" when expecting one of the following:
+. ( ) , * @ % & - + / at mod remainder rem <an exponent (**)>
+and or || multiset
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1   DECLARE
+  2   A NUMBER(20):=&A;
+  3   B NUMBER(20):=&B;
+  4  C NUMBER (20):=&C;
+  5   BEGIN
+  6   IF (A>B && A>C) THEN
+  7   DBMS_OUTPUT.PUT_LINE('A IS bIG');
+  8   ELSE IF (B>A && B>C) THEN
+  9   DBMS_OUTPUT.PUT_LINE('B IS bIG');
+ 10  ELSE
+ 11   DBMS_OUTPUT.PUT_LINE('C IS bIG');
+ 12   END IF ;
+ 13*  END;
+SQL> /
+Enter value for a: 
+old   2:  A NUMBER(20):=&A;
+new   2:  A NUMBER(20):=;
+Enter value for b: ED
+old   3:  B NUMBER(20):=&B;
+new   3:  B NUMBER(20):=ED;
+Enter value for c: 
+old   4: C NUMBER (20):=&C;
+new   4: C NUMBER (20):=;
+Enter value for a: 
+old   6:  IF (A>B && A>C) THEN
+new   6:  IF (A>B >C) THEN
+Enter value for b: 
+old   8:  ELSE IF (B>A && B>C) THEN
+new   8:  ELSE IF (B>A >C) THEN
+ A NUMBER(20):=;
+               *
+ERROR at line 2:
+ORA-06550: line 2, column 16:
+PLS-00103: Encountered the symbol ";" when expecting one of the following:
+( - + case mod new not null <an identifier>
+<a double-quoted delimited-identifier> <a bind variable> avg
+count current exists max min prior sql stddev sum variance
+execute forall merge time timestamp interval date
+<a string literal with character set specification>
+<a number> <a single-quoted SQL string> pipe
+<an alternatively-quoted string literal with character set specification>
+<an alternatively-quoted S
+ORA-06550: line 4, column 16:
+PLS-00103: Encountered the symbol ";" when expecting one of the following:
+( - + case mod new not null <an identifier>
+<a double-quoted delimited-identifier> <a bind variable> avg
+count current exists max min prior sql stddev su
+ORA-06550: line 6, column 10:
+PLS-00103: Encountered the symbol ">" when expecting one of the following:
+. ( ) , * @ % & - + / at mod remainder rem <an exponent (**)>
+and or || multiset
+
+
+SQL> 
+SQL> ED
+Wrote file afiedt.buf
+
+  1   DECLARE
+  2   A NUMBER(20):=&A;
+  3   B NUMBER(20):=&B;
+  4  C NUMBER (20):=&C;
+  5   BEGIN
+  6   IF (A>B && A>C) THEN
+  7   DBMS_OUTPUT.PUT_LINE('A IS bIG');
+  8   ELSE IF (B>A && B>C) THEN
+  9   DBMS_OUTPUT.PUT_LINE('B IS bIG');
+ 10  ELSE
+ 11   DBMS_OUTPUT.PUT_LINE('C IS bIG');
+ 12   END IF ;
+ 13*  END;
+SQL> /
+old   2:  A NUMBER(20):=&A;
+new   2:  A NUMBER(20):=;
+old   3:  B NUMBER(20):=&B;
+new   3:  B NUMBER(20):=;
+Enter value for c: 
+old   4: C NUMBER (20):=&C;
+new   4: C NUMBER (20):=;
+old   6:  IF (A>B && A>C) THEN
+new   6:  IF (A>B >C) THEN
+old   8:  ELSE IF (B>A && B>C) THEN
+new   8:  ELSE IF (B>A >C) THEN
+ A NUMBER(20):=;
+               *
+ERROR at line 2:
+ORA-06550: line 2, column 16:
+PLS-00103: Encountered the symbol ";" when expecting one of the following:
+( - + case mod new not null <an identifier>
+<a double-quoted delimited-identifier> <a bind variable> avg
+count current exists max min prior sql stddev sum variance
+execute forall merge time timestamp interval date
+<a string literal with character set specification>
+<a number> <a single-quoted SQL string> pipe
+<an alternatively-quoted string literal with character set specification>
+<an alternatively-quoted S
+ORA-06550: line 3, column 16:
+PLS-00103: Encountered the symbol ";" when expecting one of the following:
+( - + case mod new not null <an identifier>
+<a double-quoted delimited-identifier> <a bind variable> avg
+count current exists max min prior sql stddev su
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1   DECLARE
+  2   A NUMBER(20):=&A;
+  3   B NUMBER(20):=&B;
+  4  C NUMBER (20):=&C;
+  5   BEGIN
+  6   IF (A>B && A>C) THEN
+  7   DBMS_OUTPUT.PUT_LINE('A IS bIG');
+  8   ELSE IF (B>A && B>C) THEN
+  9   DBMS_OUTPUT.PUT_LINE('B IS bIG');
+ 10  ELSE
+ 11   DBMS_OUTPUT.PUT_LINE('C IS bIG');
+ 12   END IF ;
+ 13*  END;
+SQL> /
+old   2:  A NUMBER(20):=&A;
+new   2:  A NUMBER(20):=;
+old   3:  B NUMBER(20):=&B;
+new   3:  B NUMBER(20):=;
+Enter value for c: 23
+old   4: C NUMBER (20):=&C;
+new   4: C NUMBER (20):=23;
+old   6:  IF (A>B && A>C) THEN
+new   6:  IF (A>B >C) THEN
+old   8:  ELSE IF (B>A && B>C) THEN
+new   8:  ELSE IF (B>A >C) THEN
+ A NUMBER(20):=;
+               *
+ERROR at line 2:
+ORA-06550: line 2, column 16:
+PLS-00103: Encountered the symbol ";" when expecting one of the following:
+( - + case mod new not null <an identifier>
+<a double-quoted delimited-identifier> <a bind variable> avg
+count current exists max min prior sql stddev sum variance
+execute forall merge time timestamp interval date
+<a string literal with character set specification>
+<a number> <a single-quoted SQL string> pipe
+<an alternatively-quoted string literal with character set specification>
+<an alternatively-quoted S
+ORA-06550: line 3, column 16:
+PLS-00103: Encountered the symbol ";" when expecting one of the following:
+( - + case mod new not null <an identifier>
+<a double-quoted delimited-identifier> <a bind variable> avg
+count current exists max min prior sql stddev su
+
+
+SQL> /
+old   2:  A NUMBER(20):=&A;
+new   2:  A NUMBER(20):=;
+old   3:  B NUMBER(20):=&B;
+new   3:  B NUMBER(20):=;
+Enter value for c: /
+old   4: C NUMBER (20):=&C;
+new   4: C NUMBER (20):=/;
+old   6:  IF (A>B && A>C) THEN
+new   6:  IF (A>B >C) THEN
+old   8:  ELSE IF (B>A && B>C) THEN
+new   8:  ELSE IF (B>A >C) THEN
+ A NUMBER(20):=;
+               *
+ERROR at line 2:
+ORA-06550: line 2, column 16:
+PLS-00103: Encountered the symbol ";" when expecting one of the following:
+( - + case mod new not null <an identifier>
+<a double-quoted delimited-identifier> <a bind variable> avg
+count current exists max min prior sql stddev sum variance
+execute forall merge time timestamp interval date
+<a string literal with character set specification>
+<a number> <a single-quoted SQL string> pipe
+<an alternatively-quoted string literal with character set specification>
+<an alternatively-quoted S
+ORA-06550: line 3, column 16:
+PLS-00103: Encountered the symbol ";" when expecting one of the following:
+( - + case mod new not null <an identifier>
+<a double-quoted delimited-identifier> <a bind variable> avg
+count current exists max min prior sql stddev su
+
+
+SQL> /
+old   2:  A NUMBER(20):=&A;
+new   2:  A NUMBER(20):=;
+old   3:  B NUMBER(20):=&B;
+new   3:  B NUMBER(20):=;
+Enter value for c: 45;
+old   4: C NUMBER (20):=&C;
+new   4: C NUMBER (20):=45;;
+old   6:  IF (A>B && A>C) THEN
+new   6:  IF (A>B >C) THEN
+old   8:  ELSE IF (B>A && B>C) THEN
+new   8:  ELSE IF (B>A >C) THEN
+ A NUMBER(20):=;
+               *
+ERROR at line 2:
+ORA-06550: line 2, column 16:
+PLS-00103: Encountered the symbol ";" when expecting one of the following:
+( - + case mod new not null <an identifier>
+<a double-quoted delimited-identifier> <a bind variable> avg
+count current exists max min prior sql stddev sum variance
+execute forall merge time timestamp interval date
+<a string literal with character set specification>
+<a number> <a single-quoted SQL string> pipe
+<an alternatively-quoted string literal with character set specification>
+<an alternatively-quoted S
+ORA-06550: line 3, column 16:
+PLS-00103: Encountered the symbol ";" when expecting one of the following:
+( - + case mod new not null <an identifier>
+<a double-quoted delimited-identifier> <a bind variable> avg
+count current exists max min prior sql stddev su
+
+
+SQL> ;
+  1   DECLARE
+  2   A NUMBER(20):=&A;
+  3   B NUMBER(20):=&B;
+  4  C NUMBER (20):=&C;
+  5   BEGIN
+  6   IF (A>B && A>C) THEN
+  7   DBMS_OUTPUT.PUT_LINE('A IS bIG');
+  8   ELSE IF (B>A && B>C) THEN
+  9   DBMS_OUTPUT.PUT_LINE('B IS bIG');
+ 10  ELSE
+ 11   DBMS_OUTPUT.PUT_LINE('C IS bIG');
+ 12   END IF ;
+ 13*  END;
+SQL> /
+old   2:  A NUMBER(20):=&A;
+new   2:  A NUMBER(20):=;
+old   3:  B NUMBER(20):=&B;
+new   3:  B NUMBER(20):=;
+Enter value for c: ;
+old   4: C NUMBER (20):=&C;
+new   4: C NUMBER (20):=;;
+old   6:  IF (A>B && A>C) THEN
+new   6:  IF (A>B >C) THEN
+old   8:  ELSE IF (B>A && B>C) THEN
+new   8:  ELSE IF (B>A >C) THEN
+ A NUMBER(20):=;
+               *
+ERROR at line 2:
+ORA-06550: line 2, column 16:
+PLS-00103: Encountered the symbol ";" when expecting one of the following:
+( - + case mod new not null <an identifier>
+<a double-quoted delimited-identifier> <a bind variable> avg
+count current exists max min prior sql stddev sum variance
+execute forall merge time timestamp interval date
+<a string literal with character set specification>
+<a number> <a single-quoted SQL string> pipe
+<an alternatively-quoted string literal with character set specification>
+<an alternatively-quoted S
+ORA-06550: line 3, column 16:
+PLS-00103: Encountered the symbol ";" when expecting one of the following:
+( - + case mod new not null <an identifier>
+<a double-quoted delimited-identifier> <a bind variable> avg
+count current exists max min prior sql stddev su
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1   DECLARE
+  2   A NUMBER(20):=&A;
+  3   B NUMBER(20):=&B;
+  4  C NUMBER (20):=&C;
+  5   BEGIN
+  6   IF (A>B && A>C) THEN
+  7   DBMS_OUTPUT.PUT_LINE('A IS bIG');
+  8   ELSE IF (B>A && B>C) THEN
+  9   DBMS_OUTPUT.PUT_LINE('B IS bIG');
+ 10  ELSE
+ 11   DBMS_OUTPUT.PUT_LINE('C IS bIG');
+ 12   END IF ;
+ 13*  END;
+SQL> /
+old   2:  A NUMBER(20):=&A;
+new   2:  A NUMBER(20):=;
+old   3:  B NUMBER(20):=&B;
+new   3:  B NUMBER(20):=;
+Enter value for c: ED
+old   4: C NUMBER (20):=&C;
+new   4: C NUMBER (20):=ED;
+old   6:  IF (A>B && A>C) THEN
+new   6:  IF (A>B >C) THEN
+old   8:  ELSE IF (B>A && B>C) THEN
+new   8:  ELSE IF (B>A >C) THEN
+ A NUMBER(20):=;
+               *
+ERROR at line 2:
+ORA-06550: line 2, column 16:
+PLS-00103: Encountered the symbol ";" when expecting one of the following:
+( - + case mod new not null <an identifier>
+<a double-quoted delimited-identifier> <a bind variable> avg
+count current exists max min prior sql stddev sum variance
+execute forall merge time timestamp interval date
+<a string literal with character set specification>
+<a number> <a single-quoted SQL string> pipe
+<an alternatively-quoted string literal with character set specification>
+<an alternatively-quoted S
+ORA-06550: line 3, column 16:
+PLS-00103: Encountered the symbol ";" when expecting one of the following:
+( - + case mod new not null <an identifier>
+<a double-quoted delimited-identifier> <a bind variable> avg
+count current exists max min prior sql stddev su
+
+
+SQL> 
+SQL> ED
+Wrote file afiedt.buf
+
+  1   DECLARE
+  2   A NUMBER(20):=&A;
+  3   B NUMBER(20):=&B;
+  4   C NUMBER (20):=&C;
+  5   BEGIN
+  6   IF (A>B && A>C) THEN
+  7   DBMS_OUTPUT.PUT_LINE('A IS bIG');
+  8   ELSE IF (B>A && B>C) THEN
+  9   DBMS_OUTPUT.PUT_LINE('B IS bIG');
+ 10  ELSE
+ 11   DBMS_OUTPUT.PUT_LINE('C IS bIG');
+ 12   END IF ;
+ 13*  END;
+SQL> /
+old   2:  A NUMBER(20):=&A;
+new   2:  A NUMBER(20):=;
+old   3:  B NUMBER(20):=&B;
+new   3:  B NUMBER(20):=;
+Enter value for c: 78
+old   4:  C NUMBER (20):=&C;
+new   4:  C NUMBER (20):=78;
+old   6:  IF (A>B && A>C) THEN
+new   6:  IF (A>B >C) THEN
+old   8:  ELSE IF (B>A && B>C) THEN
+new   8:  ELSE IF (B>A >C) THEN
+ A NUMBER(20):=;
+               *
+ERROR at line 2:
+ORA-06550: line 2, column 16:
+PLS-00103: Encountered the symbol ";" when expecting one of the following:
+( - + case mod new not null <an identifier>
+<a double-quoted delimited-identifier> <a bind variable> avg
+count current exists max min prior sql stddev sum variance
+execute forall merge time timestamp interval date
+<a string literal with character set specification>
+<a number> <a single-quoted SQL string> pipe
+<an alternatively-quoted string literal with character set specification>
+<an alternatively-quoted S
+ORA-06550: line 3, column 16:
+PLS-00103: Encountered the symbol ";" when expecting one of the following:
+( - + case mod new not null <an identifier>
+<a double-quoted delimited-identifier> <a bind variable> avg
+count current exists max min prior sql stddev su
+
+
+SQL> /
+old   2:  A NUMBER(20):=&A;
+new   2:  A NUMBER(20):=;
+old   3:  B NUMBER(20):=&B;
+new   3:  B NUMBER(20):=;
+Enter value for c: ;
+old   4:  C NUMBER (20):=&C;
+new   4:  C NUMBER (20):=;;
+old   6:  IF (A>B && A>C) THEN
+new   6:  IF (A>B >C) THEN
+old   8:  ELSE IF (B>A && B>C) THEN
+new   8:  ELSE IF (B>A >C) THEN
+ A NUMBER(20):=;
+               *
+ERROR at line 2:
+ORA-06550: line 2, column 16:
+PLS-00103: Encountered the symbol ";" when expecting one of the following:
+( - + case mod new not null <an identifier>
+<a double-quoted delimited-identifier> <a bind variable> avg
+count current exists max min prior sql stddev sum variance
+execute forall merge time timestamp interval date
+<a string literal with character set specification>
+<a number> <a single-quoted SQL string> pipe
+<an alternatively-quoted string literal with character set specification>
+<an alternatively-quoted S
+ORA-06550: line 3, column 16:
+PLS-00103: Encountered the symbol ";" when expecting one of the following:
+( - + case mod new not null <an identifier>
+<a double-quoted delimited-identifier> <a bind variable> avg
+count current exists max min prior sql stddev su
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1   DECLARE
+  2   A NUMBER(20):=&A;
+  3   B NUMBER(20):=&B;
+  4   C NUMBER (20):=&C;
+  5   BEGIN
+  6   IF (A>B AND  A>C) THEN
+  7   DBMS_OUTPUT.PUT_LINE('A IS bIG');
+  8   ELSE IF (B>A AND B>C) THEN
+  9   DBMS_OUTPUT.PUT_LINE('B IS bIG');
+ 10  ELSE
+ 11   DBMS_OUTPUT.PUT_LINE('C IS bIG');
+ 12   END IF ;
+ 13*  END;
+SQL> /
+old   2:  A NUMBER(20):=&A;
+new   2:  A NUMBER(20):=;
+old   3:  B NUMBER(20):=&B;
+new   3:  B NUMBER(20):=;
+Enter value for c: 56
+old   4:  C NUMBER (20):=&C;
+new   4:  C NUMBER (20):=56;
+ A NUMBER(20):=;
+               *
+ERROR at line 2:
+ORA-06550: line 2, column 16:
+PLS-00103: Encountered the symbol ";" when expecting one of the following:
+( - + case mod new not null <an identifier>
+<a double-quoted delimited-identifier> <a bind variable> avg
+count current exists max min prior sql stddev sum variance
+execute forall merge time timestamp interval date
+<a string literal with character set specification>
+<a number> <a single-quoted SQL string> pipe
+<an alternatively-quoted string literal with character set specification>
+<an alternatively-quoted S
+ORA-06550: line 3, column 16:
+PLS-00103: Encountered the symbol ";" when expecting one of the following:
+( - + case mod new not null <an identifier>
+<a double-quoted delimited-identifier> <a bind variable> avg
+count current exists max min prior sql stddev su
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1   DECLARE
+  2   A NUMBER(20):=&A;
+  3   B NUMBER(20):=&B;
+  4   C NUMBER (20):=&C;
+  5   BEGIN
+  6   IF (A>B AND  A>C) THEN
+  7   DBMS_OUTPUT.PUT_LINE('A IS bIG');
+  8   ELSE IF (B>A AND B>C) THEN
+  9   DBMS_OUTPUT.PUT_LINE('B IS bIG');
+ 10  ELSE
+ 11   DBMS_OUTPUT.PUT_LINE('C IS bIG');
+ 12   END IF ;
+ 13*  END;
+
+
+
+
+SQL*Plus: Release 10.2.0.1.0 - Production on T
+
+Copyright (c) 1982, 2005, Oracle.  All rights 
+
+Enter password: *****
+
+Connected to:
+Oracle Database 10g Enterprise Edition Release
+With the Partitioning, OLAP and Data Mining op
+
+SQL> SET LINES 100 PAGES 100;
+SQL>  DECLARE
+  2   A NUMBER(20):=&A;
+  3   B NUMBER(20):=&B;
+  4  C NUMBER (20):=&C;;
+  5   BEGIN
+  6   IF A>B  AND A>C THEN
+  7   DBMS_OUTPUT.PUT_LINE("A IS bIG");
+  8   ELSIF  B>A AND B>C  THEN
+  9   DBMS_OUTPUT.PUT_LINE("B IS bIG");
+ 10   ELSE
+ 11   DBMS_OUTPUT.PUT_LINE("C IS bIG");
+ 12   END IF;
+ 13  END;
+ 14  /
+Enter value for a: 56
+old   2:  A NUMBER(20):=&A;
+new   2:  A NUMBER(20):=56;
+Enter value for b: 63
+old   3:  B NUMBER(20):=&B;
+new   3:  B NUMBER(20):=63;
+Enter value for c: 23
+old   4: C NUMBER (20):=&C;;
+new   4: C NUMBER (20):=23;;
+C NUMBER (20):=23;;
+                  *
+ERROR at line 4:
+ORA-06550: line 4, column 19:
+PLS-00103: Encountered the symbol ";" when exp
+begin function package pragma procedure subtyp
+<an identifier> <a double-quoted delimited-ide
+current cursor
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1   DECLARE
+  2   A NUMBER(20):=&A;
+  3   B NUMBER(20):=&B;
+  4  C NUMBER (20):=&C;
+  5   BEGIN
+  6   IF A>B  AND A>C THEN
+  7   DBMS_OUTPUT.PUT_LINE("A IS bIG");
+  8   ELSIF  B>A AND B>C  THEN
+  9   DBMS_OUTPUT.PUT_LINE("B IS bIG");
+ 10   ELSE
+ 11   DBMS_OUTPUT.PUT_LINE("C IS bIG");
+ 12   END IF;
+ 13* END;
+SQL> /
+Enter value for a: 56
+old   2:  A NUMBER(20):=&A;
+new   2:  A NUMBER(20):=56;
+Enter value for b: 63
+old   3:  B NUMBER(20):=&B;
+new   3:  B NUMBER(20):=63;
+Enter value for c: 96
+old   4: C NUMBER (20):=&C;
+new   4: C NUMBER (20):=96;
+ DBMS_OUTPUT.PUT_LINE("A IS bIG");
+                      *
+ERROR at line 7:
+ORA-06550: line 7, column 23:
+PLS-00201: identifier 'A IS bIG' must be decla
+ORA-06550: line 7, column 2:
+PL/SQL: Statement ignored
+ORA-06550: line 9, column 23:
+PLS-00201: identifier 'B IS bIG' must be decla
+ORA-06550: line 9, column 2:
+PL/SQL: Statement ignored
+ORA-06550: line 11, column 23:
+PLS-00201: identifier 'C IS bIG' must be decla
+ORA-06550: line 11, column 2:
+PL/SQL: Statement ignored
+
+
+SQL> EED
+SP2-0042: unknown command "EED" - rest of line
+SQL> ED
+Wrote file afiedt.buf
+
+  1   DECLARE
+  2   A NUMBER(20):=&A;
+  3   B NUMBER(20):=&B;
+  4  C NUMBER (20):=&C;
+  5   BEGIN
+  6   IF A>B  AND A>C THEN
+  7   DBMS_OUTPUT.PUT_LINE('A IS bIG');
+  8   ELSIF  B>A AND B>C  THEN
+  9   DBMS_OUTPUT.PUT_LINE('B IS bIG');
+ 10   ELSE
+ 11   DBMS_OUTPUT.PUT_LINE('C IS bIG');
+ 12   END IF;
+ 13* END;
+SQL> /
+Enter value for a: 56
+old   2:  A NUMBER(20):=&A;
+new   2:  A NUMBER(20):=56;
+Enter value for b: 63
+old   3:  B NUMBER(20):=&B;
+new   3:  B NUMBER(20):=63;
+Enter value for c: 96
+old   4: C NUMBER (20):=&C;
+new   4: C NUMBER (20):=96;
+
+PL/SQL procedure successfully completed.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1   DECLARE
+  2   A NUMBER(20):=&A;
+  3   B NUMBER(20):=&B;
+  4   C NUMBER (20):=&C;
+  5   BEGIN
+  6   IF A>B  AND A>C THEN
+  7   DBMS_OUTPUT.PUT_LINE('A IS bIG');
+  8   ELSIF  B>A AND B>C  THEN
+  9   DBMS_OUTPUT.PUT_LINE('B IS bIG');
+ 10   ELSE
+ 11   DBMS_OUTPUT.PUT_LINE('C IS bIG');
+ 12   END IF;
+ 13* END;
+SQL> /
+Enter value for a: 23
+old   2:  A NUMBER(20):=&A;
+new   2:  A NUMBER(20):=23;
+Enter value for b: 63
+old   3:  B NUMBER(20):=&B;
+new   3:  B NUMBER(20):=63;
+Enter value for c: 10
+old   4:  C NUMBER (20):=&C;
+new   4:  C NUMBER (20):=10;
+
+PL/SQL procedure successfully completed.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1   DECLARE
+  2   A NUMBER(20):=&A;
+  3   B NUMBER(20):=&B;
+  4   C NUMBER (20):=&C;
+  5   BEGIN
+  6   IF A>B  AND A>C THEN
+  7   DBMS_OUTPUT.PUT_LINE(C|| 'A IS bIG');
+  8   ELSIF  B>A AND B>C  THEN
+  9   DBMS_OUTPUT.PUT_LINE(B||'B IS bIG');
+ 10   ELSE
+ 11   DBMS_OUTPUT.PUT_LINE(C||'C IS bIG');
+ 12   END IF;
+ 13* END;
+SQL> /
+Enter value for a: 56
+old   2:  A NUMBER(20):=&A;
+new   2:  A NUMBER(20):=56;
+Enter value for b: 63
+old   3:  B NUMBER(20):=&B;
+new   3:  B NUMBER(20):=63;
+Enter value for c: 63
+old   4:  C NUMBER (20):=&C;
+new   4:  C NUMBER (20):=63;
+
+PL/SQL procedure successfully completed.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1   DECLARE
+  2   A NUMBER(20):=&A;
+  3   B NUMBER(20):=&B;
+  4   C NUMBER (20):=&C;
+  5   BEGIN
+  6   IF (A>B)  AND (A>C) THEN
+  7   DBMS_OUTPUT.PUT_LINE(C|| 'A IS bIG');
+  8   ELSIF  (B>A) AND (B>C)  THEN
+  9   DBMS_OUTPUT.PUT_LINE(B||'B IS bIG');
+ 10   ELSE
+ 11   DBMS_OUTPUT.PUT_LINE(C||'C IS bIG');
+ 12   END IF;
+ 13* END;
+SQL> /
+Enter value for a: 456
+old   2:  A NUMBER(20):=&A;
+new   2:  A NUMBER(20):=456;
+Enter value for b: 96
+old   3:  B NUMBER(20):=&B;
+new   3:  B NUMBER(20):=96;
+Enter value for c: 63
+old   4:  C NUMBER (20):=&C;
+new   4:  C NUMBER (20):=63;
+
+PL/SQL procedure successfully completed.

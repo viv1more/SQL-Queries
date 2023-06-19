@@ -1,0 +1,316 @@
+SQL>   SELECT ENAME,SAL,DEPTNO
+  2   FROM EMP
+  3   WHERE SAL>2000 AND DEPTNO= (SELECT DEPTNO
+  4                     FROM EMP
+  5                     WHERE ENAME='BLAKE')
+  6  /
+
+ENAME             SAL     DEPTNO
+---------- ---------- ----------
+BLAKE            2850         30
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1    SELECT ENAME,SAL
+  2   FROM EMP
+  3   WHERE SAL>2000 AND DEPTNO= (SELECT DEPTNO
+  4                     FROM EMP
+  5*                    WHERE ENAME='BLAKE')
+SQL> /
+
+ENAME             SAL
+---------- ----------
+BLAKE            2850
+
+SQL> \ED
+SP2-0042: unknown command "\ED" - rest of line ignored.
+SQL> ED
+Wrote file afiedt.buf
+
+  1    SELECT ENAME,SAL,DEPTNO
+  2   FROM EMP
+  3   WHERE SAL>2000 AND DEPTNO= (SELECT DEPTNO
+  4                     FROM EMP
+  5*                    WHERE ENAME='BLAKE')
+SQL> /
+
+ENAME             SAL     DEPTNO
+---------- ---------- ----------
+BLAKE            2850         30
+
+SQL> 000.
+SP2-0042: unknown command "000." - rest of line ignored.
+SQL> 
+SQL> 
+SQL> 
+SQL> 0000000000000.0.0.
+SP2-0734: unknown command beginning "0000000000..." - rest of line ignored.
+SQL> 
+SQL> .
+SQL> .
+SQL> 00000000000000000000......3
+SP2-0734: unknown command beginning "0000000000..." - rest of line ignored.
+SQL> 
+SQL> 33
+SP2-0226: Invalid line number
+SQL> 
+SQL> 3
+  3*  WHERE SAL>2000 AND DEPTNO= (SELECT DEPTNO
+SQL> 2
+  2*  FROM EMP
+SQL> ED
+Wrote file afiedt.buf
+
+  1    SELECT ENAME,SAL
+  2   FROM EMP
+  3   WHERE SAL<(SELECT SAL
+  4                     FROM EMP
+  5*                    WHERE ENAME='SMITH' AND ENAME='KING')
+SQL> /
+
+no rows selected
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1    SELECT ENAME,SAL
+  2   FROM EMP
+  3   WHERE SAL=(SELECT SAL
+  4                     FROM EMP
+  5*                    WHERE ENAME='SMITH' AND ENAME='KING')
+SQL> /
+
+no rows selected
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1    SELECT ENAME,SAL
+  2   FROM EMP
+  3   WHERE SAL=(SELECT SAL
+  4                     FROM EMP
+  5*                    WHERE ENAME='SMITH' OR ENAME='KING')
+SQL> /
+ WHERE SAL=(SELECT SAL
+            *
+ERROR at line 3:
+ORA-01427: single-row subquery returns more than one row
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1    SELECT ENAME,SAL
+  2   FROM EMP
+  3   WHERE SAL>(SELECT SAL
+  4                     FROM EMP
+  5*                    WHERE ENAME='SMITH' OR ENAME='KING')
+SQL> /
+ WHERE SAL>(SELECT SAL
+            *
+ERROR at line 3:
+ORA-01427: single-row subquery returns more than one row
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1    SELECT ENAME,SAL
+  2   FROM EMP
+  3   WHERE SAL>(SELECT SAL FROM EMP
+  4*            WHERE ENAME='SMITH' AND ENAME ='KING')
+SQL> /
+
+no rows selected
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1   SELECT ENAME,SAL
+  2   FROM EMP
+  3   WHERE SAL>(SELECT SAL FROM EMP
+  4*           WHERE ENAME IN 'SMITH' )
+SQL> /
+
+ENAME             SAL
+---------- ----------
+ALLEN            1600
+WARD             1250
+JONES            2975
+MARTIN           1250
+BLAKE            2850
+CLARK            2450
+SCOTT            3000
+KING             5000
+TURNER           1500
+ADAMS            1100
+JAMES             950
+FORD             3000
+MILLER           1300
+
+13 rows selected.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1   SELECT ENAME,SAL
+  2   FROM EMP
+  3   WHERE SAL>(SELECT SAL FROM EMP
+  4            WHERE ENAME IN 'SMITH'
+  5             AND SAL <(SELECT SAL FROM EMP
+  6*            WHERE ENAME='KING') )
+SQL> /
+
+ENAME             SAL
+---------- ----------
+ALLEN            1600
+WARD             1250
+JONES            2975
+MARTIN           1250
+BLAKE            2850
+CLARK            2450
+SCOTT            3000
+KING             5000
+TURNER           1500
+ADAMS            1100
+JAMES             950
+FORD             3000
+MILLER           1300
+
+13 rows selected.
+
+SQL> ED\
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1     SELECT ENAME,SAL
+  2   FROM EMP
+  3   WHERE SAL>(SELECT SAL FROM EMP
+  4            WHERE ENAME IN 'SMITH'
+  5             AND SAL <(SELECT SAL FROM EMP
+  6*            WHERE ENAME='KING') )
+SQL> /
+
+ENAME             SAL
+---------- ----------
+ALLEN            1600
+WARD             1250
+JONES            2975
+MARTIN           1250
+BLAKE            2850
+CLARK            2450
+SCOTT            3000
+KING             5000
+TURNER           1500
+ADAMS            1100
+JAMES             950
+FORD             3000
+MILLER           1300
+
+13 rows selected.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1     SELECT ENAME,SAL,JOB
+  2   FROM EMP
+  3* WHERE SAL=1000 AND JOB IN 'MANAGER'
+  4  /
+
+no rows selected
+
+SQL>                                     
+SQL> ED
+Wrote file afiedt.buf
+
+  1     SELECT ENAME,HIREDATE
+  2   FROM EMP
+  3  WHERE ENAME LIKE 'S%' AND HIREDATE >( SELECT HIREDATE FROM EMP
+  4*                            WHERE ENAME IN 'TURNER')
+SQL> /
+
+ENAME      HIREDATE
+---------- ---------
+SCOTT      19-APR-87
+
+SQL> .....................ED
+SP2-0734: unknown command beginning "............." - rest of line ignored.
+SQL> ED
+Wrote file afiedt.buf
+
+  1     SELECT ENAME,HIREDATE,DEPTNO
+  2   FROM EMP
+  3  WHERE ENAME LIKE '____' AND DEPTNO=20 AND HIREDATE >( SELECT HIREDATE FROM EMP
+  4                             WHERE ENAME IN 'MARTIN') AND
+  5                              HIREDATE <(SELECT HIREDATE FROM EMP
+  6                                             WHERE ENAME LIKE 'JAMES')
+  7                                     AND SAL>(SELECT SAL FROM EMP
+  8                                             WHERE ENAME IN 'JONES')
+  9                                     AND SAL<(SELECT SAL FROM  EMP
+ 10*                                            WHERE ENAME IN 'CLARK')
+ 11  /
+
+no rows selected
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1     SELECT ENAME,HIREDATE,DEPTNO
+  2   FROM EMP
+  3  WHERE ENAME LIKE '____' AND DEPTNO=20 AND HIREDATE >( SELECT HIREDATE FROM EMP
+  4                             WHERE ENAME IN 'MARTIN') AND
+  5                              HIREDATE <(SELECT HIREDATE FROM EMP
+  6                                             WHERE ENAME IN 'JAMES')
+  7                                     AND SAL>(SELECT SAL FROM EMP
+  8                                             WHERE ENAME IN 'JONES')
+  9                                     AND SAL<(SELECT SAL FROM  EMP
+ 10*                                            WHERE ENAME IN 'CLARK')
+SQL> /
+
+no rows selected
+
+SQL> SELECT ENAME FROM EMP WHERE ENAME LIKE '____';
+
+ENAME
+----------
+WARD
+KING
+FORD
+
+SQL>      SELECT ENAME,HIREDATE,DEPTNO
+  2     FROM EMP
+  3    WHERE ENAME LIKE '____' AND DEPTNO=20 AND HIREDATE >( SELECT HIREDATE FROM EMP
+  4                               WHERE ENAME IN 'MARTIN') AND
+  5                                HIREDATE <(SELECT HIREDATE FROM EMP
+  6                                               WHERE ENAME IN 'JAMES')
+  7                                       AND SAL>(SELECT SAL FROM EMP
+  8                                               WHERE ENAME IN 'JONES')
+  9                                       AND SAL<(SELECT SAL FROM  EMP
+ 10  *                                            WHERE ENAME IN 'CLARK')
+ 11  /
+*                                            WHERE ENAME IN 'CLARK')
+*
+ERROR at line 10:
+ORA-00907: missing right parenthesis
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1       SELECT ENAME,HIREDATE,DEPTNO
+  2     FROM EMP
+  3    WHERE ENAME LIKE '____' AND DEPTNO=20 AND HIREDATE >( SELECT HIREDATE FROM EMP
+  4                               WHERE ENAME IN 'MARTIN') AND
+  5                                HIREDATE <(SELECT HIREDATE FROM EMP
+  6                                               WHERE ENAME IN 'JAMES')
+  7                                       AND SAL>(SELECT SAL FROM EMP
+  8                                               WHERE ENAME IN 'JONES')
+  9                                       AND SAL<(SELECT SAL FROM  EMP
+ 10*                                 WHERE ENAME IN 'CLARK')
+SQL> /
+
+no rows selected
+
+SQL> 

@@ -1,0 +1,750 @@
+
+ERROR:
+ORA-01017: invalid username/password; logon denied
+
+
+
+Connected to:
+Oracle Database 10g Enterprise Edition Release 10.2.0.1.0 - Production
+With the Partitioning, OLAP and Data Mining options
+
+SQL> set lines 100 pages 100
+SQL> SELECT REVERSE ('VIVEK');
+SELECT REVERSE ('VIVEK')
+                       *
+ERROR at line 1:
+ORA-00923: FROM keyword not found where expected
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* SELECT REVERSE ('VIVEK') FROM DUMMY
+SQL> /
+SELECT REVERSE ('VIVEK') FROM DUMMY
+                              *
+ERROR at line 1:
+ORA-00942: table or view does not exist
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* SELECT REVERSE ('VIVEK') FROM DUAL
+SQL> /
+
+REVER
+-----
+KEVIV
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT ENAME
+  2  FROM EMP
+  3* WHERE ENAME=REVERSE(ENAME)
+SQL> /
+
+no rows selected
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* SELECT SUBSTR ('QSPIDERS',2,4) FROM DUAL
+SQL> /
+
+SUBS
+----
+SPID
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* SELECT SUBSTR ('QSPIDERS',7,2) FROM DUAL
+SQL> /
+
+SU
+--
+RS
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* SELECT SUBSTR ('QSPIDERS',2) FROM DUAL
+SQL> /
+
+SUBSTR(
+-------
+SPIDERS
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* SELECT SUBSTR ('QSPIDERS',-4,2) FROM DUAL
+SQL> /
+
+SU
+--
+DE
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* SELECT SUBSTR ('QSPIDERS',-4,-3) FROM DUAL
+SQL> /
+
+S
+-
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* SELECT SUBSTR ('QSPIDERS',-4,9) FROM DUAL
+SQL> /
+
+SUBS
+----
+DERS
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* SELECT SUBSTR ('QSPIDERS',-5,3) FROM DUAL
+SQL> /
+
+SUB
+---
+IDE
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* SELECT SUBSTR ('QSPIDERS',4,-1) FROM DUAL
+SQL> /
+
+S
+-
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* SELECT SUBSTR ('MAHARASHTRA',-8,4) FROM DUAL
+SQL> /
+
+SUBS
+----
+ARAS
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* SELECT SUBSTR (ENAME,-8,4) FROM EMP
+SQL> /
+
+SUBS
+----
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+14 rows selected.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* SELECT SUBSTR (ENAME,1,3) FROM EMP
+SQL> /
+
+SUB
+---
+SMI
+ALL
+WAR
+JON
+MAR
+BLA
+CLA
+SCO
+KIN
+TUR
+ADA
+JAM
+FOR
+MIL
+
+14 rows selected.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* SELECT SUBSTR (ENAME,1,4) FROM EMP
+SQL> /
+
+SUBS
+----
+SMIT
+ALLE
+WARD
+JONE
+MART
+BLAK
+CLAR
+SCOT
+KING
+TURN
+ADAM
+JAME
+FORD
+MILL
+
+14 rows selected.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* SELECT SUBSTR (ENAME,4,3) FROM EMP
+SQL> /
+
+SUB
+---
+TH
+EN
+D
+ES
+TIN
+KE
+RK
+TT
+G
+NER
+MS
+ES
+D
+LER
+
+14 rows selected.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* SELECT SUBSTR (ENAME,1,3) FROM EMP
+SQL> /
+
+SUB
+---
+SMI
+ALL
+WAR
+JON
+MAR
+BLA
+CLA
+SCO
+KIN
+TUR
+ADA
+JAM
+FOR
+MIL
+
+14 rows selected.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* SELECT SUBSTR (JOB,1,3) FROM EMP
+SQL> /
+
+SUB
+---
+CLE
+SAL
+SAL
+MAN
+SAL
+MAN
+MAN
+ANA
+PRE
+SAL
+CLE
+CLE
+ANA
+CLE
+
+14 rows selected.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* SELECT SUBSTR (JOB,-3) FROM EMP
+SQL> /
+
+SUB
+---
+ERK
+MAN
+MAN
+GER
+MAN
+GER
+GER
+YST
+ENT
+MAN
+ERK
+ERK
+YST
+ERK
+
+14 rows selected.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* SELECT SUBSTR (ENAME,-3) FROM EMP
+SQL> /
+
+SUB
+---
+ITH
+LEN
+ARD
+NES
+TIN
+AKE
+ARK
+OTT
+ING
+NER
+AMS
+MES
+ORD
+LER
+
+14 rows selected.
+
+SQL> T                         HHHHHH0000000000.0.00000.00.............................HHHHHHHHHHHHH
+HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH
+HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH.H....................
+.............HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH
+HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH+ED
+SP2-0734: unknown command beginning "T       ..." - rest of line ignored.
+SQL> ED
+Wrote file afiedt.buf
+
+  1* SELECT SUBSTR ('BOBBY',2) FROM EMP
+SQL> /
+
+SUBS
+----
+OBBY
+OBBY
+OBBY
+OBBY
+OBBY
+OBBY
+OBBY
+OBBY
+OBBY
+OBBY
+OBBY
+OBBY
+OBBY
+OBBY
+
+14 rows selected.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* SELECT SUBSTR ('BOOBBY',2) FROM EMP
+SQL> /
+
+SUBST
+-----
+OOBBY
+OOBBY
+OOBBY
+OOBBY
+OOBBY
+OOBBY
+OOBBY
+OOBBY
+OOBBY
+OOBBY
+OOBBY
+OOBBY
+OOBBY
+OOBBY
+
+14 rows selected.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* SELECT SUBSTR ('BBOOBBY',2) FROM EMP
+SQL> /
+
+SUBSTR
+------
+BOOBBY
+BOOBBY
+BOOBBY
+BOOBBY
+BOOBBY
+BOOBBY
+BOOBBY
+BOOBBY
+BOOBBY
+BOOBBY
+BOOBBY
+BOOBBY
+BOOBBY
+BOOBBY
+
+14 rows selected.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* SELECT SUBSTR (ENAME,2) FROM EMP
+SQL> /
+
+SUBSTR(EN
+---------
+MITH
+LLEN
+ARD
+ONES
+ARTIN
+LAKE
+LARK
+COTT
+ING
+URNER
+DAMS
+AMES
+ORD
+ILLER
+
+14 rows selected.
+
+SQL> N                                                                                              
+                     
+SP2-0042: unknown command "N" - rest of line ignored.
+SQL> 
+SQL> ED
+Wrote file afiedt.buf
+
+  1* SELECT REPLACE ('BOBBY','VIVEK') FROM DUAL
+SQL> /
+
+REPLA
+-----
+BOBBY
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* SELECT REPLACE ('BOBBY','VIVEK' ['MORE']) FROM DUAL
+SQL> /
+SELECT REPLACE ('BOBBY','VIVEK' ['MORE']) FROM DUAL
+                                *
+ERROR at line 1:
+ORA-00907: missing right parenthesis
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* SELECT REPLACE ('BOBBY','VIVEK' ,'MORE') FROM DUAL
+SQL> /
+
+REPLA
+-----
+BOBBY
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* SELECT REPLACE ('BOBBY','B' ,'P') FROM DUAL
+SQL> /
+
+REPLA
+-----
+POPPY
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* SELECT REPLACE ('BOBBY','BOBBY' ,'BOOOOOOBBBBYYYY') FROM DUAL
+SQL> /
+
+REPLACE('BOBBY'
+---------------
+BOOOOOOBBBBYYYY
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* SELECT REPLACE ('BOBBY','B') FROM DUAL
+SQL> /
+
+RE
+--
+OY
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* SELECT REPLACE ('BOBBY','B') FROM DUAL
+SQL> ED
+Wrote file afiedt.buf
+
+  1* SELECT REPLACE ('BOBBY','B','OP') FROM DUAL
+SQL> /
+
+REPLACE(
+--------
+OPOOPOPY
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* SELECT INSTRING ('BOBBY','B') FROM DUAL
+  2  /
+SELECT INSTRING ('BOBBY','B') FROM DUAL
+       *
+ERROR at line 1:
+ORA-00904: "INSTRING": invalid identifier
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* SELECT INSTR ('BOBBY','B') FROM DUAL
+SQL> /
+
+INSTR('BOBBY','B')
+------------------
+                 1
+
+SQL>                                                                                                
+                                                                                                    
+                                                                                                    
+                                           ED
+Wrote file afiedt.buf
+
+  1* SELECT INSTR ('BOBBY','BO') FROM DUAL
+SQL> /
+
+INSTR('BOBBY','BO')
+-------------------
+                  1
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* SELECT INSTR ('BOBBY','O') FROM DUAL
+SQL> /
+
+INSTR('BOBBY','O')
+------------------
+                 2
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* SELECT INSTR ('BOBBY','O','Y') FROM DUAL
+SQL> /
+SELECT INSTR ('BOBBY','O','Y') FROM DUAL
+                          *
+ERROR at line 1:
+ORA-01722: invalid number
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* SELECT INSTR ('BOBBY','O',1,1) FROM DUAL
+SQL> /
+
+INSTR('BOBBY','O',1,1)
+----------------------
+                     2
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* SELECT INSTR ('BOBBY','B',1,1) FROM DUAL
+SQL> /
+
+INSTR('BOBBY','B',1,1)
+----------------------
+                     1
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* SELECT INSTR ('BOBBY','B',1,2) FROM DUAL
+SQL> /
+
+INSTR('BOBBY','B',1,2)
+----------------------
+                     3
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* SELECT INSTR ('SUNSCREEN','B',1,2) FROM DUAL
+SQL> /
+
+INSTR('SUNSCREEN','B',1,2)
+--------------------------
+                         0
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* SELECT INSTR ('SUNSCREEN','E',1,1) FROM DUAL
+SQL> /
+
+INSTR('SUNSCREEN','E',1,1)
+--------------------------
+                         7
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* SELECT INSTR ('SUNSCREEN','E',1,2) FROM DUAL
+SQL> /
+
+INSTR('SUNSCREEN','E',1,2)
+--------------------------
+                         8
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* SELECT INSTR ('SUNSCREEN','E',1,3) FROM DUAL
+SQL> /
+
+INSTR('SUNSCREEN','E',1,3)
+--------------------------
+                         0
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* SELECT INSTR ('SUNSCREEN','E',2,2) FROM DUAL
+SQL> /
+
+INSTR('SUNSCREEN','E',2,2)
+--------------------------
+                         8
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* SELECT INSTR ('OPPO','P',2,2) FROM DUAL
+SQL> /
+
+INSTR('OPPO','P',2,2)
+---------------------
+                    3
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* SELECT INSTR ('OPPO','P',3,2) FROM DUAL
+SQL> /
+
+INSTR('OPPO','P',3,2)
+---------------------
+                    0
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* SELECT INSTR ('BANANA',1,3) FROM DUAL
+SQL> /
+
+INSTR('BANANA',1,3)
+-------------------
+                  0
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* SELECT INSTR ('BANANA','A',1,3) FROM DUAL
+SQL> /
+
+INSTR('BANANA','A',1,3)
+-----------------------
+                      6
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* SELECT INSTR ('BANANA','A',2,1) FROM DUAL
+SQL> /
+
+INSTR('BANANA','A',2,1)
+-----------------------
+                      2
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* SELECT INSTR ('BANANA','NA',1,2) FROM DUAL
+SQL> /
+
+INSTR('BANANA','NA',1,2)
+------------------------
+                       5
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* SELECT INSTR ('BANANA','A',4,2) FROM DUAL
+SQL> /
+
+INSTR('BANANA','A',4,2)
+-----------------------
+                      6
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* SELECT INSTR ('MALAYALAM','A',4,5) FROM DUAL
+SQL> /
+
+INSTR('MALAYALAM','A',4,5)
+--------------------------
+                         0
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* SELECT INSTR ('MALAYALAM','A',2,1) FROM DUAL
+SQL> /
+
+INSTR('MALAYALAM','A',2,1)
+--------------------------
+                         2
+
+SQL> ED

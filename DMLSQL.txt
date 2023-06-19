@@ -1,0 +1,541 @@
+
+SQL*Plus: Release 10.2.0.1.0 - Production on Wed Mar 22 08:41:32 2023
+
+Copyright (c) 1982, 2005, Oracle.  All rights reserved.
+
+Enter password: *****
+
+Connected to:
+Oracle Database 10g Enterprise Edition Release 10.2.0.1.0 - Production
+With the Partitioning, OLAP and Data Mining options
+
+SQL> SET LINES 100 PAGES 100;
+SQL> SELECT * FROM TAB;
+
+TNAME                          TABTYPE  CLUSTERID
+------------------------------ ------- ----------
+DEPT                           TABLE
+EMP                            TABLE
+BONUS                          TABLE
+SALGRADE                       TABLE
+STUDENT                        TABLE
+VIV1                           TABLE
+
+6 rows selected.
+
+SQL> DESC STUDENT;
+ Name                                                  Null?    Type
+ ----------------------------------------------------- -------- ------------------------------------
+ STUD_ID                                               NOT NULL NUMBER(3)
+ SNAME                                                          VARCHAR2(10)
+ SPHNO                                                          NUMBER(10)
+ SPER                                                  NOT NULL NUMBER(5,2)
+ SBRANCH                                                        VARCHAR2(15)
+
+SQL> INSERT INTO STUDENT VALUES(1,'VIVEK MAHATO',9860986098,78,'MCA');
+INSERT INTO STUDENT VALUES(1,'VIVEK MAHATO',9860986098,78,'MCA')
+                             *
+ERROR at line 1:
+ORA-12899: value too large for column "SCOTT"."STUDENT"."SNAME" (actual: 12, maximum: 10)
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* INSERT INTO STUDENT VALUES(1,'VIVEKMAH',9860986098,78,'MCA')
+SQL> /
+
+1 row created.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* INSERT INTO STUDENT VALUES(1,'VIVEKMORE',7887445667,86,'MCAI')
+SQL> /
+INSERT INTO STUDENT VALUES(1,'VIVEKMORE',7887445667,86,'MCAI')
+*
+ERROR at line 1:
+ORA-00001: unique constraint (SCOTT.SYS_C005450) violated
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* INSERT INTO STUDENT VALUES(2,'VIVEKMORE',7887445667,86,'MCAI')
+SQL> /
+
+1 row created.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  INSERT INTO STUDENT VALUES(3,'SUYOG',3451714171,86,'CIVIL'),
+  2* INSERT INTO STUDENT VALUES(4,'CHANDU',4789651230,86,'E&TC');
+  3  /
+Enter value for tc: 12
+old   2: INSERT INTO STUDENT VALUES(4,'CHANDU',4789651230,86,'E&TC');
+new   2: INSERT INTO STUDENT VALUES(4,'CHANDU',4789651230,86,'E12');
+INSERT INTO STUDENT VALUES(3,'SUYOG',3451714171,86,'CIVIL'),
+                                                           *
+ERROR at line 1:
+ORA-00933: SQL command not properly ended
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  INSERT INTO STUDENT VALUES(3,'SUYOG',3451714171,86,'CIVIL'),
+  2* INSERT INTO STUDENT VALUES(4,'CHANDU',4789651230,86,'E&TC')
+SQL> /
+Enter value for tc: ED
+old   2: INSERT INTO STUDENT VALUES(4,'CHANDU',4789651230,86,'E&TC')
+new   2: INSERT INTO STUDENT VALUES(4,'CHANDU',4789651230,86,'EED')
+INSERT INTO STUDENT VALUES(3,'SUYOG',3451714171,86,'CIVIL'),
+                                                           *
+ERROR at line 1:
+ORA-00933: SQL command not properly ended
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* INSERT INTO STUDENT VALUES(3,'SUYOG',3451714171,86,'CIVIL')
+SQL> /
+INSERT INTO STUDENT VALUES(3,'SUYOG',3451714171,86,'CIVIL')
+*
+ERROR at line 1:
+ORA-00001: unique constraint (SCOTT.SYS_C005456) violated
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* INSERT INTO STUDENT VALUES(4,'CHANDU',4789651230,86,'E&TC')
+  2  /
+Enter value for tc: ED
+old   1: INSERT INTO STUDENT VALUES(4,'CHANDU',4789651230,86,'E&TC')
+new   1: INSERT INTO STUDENT VALUES(4,'CHANDU',4789651230,86,'EED')
+INSERT INTO STUDENT VALUES(4,'CHANDU',4789651230,86,'EED')
+*
+ERROR at line 1:
+ORA-00001: unique constraint (SCOTT.SYS_C005456) violated
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* INSERT INTO STUDENT VALUES(4,'CHANDU',4789651230,86,'ETC')
+SQL> /
+INSERT INTO STUDENT VALUES(4,'CHANDU',4789651230,86,'ETC')
+*
+ERROR at line 1:
+ORA-00001: unique constraint (SCOTT.SYS_C005456) violated
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* INSERT INTO STUDENT VALUES(4,'CHANDU',4789651230,86,'ETC')
+SQL> SELECT * FROM STUDENT;
+
+   STUD_ID SNAME           SPHNO       SPER SBRANCH
+---------- ---------- ---------- ---------- ---------------
+         1 VIVEKMAH   9860986098         78 MCA
+         2 VIVEKMORE  7887445667         86 MCAI
+
+SQL> INSERT INTO STUDENT (3,'SUYOG',7878787878,'67','CIVIL');
+INSERT INTO STUDENT (3,'SUYOG',7878787878,'67','CIVIL')
+                     *
+ERROR at line 1:
+ORA-00928: missing SELECT keyword
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* INSERT INTO STUDENT (3,'SUYOG',7878787878,'67','CIVIL')
+SQL> ED
+Wrote file afiedt.buf
+
+  1* INSERT INTO STUDENT VALUES (3,'SUYOG',7878787878,'67','CIVIL')
+SQL> /
+
+1 row created.
+
+SQL> SELECT * FROM STUDENT;
+
+   STUD_ID SNAME           SPHNO       SPER SBRANCH
+---------- ---------- ---------- ---------- ---------------
+         1 VIVEKMAH   9860986098         78 MCA
+         2 VIVEKMORE  7887445667         86 MCAI
+         3 SUYOG      7878787878         67 CIVIL
+
+SQL> UPDATE STUDENT
+  2  SET SNAME='CHANDU'
+  3  WHERE STUD_ID=3;
+
+1 row updated.
+
+SQL> SELECT * FROM STUDENT;
+
+   STUD_ID SNAME           SPHNO       SPER SBRANCH
+---------- ---------- ---------- ---------- ---------------
+         1 VIVEKMAH   9860986098         78 MCA
+         2 VIVEKMORE  7887445667         86 MCAI
+         3 CHANDU     7878787878         67 CIVIL
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* SELECT * FROM STUDENT
+SQL> /
+
+   STUD_ID SNAME           SPHNO       SPER SBRANCH
+---------- ---------- ---------- ---------- ---------------
+         1 VIVEKMAH   9860986098         78 MCA
+         2 VIVEKMORE  7887445667         86 MCAI
+         3 CHANDU     7878787878         67 CIVIL
+
+SQL> UPDATE STUDENT 
+  2  SPER=89
+  3  WHERE SBRANCH='MCAI';
+SPER=89
+    *
+ERROR at line 2:
+ORA-00971: missing SET keyword
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  UPDATE STUDENT
+  2  SET SPER=89
+  3* WHERE SBRANCH='MCAI'
+SQL> /
+
+1 row updated.
+
+SQL> SELECT * FROM STUDENT;
+
+   STUD_ID SNAME           SPHNO       SPER SBRANCH
+---------- ---------- ---------- ---------- ---------------
+         1 VIVEKMAH   9860986098         78 MCA
+         2 VIVEKMORE  7887445667         89 MCAI
+         3 CHANDU     7878787878         67 CIVIL
+
+SQL> DELETE FROM STUDENT
+  2  WHERE STUD_ID=1
+  3  ;
+
+1 row deleted.
+
+SQL> SELECT *FROM STUDENT;
+
+   STUD_ID SNAME           SPHNO       SPER SBRANCH
+---------- ---------- ---------- ---------- ---------------
+         2 VIVEKMORE  7887445667         89 MCAI
+         3 CHANDU     7878787878         67 CIVIL
+
+SQL> DESC STUDENT;
+ Name                                                  Null?    Type
+ ----------------------------------------------------- -------- ------------------------------------
+ STUD_ID                                               NOT NULL NUMBER(3)
+ SNAME                                                          VARCHAR2(10)
+ SPHNO                                                          NUMBER(10)
+ SPER                                                  NOT NULL NUMBER(5,2)
+ SBRANCH                                                        VARCHAR2(15)
+
+SQL> ALTER TABLE STUDENT
+  2  ADD COLUMN SDOB;
+ADD COLUMN SDOB
+    *
+ERROR at line 2:
+ORA-00904: : invalid identifier
+
+
+SQL> ALTER TABLE STUDENT
+  2  ADD SDOB DATE ;
+
+Table altered.
+
+SQL> DESC STUDENT;
+ Name                                                  Null?    Type
+ ----------------------------------------------------- -------- ------------------------------------
+ STUD_ID                                               NOT NULL NUMBER(3)
+ SNAME                                                          VARCHAR2(10)
+ SPHNO                                                          NUMBER(10)
+ SPER                                                  NOT NULL NUMBER(5,2)
+ SBRANCH                                                        VARCHAR2(15)
+ SDOB                                                           DATE
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  ALTER TABLE STUDENT
+  2* ADD SDOB DATE
+SQL> SELECT/
+  2  
+SQL> SELECT * FROM STUDENT;
+
+   STUD_ID SNAME           SPHNO       SPER SBRANCH         SDOB
+---------- ---------- ---------- ---------- --------------- ---------
+         2 VIVEKMORE  7887445667         89 MCAI
+         3 CHANDU     7878787878         67 CIVIL
+
+SQL> UPDATE SDOB
+  2  ';
+ERROR:
+ORA-01756: quoted string not properly terminated
+
+
+SQL> UPDATE STUDENT
+  2  SET SDOB='24-NOV-1999'
+  3  WHERE STUD_ID=2;
+
+1 row updated.
+
+SQL> SELECT * FROM SSTUDENT;
+SELECT * FROM SSTUDENT
+              *
+ERROR at line 1:
+ORA-00942: table or view does not exist
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* SELECT * FROM STUDENT
+SQL> /
+
+   STUD_ID SNAME           SPHNO       SPER SBRANCH         SDOB
+---------- ---------- ---------- ---------- --------------- ---------
+         2 VIVEKMORE  7887445667         89 MCAI            24-NOV-99
+         3 CHANDU     7878787878         67 CIVIL
+
+SQL> ALTER TABLE STUDENT
+  2  MODIFY SNAME VARCHAR2(30);
+
+Table altered.
+
+SQL> desc STUDENT;
+ Name                                                  Null?    Type
+ ----------------------------------------------------- -------- ------------------------------------
+ STUD_ID                                               NOT NULL NUMBER(3)
+ SNAME                                                          VARCHAR2(30)
+ SPHNO                                                          NUMBER(10)
+ SPER                                                  NOT NULL NUMBER(5,2)
+ SBRANCH                                                        VARCHAR2(15)
+ SDOB                                                           DATE
+
+SQL> CREATE TABLE MOVIE(
+  2  MOVIE_NAME VARCHAR(30) NOT NULL,
+  3  RELEASE_DATE DATE NOT NULL,
+  4  TICKET_PRICE NUMBER(4) );
+
+Table created.
+
+SQL> DESC MOVIE;
+ Name                                                  Null?    Type
+ ----------------------------------------------------- -------- ------------------------------------
+ MOVIE_NAME                                            NOT NULL VARCHAR2(30)
+ RELEASE_DATE                                          NOT NULL DATE
+ TICKET_PRICE                                                   NUMBER(4)
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  CREATE TABLE MOVIE(
+  2  MOVIE_NAME VARCHAR(30) NOT NULL,
+  3  RELEASE_DATE DATE NOT NULL,
+  4* TICKET_PRICE NUMBER(4) )
+SQL> ALTER TABLE MOVIE
+  2  MODIFY TICKET_PRICE NUMBER(4) DEFAULT=150;
+MODIFY TICKET_PRICE NUMBER(4) DEFAULT=150
+                                     *
+ERROR at line 2:
+ORA-00936: missing expression
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  ALTER TABLE MOVIE
+  2* MODIFY TICKET_PRICE NUMBER(4) DEFAULT=150
+SQL> /
+MODIFY TICKET_PRICE NUMBER(4) DEFAULT=150
+                                     *
+ERROR at line 2:
+ORA-00936: missing expression
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  ALTER TABLE MOVIE
+  2* MODIFY TICKET_PRICE NUMBER(4) DEFAULT=150
+SQL> SELECT * FROM TAB;
+
+TNAME                          TABTYPE  CLUSTERID
+------------------------------ ------- ----------
+DEPT                           TABLE
+EMP                            TABLE
+BONUS                          TABLE
+SALGRADE                       TABLE
+MOVIE                          TABLE
+STUDENT                        TABLE
+VIV1                           TABLE
+
+7 rows selected.
+
+SQL> DESC MOVIE;
+ Name                                                  Null?    Type
+ ----------------------------------------------------- -------- ------------------------------------
+ MOVIE_NAME                                            NOT NULL VARCHAR2(30)
+ RELEASE_DATE                                          NOT NULL DATE
+ TICKET_PRICE                                                   NUMBER(4)
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* SELECT * FROM TAB
+SQL> ALTER TABLE MOVIE 
+  2  MODIFY TICKET_PRICE NUMBER(5) DEFAULT 150;
+
+Table altered.
+
+SQL> DESC MOVIE;
+ Name                                                  Null?    Type
+ ----------------------------------------------------- -------- ------------------------------------
+ MOVIE_NAME                                            NOT NULL VARCHAR2(30)
+ RELEASE_DATE                                          NOT NULL DATE
+ TICKET_PRICE                                                   NUMBER(5)
+
+SQL> ALTER TABLE MOVIE
+  2  /
+ALTER TABLE MOVIE
+                *
+ERROR at line 1:
+ORA-02210: no options specified for ALTER TABLE
+
+
+SQL> INSERT INTO MOVIE VALUES ('NAAGINKABADALA','23-MAR-23','');
+
+1 row created.
+
+SQL> SELECT * FROM MOVIE;
+
+MOVIE_NAME                     RELEASE_D TICKET_PRICE
+------------------------------ --------- ------------
+NAAGINKABADALA                 23-MAR-23
+
+SQL> INSERT INTO MOVIE VALUES ('POLICE WALA GUNDA','30-APRIL',133);
+INSERT INTO MOVIE VALUES ('POLICE WALA GUNDA','30-APRIL',133)
+                                              *
+ERROR at line 1:
+ORA-01861: literal does not match format string
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* INSERT INTO MOVIE VALUES ('POLICE WALA GUNDA','30-APRIL',133)
+SQL> ED
+Wrote file afiedt.buf
+
+  1* INSERT INTO MOVIE VALUES ('POLICE WALA GUNDA','30-APRIL',DEFAULT)
+SQL> /
+INSERT INTO MOVIE VALUES ('POLICE WALA GUNDA','30-APRIL',DEFAULT)
+                                              *
+ERROR at line 1:
+ORA-01861: literal does not match format string
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* INSERT INTO MOVIE VALUES ('POLICEWALAGUNDA','30-APRIL',DEFAULT)
+SQL> /
+INSERT INTO MOVIE VALUES ('POLICEWALAGUNDA','30-APRIL',DEFAULT)
+                                            *
+ERROR at line 1:
+ORA-01861: literal does not match format string
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* INSERT INTO MOVIE VALUES ('POLICE WALA GUNDA','30-APRIL-2013',DEFAULT)
+SQL> /
+
+1 row created.
+
+SQL> SELECT * FROM MOVIE;
+
+MOVIE_NAME                     RELEASE_D TICKET_PRICE
+------------------------------ --------- ------------
+NAAGINKABADALA                 23-MAR-23
+POLICE WALA GUNDA              30-APR-13          150
+
+SQL> INSERT IN TO MOVIES ('MR.INDIA','12-JAN-1978',100);
+INSERT IN TO MOVIES ('MR.INDIA','12-JAN-1978',100)
+       *
+ERROR at line 1:
+ORA-00925: missing INTO keyword
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* INSERT INTO MOVIES ('MR.INDIA','12-JAN-1978',100)
+SQL> /
+INSERT INTO MOVIES ('MR.INDIA','12-JAN-1978',100)
+                    *
+ERROR at line 1:
+ORA-00928: missing SELECT keyword
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* INSERT INTO MOVIE VALUES ('MR.INDIA','12-JAN-1978',100)
+SQL> /
+
+1 row created.
+
+SQL> SELECT * FROM MOVIE;
+
+MOVIE_NAME                     RELEASE_D TICKET_PRICE
+------------------------------ --------- ------------
+NAAGINKABADALA                 23-MAR-23
+POLICE WALA GUNDA              30-APR-13          150
+MR.INDIA                       12-JAN-78          100
+
+SQL> INSERT INTO MOVIE VALUES ('ZAPATLELA','14-FEB-1989',500);
+
+1 row created.
+
+SQL> SELECT * FROM MOVIE;
+
+MOVIE_NAME                     RELEASE_D TICKET_PRICE
+------------------------------ --------- ------------
+NAAGINKABADALA                 23-MAR-23
+POLICE WALA GUNDA              30-APR-13          150
+MR.INDIA                       12-JAN-78          100
+ZAPATLELA                      14-FEB-89          500
+
+SQL> UPDATE MOVIE 
+  2  SET TICKET_PRICE=230
+  3  WHERE MOVIE_NAME='NAAGINKABADALA';
+
+1 row updated.
+
+SQL> SELECT * FROM MOVIE;
+
+MOVIE_NAME                     RELEASE_D TICKET_PRICE
+------------------------------ --------- ------------
+NAAGINKABADALA                 23-MAR-23          230
+POLICE WALA GUNDA              30-APR-13          150
+MR.INDIA                       12-JAN-78          100
+ZAPATLELA                      14-FEB-89          500
+
+SQL> 

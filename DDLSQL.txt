@@ -1,0 +1,995 @@
+ERROR at line 3:
+ORA-00932: inconsistent datatypes: expected NUMBER got DATE
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT ENAME FROM EMP
+  2*  WHERE TO_CHAR(MOD(HIREDATE,4)=0)
+SQL> /
+ WHERE TO_CHAR(MOD(HIREDATE,4)=0)
+                              *
+ERROR at line 2:
+ORA-00907: missing right parenthesis
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT ENAME FROM EMP
+  2*  WHERE TO_CHAR(MOD(HIREDATE,4))=0
+SQL> /
+ WHERE TO_CHAR(MOD(HIREDATE,4))=0
+                   *
+ERROR at line 2:
+ORA-00932: inconsistent datatypes: expected NUMBER got DATE
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT ENAME FROM EMP
+  2*  WHERE TO_CHAR(MOD(HIREDATE,4)=0)
+SQL> /
+ WHERE TO_CHAR(MOD(HIREDATE,4)=0)
+                              *
+ERROR at line 2:
+ORA-00907: missing right parenthesis
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT ENAME FROM EMP
+  2*  WHERE MOD(TO_CHAR(HIREDATE,'YEAR'),4)=0
+SQL> /
+ WHERE MOD(TO_CHAR(HIREDATE,'YEAR'),4)=0
+           *
+ERROR at line 2:
+ORA-01722: invalid number
+
+
+SQL> \ED
+SP2-0042: unknown command "\ED" - rest of line ignored.
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT ENAME FROM EMP
+  2*  WHERE MOD(TO_CHAR(HIREDATE,4)=0
+SQL> /
+ WHERE MOD(TO_CHAR(HIREDATE,4)=0
+       *
+ERROR at line 2:
+ORA-00909: invalid number of arguments
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT ENAME FROM EMP
+  2*  WHERE MOD(TO_CHAR(HIREDATE,'YYYY'),4)=0
+SQL> /
+
+ENAME
+----------
+SMITH
+
+SQL> [[;0
+SP2-0042: unknown command "[[;0" - rest of line ignored.
+SQL> 
+SQL> 00000000000...
+SP2-0734: unknown command beginning "0000000000..." - rest of line ignored.
+SQL> .
+SQL> 
+SQL> 
+SQL> 
+SQL> 
+SQL> 
+SQL> 3
+SP2-0226: Invalid line number
+SQL> 
+SQL> SELECT NVL (COMM,SAL) FROM EMP;
+
+NVL(COMM,SAL)
+-------------
+          800
+          300
+          500
+         2975
+         1400
+         2850
+         2450
+         3000
+         5000
+            0
+         1100
+          950
+         3000
+         1300
+
+14 rows selected.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* SELECT NVL (COMM,SAL),SAL+COMM FROM EMP
+SQL> /
+
+NVL(COMM,SAL)   SAL+COMM
+------------- ----------
+          800
+          300       1900
+          500       1750
+         2975
+         1400       2650
+         2850
+         2450
+         3000
+         5000
+            0       1500
+         1100
+          950
+         3000
+         1300
+
+14 rows selected.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* SELECT NVL (COMM,SAL),NVL(SAL+COMM) FROM EMP
+SQL> /
+SELECT NVL (COMM,SAL),NVL(SAL+COMM) FROM EMP
+                      *
+ERROR at line 1:
+ORA-00909: invalid number of arguments
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* SELECT NVL (COMM,SAL+COMM) FROM EMP
+SQL> /
+
+NVL(COMM,SAL+COMM)
+------------------
+
+               300
+               500
+
+              1400
+
+
+
+
+                 0
+
+
+
+
+
+14 rows selected.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* SELECT NVL (COMM,SAL) FROM EMP
+SQL> /
+
+NVL(COMM,SAL)
+-------------
+          800
+          300
+          500
+         2975
+         1400
+         2850
+         2450
+         3000
+         5000
+            0
+         1100
+          950
+         3000
+         1300
+
+14 rows selected.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* SELECT NVL (COMM,12) FROM EMP
+SQL> /
+
+NVL(COMM,12)
+------------
+          12
+         300
+         500
+          12
+        1400
+          12
+          12
+          12
+          12
+           0
+          12
+          12
+          12
+          12
+
+14 rows selected.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* SELECT SSAL+NVL (COMM,SAL) FROM EMP
+SQL> /
+SELECT SSAL+NVL (COMM,SAL) FROM EMP
+       *
+ERROR at line 1:
+ORA-00904: "SSAL": invalid identifier
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* SELECT SAL+NVL (COMM,SAL) FROM EMP
+SQL> /
+
+SAL+NVL(COMM,SAL)
+-----------------
+             1600
+             1900
+             1750
+             5950
+             2650
+             5700
+             4900
+             6000
+            10000
+             1500
+             2200
+             1900
+             6000
+             2600
+
+14 rows selected.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* SELECT SAL+NVL (COMM,0) FROM EMP
+SQL> /
+
+SAL+NVL(COMM,0)
+---------------
+            800
+           1900
+           1750
+           2975
+           2650
+           2850
+           2450
+           3000
+           5000
+           1500
+           1100
+            950
+           3000
+           1300
+
+14 rows selected.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* SELECT SAL+NVL (COMM,0) FROM EMP
+SQL>  .......ED
+SP2-0042: unknown command ".......ED" - rest of line ignored.
+SQL> ED4ED5EE
+
+SQL> /
+
+SAL+NVL(COMM,0)
+---------------
+            800
+           1900
+           1750
+           2975
+           2650
+           2850
+           2450
+           3000
+           5000
+           1500
+           1100
+            950
+           3000
+           1300
+
+14 rows selected.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* SELECT SAL+NVL (SAL,0) FROM EMP
+SQL> /
+
+SAL+NVL(SAL,0)
+--------------
+          1600
+          3200
+          2500
+          5950
+          2500
+          5700
+          4900
+          6000
+         10000
+          3000
+          2200
+          1900
+          6000
+          2600
+
+14 rows selected.
+
+SQL> SELECT * FROM EMP;
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------
+      7369 SMITH      CLERK           7902 17-DEC-80        800                    20
+      7499 ALLEN      SALESMAN        7698 20-FEB-81       1600        300         30
+      7521 WARD       SALESMAN        7698 22-FEB-81       1250        500         30
+      7566 JONES      MANAGER         7839 02-APR-81       2975                    20
+      7654 MARTIN     SALESMAN        7698 28-SEP-81       1250       1400         30
+      7698 BLAKE      MANAGER         7839 01-MAY-81       2850                    30
+      7782 CLARK      MANAGER         7839 09-JUN-81       2450                    10
+      7788 SCOTT      ANALYST         7566 19-APR-87       3000                    20
+      7839 KING       PRESIDENT            17-NOV-81       5000                    10
+      7844 TURNER     SALESMAN        7698 08-SEP-81       1500          0         30
+      7876 ADAMS      CLERK           7788 23-MAY-87       1100                    20
+      7900 JAMES      CLERK           7698 03-DEC-81        950                    30
+      7902 FORD       ANALYST         7566 03-DEC-81       3000                    20
+      7934 MILLER     CLERK           7782 23-JAN-82       1300                    10
+
+14 rows selected.
+
+SQL> SELECT REPLACE (ENAME,'SMITH','BSDK') FROM EMP;
+
+REPLACE(ENAME,'SMITH','BSDK')
+----------------------------------------
+BSDK
+ALLEN
+WARD
+JONES
+MARTIN
+BLAKE
+CLARK
+SCOTT
+KING
+TURNER
+ADAMS
+JAMES
+FORD
+MILLER
+
+14 rows selected.
+
+SQL> CREATE TABLE STUDENT
+  2  (
+  3  SID NUMBER(3) PRIMARY KEY,
+  4  SNAME VARCHAR(10) NOT NULL,
+  5  SPHNO NUMBER(10) CHECK(LENGTH(SPHNO)=10),
+  6  SADD VARCHAR(20),
+  7  SPER NUMBER(4,1);
+SPER NUMBER(4,1)
+               *
+ERROR at line 7:
+ORA-00907: missing right parenthesis
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  CREATE TABLE STUDENT
+  2  (
+  3  SID NUMBER(3) PRIMARY KEY,
+  4  SNAME VARCHAR(10) NOT NULL,
+  5  SPHNO NUMBER(10) CHECK(LENGTH(SPHNO)=10),
+  6  SADD VARCHAR(20),
+  7  SPER NUMBER(4,1)
+  8* )
+SQL> /
+
+Table created.
+
+SQL> SELECT * FROM TAB;
+
+TNAME                          TABTYPE  CLUSTERID
+------------------------------ ------- ----------
+DEPT                           TABLE
+EMP                            TABLE
+BONUS                          TABLE
+SALGRADE                       TABLE
+STUDENT                        TABLE
+
+SQL> DESC STUD;
+ERROR:
+ORA-04043: object STUD does not exist
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* SELECT * FROM TAB
+  2  /
+
+TNAME                          TABTYPE  CLUSTERID
+------------------------------ ------- ----------
+DEPT                           TABLE
+EMP                            TABLE
+BONUS                          TABLE
+SALGRADE                       TABLE
+STUDENT                        TABLE
+
+SQL> DESC STUDENT;
+ Name                                                  Null?    Type
+ ----------------------------------------------------- -------- ------------------------------------
+ SID                                                   NOT NULL NUMBER(3)
+ SNAME                                                 NOT NULL VARCHAR2(10)
+ SPHNO                                                          NUMBER(10)
+ SADD                                                           VARCHAR2(20)
+ SPER                                                           NUMBER(4,1)
+
+SQL> CREATE TABLE CUSTOMER
+  2  (
+  3  CID NUMBER(3) PRIMARY KEY,
+  4  CNAME VARCHAR(10) NOT NULL,
+  5  CPHNO NUMBER (10) CHECK (LENGTH(CPHNO=10),
+  6  CADD VARCHAR (20) NOT NULL,
+  7  CEMAIL VARCHAR (15));
+CPHNO NUMBER (10) CHECK (LENGTH(CPHNO=10),
+                                     *
+ERROR at line 5:
+ORA-00907: missing right parenthesis
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  CREATE TABLE CUSTOMER
+  2  (
+  3  CID NUMBER(3) PRIMARY KEY,
+  4  CNAME VARCHAR(10) NOT NULL,
+  5  CPHNO NUMBER (10) CHECK (LENGTH(CPHNO=10)),
+  6  CADD VARCHAR (20) NOT NULL,
+  7* CEMAIL VARCHAR (15))
+SQL> /
+CPHNO NUMBER (10) CHECK (LENGTH(CPHNO=10)),
+                                     *
+ERROR at line 5:
+ORA-00907: missing right parenthesis
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  CREATE TABLE CUSTOMER
+  2  (
+  3  CID NUMBER(3) PRIMARY KEY,
+  4  CNAME VARCHAR(10) NOT NULL,
+  5  CPHNO NUMBER (10) CHECK (LENGTH(CPHNO=10),
+  6  CADD VARCHAR (20) NOT NULL,
+  7* CEMAIL VARCHAR (15))
+SQL> /
+CPHNO NUMBER (10) CHECK (LENGTH(CPHNO=10),
+                                     *
+ERROR at line 5:
+ORA-00907: missing right parenthesis
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  CREATE TABLE CUSTOMER
+  2  (
+  3  CID NUMBER(3) PRIMARY KEY,
+  4  CNAME VARCHAR(10) NOT NULL,
+  5  CPHNO NUMBER (10) CHECK (LENGTH(CPHNO)=10),
+  6  CADD VARCHAR (20) NOT NULL,
+  7* CEMAIL VARCHAR (15))
+SQL> /
+
+Table created.
+
+SQL> DESC CUSTOMER
+ Name                                                  Null?    Type
+ ----------------------------------------------------- -------- ------------------------------------
+ CID                                                   NOT NULL NUMBER(3)
+ CNAME                                                 NOT NULL VARCHAR2(10)
+ CPHNO                                                          NUMBER(10)
+ CADD                                                  NOT NULL VARCHAR2(20)
+ CEMAIL                                                         VARCHAR2(15)
+
+SQL> SELECT * FROM TAB;
+
+TNAME                          TABTYPE  CLUSTERID
+------------------------------ ------- ----------
+DEPT                           TABLE
+EMP                            TABLE
+BONUS                          TABLE
+SALGRADE                       TABLE
+STUDENT                        TABLE
+CUSTOMER                       TABLE
+
+6 rows selected.
+
+SQL> RENAME CUSTOMER TO CUST;
+
+Table renamed.
+
+SQL> DESC CUST;
+ Name                                                  Null?    Type
+ ----------------------------------------------------- -------- ------------------------------------
+ CID                                                   NOT NULL NUMBER(3)
+ CNAME                                                 NOT NULL VARCHAR2(10)
+ CPHNO                                                          NUMBER(10)
+ CADD                                                  NOT NULL VARCHAR2(20)
+ CEMAIL                                                         VARCHAR2(15)
+
+SQL> SELECT * FROM TAB;;
+SELECT * FROM TAB;
+                 *
+ERROR at line 1:
+ORA-00911: invalid character
+
+
+SQL> E
+SP2-0042: unknown command "E" - rest of line ignored.
+SQL> ED
+Wrote file afiedt.buf
+
+  1* SELECT * FROM TAB
+SQL> /
+
+TNAME                          TABTYPE  CLUSTERID
+------------------------------ ------- ----------
+DEPT                           TABLE
+EMP                            TABLE
+BONUS                          TABLE
+SALGRADE                       TABLE
+STUDENT                        TABLE
+CUST                           TABLE
+
+6 rows selected.
+
+SQL> ALTER TABLE STUD
+  2  ADD SBRANCH VARCHAR(15);
+ALTER TABLE STUD
+*
+ERROR at line 1:
+ORA-00942: table or view does not exist
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  ALTER TABLE STUDENT
+  2* ADD SBRANCH VARCHAR(15)
+SQL> /
+
+Table altered.
+
+SQL> DESC STUDENT
+ Name                                                  Null?    Type
+ ----------------------------------------------------- -------- ------------------------------------
+ SID                                                   NOT NULL NUMBER(3)
+ SNAME                                                 NOT NULL VARCHAR2(10)
+ SPHNO                                                          NUMBER(10)
+ SADD                                                           VARCHAR2(20)
+ SPER                                                           NUMBER(4,1)
+ SBRANCH                                                        VARCHAR2(15)
+
+SQL> ALTER TABLE STUDENT
+  2  DROP COLUMN SADD;
+
+Table altered.
+
+SQL> DESC STDUENT;
+ERROR:
+ORA-04043: object STDUENT does not exist
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  ALTER TABLE STUDENT
+  2* DROP COLUMN SADD
+SQL> DESC STUDENT;
+ Name                                                  Null?    Type
+ ----------------------------------------------------- -------- ------------------------------------
+ SID                                                   NOT NULL NUMBER(3)
+ SNAME                                                 NOT NULL VARCHAR2(10)
+ SPHNO                                                          NUMBER(10)
+ SPER                                                           NUMBER(4,1)
+ SBRANCH                                                        VARCHAR2(15)
+
+SQL> ALTER TABLE STUDENT
+  2  RENAME COLUMN SID TO STUD_ID;
+
+Table altered.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  ALTER TABLE STUDENT
+  2* RENAME COLUMN SID TO STUD_ID
+SQL> DESC STUDENT;
+ Name                                                  Null?    Type
+ ----------------------------------------------------- -------- ------------------------------------
+ STUD_ID                                               NOT NULL NUMBER(3)
+ SNAME                                                 NOT NULL VARCHAR2(10)
+ SPHNO                                                          NUMBER(10)
+ SPER                                                           NUMBER(4,1)
+ SBRANCH                                                        VARCHAR2(15)
+
+SQL> ALTER TABLE STUDENT
+  2  MODIFY SPER NUMBER(5,2) UNIQUE NOT NULL;
+
+Table altered.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  ALTER TABLE STUDENT
+  2* MODIFY SPER NUMBER(5,2) UNIQUE NOT NULL
+SQL> DESC STUDENT;
+ Name                                                  Null?    Type
+ ----------------------------------------------------- -------- ------------------------------------
+ STUD_ID                                               NOT NULL NUMBER(3)
+ SNAME                                                 NOT NULL VARCHAR2(10)
+ SPHNO                                                          NUMBER(10)
+ SPER                                                  NOT NULL NUMBER(5,2)
+ SBRANCH                                                        VARCHAR2(15)
+
+SQL> ALTER TABLE STUDENT 
+  2  MODIFY SNAME VARCHAR(10) NULL;
+
+Table altered.
+
+SQL> DESC STUDENT;
+ Name                                                  Null?    Type
+ ----------------------------------------------------- -------- ------------------------------------
+ STUD_ID                                               NOT NULL NUMBER(3)
+ SNAME                                                          VARCHAR2(10)
+ SPHNO                                                          NUMBER(10)
+ SPER                                                  NOT NULL NUMBER(5,2)
+ SBRANCH                                                        VARCHAR2(15)
+
+SQL> CREATE TABLE VIVEK
+  2  (
+  3  VID NUMBER(5) PRIMARY KEY,
+  4  VNAME VARCHAR2(10) NOT NULL,
+  5  VADD VARCHAR(15),
+  6  VMAIL VARCHAR (10) UNIQUE NOT NULL,
+  7  VPHNO NUMBER (10) CHECK (LENGTH(VPHNO)=10));
+
+Table created.
+
+SQL> DESC VIVEK;
+ Name                                                  Null?    Type
+ ----------------------------------------------------- -------- ------------------------------------
+ VID                                                   NOT NULL NUMBER(5)
+ VNAME                                                 NOT NULL VARCHAR2(10)
+ VADD                                                           VARCHAR2(15)
+ VMAIL                                                 NOT NULL VARCHAR2(10)
+ VPHNO                                                          NUMBER(10)
+
+SQL> RENAME VIVEK TO VIV1;
+
+Table renamed.
+
+SQL> DESC VIV1;
+ Name                                                  Null?    Type
+ ----------------------------------------------------- -------- ------------------------------------
+ VID                                                   NOT NULL NUMBER(5)
+ VNAME                                                 NOT NULL VARCHAR2(10)
+ VADD                                                           VARCHAR2(15)
+ VMAIL                                                 NOT NULL VARCHAR2(10)
+ VPHNO                                                          NUMBER(10)
+
+SQL> ALTER COLUMN VADD
+  2  /
+ALTER COLUMN VADD
+      *
+ERROR at line 1:
+ORA-00940: invalid ALTER command
+
+
+SQL> ALTER TABLE VIV1
+  2  ADD VDOB DATE NOT NULL;
+
+Table altered.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  ALTER TABLE VIV1
+  2* ADD VDOB DATE NOT NULL
+SQL> DESC VIV1;
+ Name                                                  Null?    Type
+ ----------------------------------------------------- -------- ------------------------------------
+ VID                                                   NOT NULL NUMBER(5)
+ VNAME                                                 NOT NULL VARCHAR2(10)
+ VADD                                                           VARCHAR2(15)
+ VMAIL                                                 NOT NULL VARCHAR2(10)
+ VPHNO                                                          NUMBER(10)
+ VDOB                                                  NOT NULL DATE
+
+SQL> ALTER TABLE VIV1
+  2  RENAME VMAIL TO VIMAIL;
+RENAME VMAIL TO VIMAIL
+       *
+ERROR at line 2:
+ORA-14155: missing PARTITION or SUBPARTITION keyword
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  ALTER TABLE VIV1
+  2* RENAME VMAIL TO VIMAIL
+SQL> ED
+Wrote file afiedt.buf
+
+  1  ALTER TABLE VIV1
+  2* RENAME VMAIL TO VMAL
+SQL> /
+RENAME VMAIL TO VMAL
+       *
+ERROR at line 2:
+ORA-14155: missing PARTITION or SUBPARTITION keyword
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  ALTER TABLE VIV1
+  2* RENAME VMAIL TO VMAL
+SQL> /
+RENAME VMAIL TO VMAL
+       *
+ERROR at line 2:
+ORA-14155: missing PARTITION or SUBPARTITION keyword
+
+
+SQL> ALTER TABLE VIV1
+  2  RENAME VPHNO TO VMOB;
+RENAME VPHNO TO VMOB
+       *
+ERROR at line 2:
+ORA-14155: missing PARTITION or SUBPARTITION keyword
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  ALTER TABLE VIV1
+  2* RENAME VPHNO TO VMOB
+SQL> ED
+Wrote file afiedt.buf
+
+  1  ALTER TABLE VIV1
+  2* RENAME COULMN VPHNO TO VMOB
+SQL> /
+RENAME COULMN VPHNO TO VMOB
+       *
+ERROR at line 2:
+ORA-14155: missing PARTITION or SUBPARTITION keyword
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  ALTER TABLE VIV1
+  2* RENAME COULMN VPHNO TO VMOB
+SQL> /
+RENAME COULMN VPHNO TO VMOB
+       *
+ERROR at line 2:
+ORA-14155: missing PARTITION or SUBPARTITION keyword
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  ALTER TABLE VIV1
+  2* RENAME COULMN VPHNO TO VMOB
+SQL> DESC VIV1;
+ Name                                                  Null?    Type
+ ----------------------------------------------------- -------- ------------------------------------
+ VID                                                   NOT NULL NUMBER(5)
+ VNAME                                                 NOT NULL VARCHAR2(10)
+ VADD                                                           VARCHAR2(15)
+ VMAIL                                                 NOT NULL VARCHAR2(10)
+ VPHNO                                                          NUMBER(10)
+ VDOB                                                  NOT NULL DATE
+
+SQL> ALTER TABLE VIV1
+  2  RENAME COLUMN VADD TO VADDRESS;
+
+Table altered.
+
+SQL> ALTER TABLE VIV1
+  2  RENAME VPHNO TO VMOB;
+RENAME VPHNO TO VMOB
+       *
+ERROR at line 2:
+ORA-14155: missing PARTITION or SUBPARTITION keyword
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  ALTER TABLE VIV1
+  2* RENAME COLUMN VPHNO TO VMOB
+SQL> /
+
+Table altered.
+
+SQL> ALTER TABLE VIVEK
+  2  DROP CLOUMN VMAIL;
+DROP CLOUMN VMAIL
+     *
+ERROR at line 2:
+ORA-00905: missing keyword
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  ALTER TABLE VIVEK
+  2* DROP COLUMN VMAIL
+SQL> /
+ALTER TABLE VIVEK
+*
+ERROR at line 1:
+ORA-00942: table or view does not exist
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  ALTER TABLE VIV1
+  2* DROP COLUMN VMAIL
+SQL> /
+
+Table altered.
+
+SQL> ALTER TABLE VIV1
+  2  ADD COLUMN VGEN VARCHAR2(10) NOT NULL;
+ADD COLUMN VGEN VARCHAR2(10) NOT NULL
+    *
+ERROR at line 2:
+ORA-00904: : invalid identifier
+
+
+SQL> WED
+SP2-0042: unknown command "WED" - rest of line ignored.
+SQL> ED
+Wrote file afiedt.buf
+
+  1  ALTER TABLE VIV1
+  2* ADD  VGEN VARCHAR2(10) NOT NULL
+SQL> /
+
+Table altered.
+
+SQL> DESC VIV1;
+ Name                                                  Null?    Type
+ ----------------------------------------------------- -------- ------------------------------------
+ VID                                                   NOT NULL NUMBER(5)
+ VNAME                                                 NOT NULL VARCHAR2(10)
+ VADDRESS                                                       VARCHAR2(15)
+ VMOB                                                           NUMBER(10)
+ VDOB                                                  NOT NULL DATE
+ VGEN                                                  NOT NULL VARCHAR2(10)
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  ALTER TABLE VIV1
+  2* MODIFY VID NUMBER(10) FOREIGN KEY
+SQL> /
+MODIFY VID NUMBER(10) FOREIGN KEY
+                      *
+ERROR at line 2:
+ORA-01735: invalid ALTER TABLE option
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  ALTER TABLE VIV1
+  2* MODIFY VID NUMBER(10) PRIMARY KEY
+SQL> /
+MODIFY VID NUMBER(10) PRIMARY KEY
+                      *
+ERROR at line 2:
+ORA-02260: table can have only one primary key
+
+
+SQL> SELECT * FROM VIV1;
+
+no rows selected
+
+SQL> TRUNCATE TABLE CUST;
+
+Table truncated.
+
+SQL> DESC CUST;
+ Name                                                  Null?    Type
+ ----------------------------------------------------- -------- ------------------------------------
+ CID                                                   NOT NULL NUMBER(3)
+ CNAME                                                 NOT NULL VARCHAR2(10)
+ CPHNO                                                          NUMBER(10)
+ CADD                                                  NOT NULL VARCHAR2(20)
+ CEMAIL                                                         VARCHAR2(15)
+
+SQL> SELECT * FROM SALGRADE;
+
+     GRADE      LOSAL      HISAL
+---------- ---------- ----------
+         1        700       1200
+         2       1201       1400
+         3       1401       2000
+         4       2001       3000
+         5       3001       9999
+
+SQL> TRUNCATE TABLE SALGRADE;
+
+Table truncated.
+
+SQL> SELECT * FROM SALGRADE;
+
+no rows selected
+
+SQL> DROP TBALE SALGRADE;
+DROP TBALE SALGRADE
+     *
+ERROR at line 1:
+ORA-00950: invalid DROP option
+
+
+SQL> DROP TABLE CUST;
+
+Table dropped.
+
+SQL> FLASHBACK TABLE CUST TO BEFORE DROP;
+
+Flashback complete.
+
+SQL> DESC CUST;
+ Name                                                  Null?    Type
+ ----------------------------------------------------- -------- ------------------------------------
+ CID                                                   NOT NULL NUMBER(3)
+ CNAME                                                 NOT NULL VARCHAR2(10)
+ CPHNO                                                          NUMBER(10)
+ CADD                                                  NOT NULL VARCHAR2(20)
+ CEMAIL                                                         VARCHAR2(15)
+
+SQL> PURGE TABLE CUST;
+PURGE TABLE CUST
+*
+ERROR at line 1:
+ORA-38307: object not in RECYCLE BIN
+
+
+SQL> DROP TABLE CUST;
+
+Table dropped.
+
+SQL> PURGE TABLE CUST;

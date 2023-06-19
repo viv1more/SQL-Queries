@@ -1,0 +1,1000 @@
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT ENAME,SAL FROM EMP
+  2  WHERE SAL > (SELECT MAX(SAL) FROM EMP
+  3*    WHERE JOB IN 'SALESMAN')
+SQL> /
+
+ENAME             SAL
+---------- ----------
+JONES            2975
+BLAKE            2850
+CLARK            2450
+SCOTT            3000
+KING             5000
+FORD             3000
+
+6 rows selected.
+
+SQL>  GTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
+TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
+TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTGGGTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
+TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
+TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
+TTTTTGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGTTTTTTTTTTTTTGGGGGGGGGGGGGG0000000000000000000000000000000
+0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+000000000000000000000000000000000000000
+SP2-0734: unknown command beginning "GTTTTTTTTT..." - rest of line ignored.
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT ENAME,SAL FROM EMP
+  2  WHERE SAL > ALL (SELECT SAL FROM EMP
+  3*    WHERE JOB IN  'SALESMAN')
+SQL> /
+
+ENAME             SAL
+---------- ----------
+JONES            2975
+BLAKE            2850
+CLARK            2450
+SCOTT            3000
+KING             5000
+FORD             3000
+
+6 rows selected.
+
+SQL> SELECT ENAME,LOC
+  2  FROM EMP,DEPT;
+
+ENAME      LOC
+---------- -------------
+SMITH      NEW YORK
+ALLEN      NEW YORK
+WARD       NEW YORK
+JONES      NEW YORK
+MARTIN     NEW YORK
+BLAKE      NEW YORK
+CLARK      NEW YORK
+SCOTT      NEW YORK
+KING       NEW YORK
+TURNER     NEW YORK
+ADAMS      NEW YORK
+JAMES      NEW YORK
+FORD       NEW YORK
+MILLER     NEW YORK
+SMITH      DALLAS
+ALLEN      DALLAS
+WARD       DALLAS
+JONES      DALLAS
+MARTIN     DALLAS
+BLAKE      DALLAS
+CLARK      DALLAS
+SCOTT      DALLAS
+KING       DALLAS
+TURNER     DALLAS
+ADAMS      DALLAS
+JAMES      DALLAS
+FORD       DALLAS
+MILLER     DALLAS
+SMITH      CHICAGO
+ALLEN      CHICAGO
+WARD       CHICAGO
+JONES      CHICAGO
+MARTIN     CHICAGO
+BLAKE      CHICAGO
+CLARK      CHICAGO
+SCOTT      CHICAGO
+KING       CHICAGO
+TURNER     CHICAGO
+ADAMS      CHICAGO
+JAMES      CHICAGO
+FORD       CHICAGO
+MILLER     CHICAGO
+SMITH      BOSTON
+ALLEN      BOSTON
+WARD       BOSTON
+JONES      BOSTON
+MARTIN     BOSTON
+BLAKE      BOSTON
+CLARK      BOSTON
+SCOTT      BOSTON
+KING       BOSTON
+TURNER     BOSTON
+ADAMS      BOSTON
+JAMES      BOSTON
+FORD       BOSTON
+MILLER     BOSTON
+
+56 rows selected.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT ENAME,LOC
+  2* FROM EMP CROSS JOIN DEPT
+SQL> /\
+
+ENAME      LOC
+---------- -------------
+SMITH      NEW YORK
+ALLEN      NEW YORK
+WARD       NEW YORK
+JONES      NEW YORK
+MARTIN     NEW YORK
+BLAKE      NEW YORK
+CLARK      NEW YORK
+SCOTT      NEW YORK
+KING       NEW YORK
+TURNER     NEW YORK
+ADAMS      NEW YORK
+JAMES      NEW YORK
+FORD       NEW YORK
+MILLER     NEW YORK
+SMITH      DALLAS
+ALLEN      DALLAS
+WARD       DALLAS
+JONES      DALLAS
+MARTIN     DALLAS
+BLAKE      DALLAS
+CLARK      DALLAS
+SCOTT      DALLAS
+KING       DALLAS
+TURNER     DALLAS
+ADAMS      DALLAS
+JAMES      DALLAS
+FORD       DALLAS
+MILLER     DALLAS
+SMITH      CHICAGO
+ALLEN      CHICAGO
+WARD       CHICAGO
+JONES      CHICAGO
+MARTIN     CHICAGO
+BLAKE      CHICAGO
+CLARK      CHICAGO
+SCOTT      CHICAGO
+KING       CHICAGO
+TURNER     CHICAGO
+ADAMS      CHICAGO
+JAMES      CHICAGO
+FORD       CHICAGO
+MILLER     CHICAGO
+SMITH      BOSTON
+ALLEN      BOSTON
+WARD       BOSTON
+JONES      BOSTON
+MARTIN     BOSTON
+BLAKE      BOSTON
+CLARK      BOSTON
+SCOTT      BOSTON
+KING       BOSTON
+TURNER     BOSTON
+ADAMS      BOSTON
+JAMES      BOSTON
+FORD       BOSTON
+MILLER     BOSTON
+
+56 rows selected.
+
+SQL> SELECT ENAME,DnAME.
+  2  
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT ENAME,DnAME
+  2* FROM EMP,DEPT WHERE EMP.DEPTNO=DEPT.DEPTNO
+SQL> /
+
+ENAME      DNAME
+---------- --------------
+SMITH      RESEARCH
+ALLEN      SALES
+WARD       SALES
+JONES      RESEARCH
+MARTIN     SALES
+BLAKE      SALES
+CLARK      ACCOUNTING
+SCOTT      RESEARCH
+KING       ACCOUNTING
+TURNER     SALES
+ADAMS      RESEARCH
+JAMES      SALES
+FORD       RESEARCH
+MILLER     ACCOUNTING
+
+14 rows selected.
+
+SQL> SELECT ENAME,DNAME
+  2  FROM EMP INNER JOIN DEPT ON EMP.DEPTNO=DEPT.DEPTNO;
+
+ENAME      DNAME
+---------- --------------
+SMITH      RESEARCH
+ALLEN      SALES
+WARD       SALES
+JONES      RESEARCH
+MARTIN     SALES
+BLAKE      SALES
+CLARK      ACCOUNTING
+SCOTT      RESEARCH
+KING       ACCOUNTING
+TURNER     SALES
+ADAMS      RESEARCH
+JAMES      SALES
+FORD       RESEARCH
+MILLER     ACCOUNTING
+
+14 rows selected.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT ENAME,DNAME,LOC,SAL
+  2* FROM EMP INNER JOIN DEPT ON EMP.DEPTNO=DEPT.DEPTNO
+SQL> /
+
+ENAME      DNAME          LOC                  SAL
+---------- -------------- ------------- ----------
+SMITH      RESEARCH       DALLAS               800
+ALLEN      SALES          CHICAGO             1600
+WARD       SALES          CHICAGO             1250
+JONES      RESEARCH       DALLAS              2975
+MARTIN     SALES          CHICAGO             1250
+BLAKE      SALES          CHICAGO             2850
+CLARK      ACCOUNTING     NEW YORK            2450
+SCOTT      RESEARCH       DALLAS              3000
+KING       ACCOUNTING     NEW YORK            5000
+TURNER     SALES          CHICAGO             1500
+ADAMS      RESEARCH       DALLAS              1100
+JAMES      SALES          CHICAGO              950
+FORD       RESEARCH       DALLAS              3000
+MILLER     ACCOUNTING     NEW YORK            1300
+
+14 rows selected.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT ENAME,DNAME,LOC,SAL
+  2  FROM EMP INNER JOIN DEPT ON EMP.DEPTNO=DEPT.DEPTNO
+  3* WHERE SAL>2000 AND DEPTNO=10
+SQL> /
+WHERE SAL>2000 AND DEPTNO=10
+                   *
+ERROR at line 3:
+ORA-00918: column ambiguously defined
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT ENAME,DNAME,LOC,SAL
+  2  FROM EMP , DEPT
+  3* WHEREEMP.DEPTNO=DEPT.DEPTNO AND SAL>2000 AND DEPTNO=10
+SQL> /
+WHEREEMP.DEPTNO=DEPT.DEPTNO AND SAL>2000 AND DEPTNO=10
+        *
+ERROR at line 3:
+ORA-00933: SQL command not properly ended
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT ENAME,DNAME,LOC,SAL
+  2  FROM EMP , DEPT
+  3* WHERE EMP.DEPTNO=DEPT.DEPTNO AND SAL>2000 AND DEPTNO=10
+SQL> /
+WHERE EMP.DEPTNO=DEPT.DEPTNO AND SAL>2000 AND DEPTNO=10
+                                              *
+ERROR at line 3:
+ORA-00918: column ambiguously defined
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT ENAME,DNAME,LOC,SAL
+  2  FROM EMP , DEPT
+  3* WHERE EMP.DEPTNO=DEPT.DEPTNO AND SAL>2000 AND DEPT.DEPTNO=10
+SQL> /
+
+ENAME      DNAME          LOC                  SAL
+---------- -------------- ------------- ----------
+CLARK      ACCOUNTING     NEW YORK            2450
+KING       ACCOUNTING     NEW YORK            5000
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT ENAME,DNAME,LOC,SAL,DEPTNO
+  2  FROM EMP , DEPT
+  3* WHERE EMP.DEPTNO=DEPT.DEPTNO AND SAL>2000 AND DEPT.DEPTNO=10
+SQL> /
+SELECT ENAME,DNAME,LOC,SAL,DEPTNO
+                           *
+ERROR at line 1:
+ORA-00918: column ambiguously defined
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT ENAME,DNAME,LOC,SAL
+  2  FROM EMP , DEPT
+  3* WHERE EMP.DEPTNO=DEPT.DEPTNO AND SAL>2000 AND DEPT.DEPTNO=10
+SQL> /
+
+ENAME      DNAME          LOC                  SAL
+---------- -------------- ------------- ----------
+CLARK      ACCOUNTING     NEW YORK            2450
+KING       ACCOUNTING     NEW YORK            5000
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT ENAME,DNAME,LOC,SAL
+  2  FROM EMP , DEPT
+  3* WHERE EMP.DEPTNO=DEPT.DEPTNO AND EMP.SAL>2000 AND DEPT.DEPTNO=10
+SQL> /
+
+ENAME      DNAME          LOC                  SAL
+---------- -------------- ------------- ----------
+CLARK      ACCOUNTING     NEW YORK            2450
+KING       ACCOUNTING     NEW YORK            5000
+
+SQL> SELECT DEPTNO,ENAME FROM EMP;
+
+    DEPTNO ENAME
+---------- ----------
+        20 SMITH
+        30 ALLEN
+        30 WARD
+        20 JONES
+        30 MARTIN
+        30 BLAKE
+        10 CLARK
+        20 SCOTT
+        10 KING
+        30 TURNER
+        20 ADAMS
+        30 JAMES
+        20 FORD
+        10 MILLER
+
+14 rows selected.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT DEPTNO,ENAME FROM EMP
+  2* WHERE SAL>2000
+SQL> /
+
+    DEPTNO ENAME
+---------- ----------
+        20 JONES
+        30 BLAKE
+        10 CLARK
+        20 SCOTT
+        10 KING
+        20 FORD
+
+6 rows selected.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT DEPTNO,ENAME FROM EMP
+  2* WHERE SAL>2000 AND DEPTNO=10
+SQL> /
+
+    DEPTNO ENAME
+---------- ----------
+        10 CLARK
+        10 KING
+
+SQL> SELECT ENAME,DNAME,LOC,SAL
+  2  FROM EMP , DEPT
+  3  WHERE EMP.DEPTNO=DEPT.DEPTNO AND EMP.SAL>2000 AND DEPT.DEPTNO=10
+  4  /
+
+ENAME      DNAME          LOC                  SAL
+---------- -------------- ------------- ----------
+CLARK      ACCOUNTING     NEW YORK            2450
+KING       ACCOUNTING     NEW YORK            5000
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT ENAME,DNAME,LOC,SAL,EMP.DEPTNO
+  2  FROM EMP , DEPT
+  3* WHERE EMP.DEPTNO=DEPT.DEPTNO AND EMP.SAL>2000 AND DEPT.DEPTNO=10
+SQL> /
+
+ENAME      DNAME          LOC                  SAL     DEPTNO
+---------- -------------- ------------- ---------- ----------
+CLARK      ACCOUNTING     NEW YORK            2450         10
+KING       ACCOUNTING     NEW YORK            5000         10
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT ENAME,DNAME,JOB,SAL,EMP.DEPTNO
+  2  FROM EMP , DEPT
+  3* WHERE EMP.DEPTNO=DEPT.DEPTNO AND EMP.SAL>2000 AND DEPT.DEPTNO=10
+SQL> /
+
+ENAME      DNAME          JOB              SAL     DEPTNO
+---------- -------------- --------- ---------- ----------
+CLARK      ACCOUNTING     MANAGER         2450         10
+KING       ACCOUNTING     PRESIDENT       5000         10
+
+SQL> 32UJ777700111.1010101.2.2.22222.2...
+SP2-0734: unknown command beginning "32UJ777700..." - rest of line ignored.
+SQL> 
+SQL> 
+SQL> 
+SQL> 
+SQL> 
+SQL> 
+SQL> 
+SQL> 
+SQL> 
+SQL> 
+SQL> 
+SQL> 
+SQL> 
+SQL> 
+SQL> 
+SQL> 
+SQL> 
+SQL> 
+SQL> 
+SQL> 
+SQL> 
+SQL> 
+SQL> 
+SQL> 3
+  3* WHERE EMP.DEPTNO=DEPT.DEPTNO AND EMP.SAL>2000 AND DEPT.DEPTNO=10
+SQL> 
+SQL> 33.000..00..2.2.2KKKKKKKKKKKKKKIIIIIIIIIIIIIIIIIIKIKIIIIIIIII
+SP2-0734: unknown command beginning "33.000..00..." - rest of line ignored.
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT ENAME,DNAME,JOB,LOC,SAL,EMP.DEPTNO
+  2  FROM EMP , DEPT
+  3* WHERE EMP.DEPTNO=DEPT.DEPTNO AND EMP.JOB IN 'ANALYST' AND EMP.DEPTNO=30
+SQL> /
+
+no rows selected
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT ENAME,DNAME,JOB,LOC,SAL,EMP.DEPTNO
+  2  FROM EMP , DEPT
+  3* WHERE EMP.DEPTNO=DEPT.DEPTNO AND EMP.JOB IN 'ANALYST' AND EMP.DEPTNO=20
+SQL> 
+SQL> 
+SQL> 
+SQL> 
+SQL> 
+SQL> 
+SQL> 
+SQL> 
+SQL> 
+SQL> /
+
+ENAME      DNAME          JOB       LOC                  SAL     DEPTNO
+---------- -------------- --------- ------------- ---------- ----------
+SCOTT      RESEARCH       ANALYST   DALLAS              3000         20
+FORD       RESEARCH       ANALYST   DALLAS              3000         20
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT ENAME,DNAME,JOB,LOC,SAL,EMP.DEPTNO,DEPT.DEPTNO
+  2  FROM EMP , DEPT
+  3* WHERE EMP.DEPTNO=DEPT.DEPTNO AND EMP.JOB IN 'ANALYST' AND EMP.DEPTNO=20
+SQL> /
+
+ENAME      DNAME          JOB       LOC                  SAL     DEPTNO     DEPTNO
+---------- -------------- --------- ------------- ---------- ---------- ----------
+SCOTT      RESEARCH       ANALYST   DALLAS              3000         20         20
+FORD       RESEARCH       ANALYST   DALLAS              3000         20         20
+
+SQL> SELECT ENAME,SAL,DNAME 
+  2  FROM EMP,DEPT
+  3  WHERE EMP.DEPTNO=DEPT.DEPTNO 
+  4  AND EMP.DEPTNO=20 AND SAL>1800;
+
+ENAME             SAL DNAME
+---------- ---------- --------------
+JONES            2975 RESEARCH
+SCOTT            3000 RESEARCH
+FORD             3000 RESEARCH
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT ENAME,SAL,DNAME,EMP.DEPTNO
+  2  FROM EMP,DEPT
+  3  WHERE EMP.DEPTNO=DEPT.DEPTNO
+  4* AND EMP.DEPTNO=20 AND SAL>1800
+SQL> /
+
+ENAME             SAL DNAME              DEPTNO
+---------- ---------- -------------- ----------
+JONES            2975 RESEARCH               20
+SCOTT            3000 RESEARCH               20
+FORD             3000 RESEARCH               20
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT ENAME,SAL,DNAME,EMP.DEPTNO
+  2  FROM EMP,DEPT
+  3  WHERE EMP.DEPTNO=DEPT.DEPTNO
+  4* AND EMP.DEPTNO=20 AND SAL>1800
+SQL> SELECT ENAME,EMP.DEPTNO,DNAME,LOC
+  2  FROM EMP,DEPT
+  3  WHERE EMP.DEPTNO=DEPT.DEPTNO AND SAL>2000 AND LOC='NEW YORK';
+
+ENAME          DEPTNO DNAME          LOC
+---------- ---------- -------------- -------------
+CLARK              10 ACCOUNTING     NEW YORK
+KING               10 ACCOUNTING     NEW YORK
+
+SQL> SELECT ENAME, LOC FROM WHERE EMP.DEPTNO=DEPT.DEPTNO
+  2  ;
+SELECT ENAME, LOC FROM WHERE EMP.DEPTNO=DEPT.DEPTNO
+                       *
+ERROR at line 1:
+ORA-00903: invalid table name
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT ENAME, LOC FROM EMP,DEPT
+  2* WHERE EMP.DEPTNO=DEPT.DEPTNO
+  3  /
+
+ENAME      LOC
+---------- -------------
+SMITH      DALLAS
+ALLEN      CHICAGO
+WARD       CHICAGO
+JONES      DALLAS
+MARTIN     CHICAGO
+BLAKE      CHICAGO
+CLARK      NEW YORK
+SCOTT      DALLAS
+KING       NEW YORK
+TURNER     CHICAGO
+ADAMS      DALLAS
+JAMES      CHICAGO
+FORD       DALLAS
+MILLER     NEW YORK
+
+14 rows selected.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT DNAME,SAL
+  2  FROM EMP,DEPT
+  3* WHERE EMP.DEPTNO=DEPT.DEPTNO AND DNAME='ACCOUNTING'
+SQL> /
+
+DNAME                 SAL
+-------------- ----------
+ACCOUNTING           2450
+ACCOUNTING           5000
+ACCOUNTING           1300
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT DNAME,SAL *12 ANNUALSAL
+  2  FROM EMP,DEPT
+  3* WHERE EMP.DEPTNO=DEPT.DEPTNO AND SAL>2340
+SQL> /
+
+DNAME           ANNUALSAL
+-------------- ----------
+RESEARCH            35700
+SALES               34200
+ACCOUNTING          29400
+RESEARCH            36000
+ACCOUNTING          60000
+RESEARCH            36000
+
+6 rows selected.
+
+SQL> \ED
+SP2-0042: unknown command "\ED" - rest of line ignored.
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT DNAME,SAL *12 ANNUALSAL,SAL
+  2  FROM EMP,DEPT
+  3* WHERE EMP.DEPTNO=DEPT.DEPTNO AND SAL>2340
+SQL> /
+
+DNAME           ANNUALSAL        SAL
+-------------- ---------- ----------
+RESEARCH            35700       2975
+SALES               34200       2850
+ACCOUNTING          29400       2450
+RESEARCH            36000       3000
+ACCOUNTING          60000       5000
+RESEARCH            36000       3000
+
+6 rows selected.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT ENAME,DNAME
+  2  FROM EMP,DEPT
+  3* WHERE EMP.DEPTNO=DEPT.DEPTNO AND ENAME LIKE '%A%'
+SQL> /
+
+ENAME      DNAME
+---------- --------------
+ALLEN      SALES
+WARD       SALES
+MARTIN     SALES
+BLAKE      SALES
+CLARK      ACCOUNTING
+ADAMS      RESEARCH
+JAMES      SALES
+
+7 rows selected.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT ENAME,DNAME
+  2  FROM EMP,DEPT
+  3* WHERE EMP.DEPTNO=DEPT.DEPTNO AND ENAME JOB='SALESMAN'
+SQL> /
+WHERE EMP.DEPTNO=DEPT.DEPTNO AND ENAME JOB='SALESMAN'
+                                       *
+ERROR at line 3:
+ORA-00920: invalid relational operator
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT ENAME,DNAME
+  2  FROM EMP,DEPT
+  3* WHERE EMP.DEPTNO=DEPT.DEPTNO AND ENAME JOB IN 'SALESMAN'
+SQL> /
+WHERE EMP.DEPTNO=DEPT.DEPTNO AND ENAME JOB IN 'SALESMAN'
+                                       *
+ERROR at line 3:
+ORA-00920: invalid relational operator
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT ENAME,DNAME
+  2  FROM EMP,DEPT
+  3* WHERE EMP.DEPTNO=DEPT.DEPTNO AND JOB IN 'SALESMAN'
+SQL> /
+
+ENAME      DNAME
+---------- --------------
+ALLEN      SALES
+WARD       SALES
+MARTIN     SALES
+TURNER     SALES
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT ENAME,DNAME,JOB
+  2  FROM EMP,DEPT
+  3* WHERE EMP.DEPTNO=DEPT.DEPTNO AND JOB IN 'SALESMAN'
+SQL> /
+
+ENAME      DNAME          JOB
+---------- -------------- ---------
+ALLEN      SALES          SALESMAN
+WARD       SALES          SALESMAN
+MARTIN     SALES          SALESMAN
+TURNER     SALES          SALESMAN
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT DNAME,JOB
+  2  FROM EMP,DEPT
+  3* WHERE EMP.DEPTNO=DEPT.DEPTNO AND DNAME LIKE 'S%'
+SQL> /
+
+DNAME          JOB
+-------------- ---------
+SALES          SALESMAN
+SALES          SALESMAN
+SALES          SALESMAN
+SALES          MANAGER
+SALES          SALESMAN
+SALES          CLERK
+
+6 rows selected.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT DNAME,MGR
+  2  FROM EMP,DEPT
+  3* WHERE EMP.DEPTNO=DEPT.DEPTNO AND MGR=7839
+SQL> /
+
+DNAME                 MGR
+-------------- ----------
+RESEARCH             7839
+SALES                7839
+ACCOUNTING           7839
+
+SQL> EED
+SP2-0042: unknown command "EED" - rest of line ignored.
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT DNAME,MGR,ENAME,MGR
+  2  FROM EMP,DEPT
+  3* WHERE EMP.DEPTNO=DEPT.DEPTNO AND MGR=7839
+SQL> /
+
+DNAME                 MGR ENAME             MGR
+-------------- ---------- ---------- ----------
+RESEARCH             7839 JONES            7839
+SALES                7839 BLAKE            7839
+ACCOUNTING           7839 CLARK            7839
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT DNAME,MGR,ENAME,MGR
+  2  FROM EMP,DEPT
+  3* WHERE EMP.DEPTNO=DEPT.DEPTNO AND EMP.MGR=7839
+SQL> /
+
+DNAME                 MGR ENAME             MGR
+-------------- ---------- ---------- ----------
+RESEARCH             7839 JONES            7839
+SALES                7839 BLAKE            7839
+ACCOUNTING           7839 CLARK            7839
+
+SQL> SEELECT MGR ,ENAME ,EMPNO FROM EMP;
+SP2-0734: unknown command beginning "SEELECT MG..." - rest of line ignored.
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT DNAME,MGR,ENAME,MGR
+  2  FROM EMP,DEPT
+  3* WHERE EMP.DEPTNO=DEPT.DEPTNO AND EMP.MGR=7839
+SQL> /
+
+DNAME                 MGR ENAME             MGR
+-------------- ---------- ---------- ----------
+RESEARCH             7839 JONES            7839
+SALES                7839 BLAKE            7839
+ACCOUNTING           7839 CLARK            7839
+
+SQL> SEELECT MGR ,ENAME ,EMPNO FROM EMP;
+SP2-0734: unknown command beginning "SEELECT MG..." - rest of line ignored.
+SQL> SEELECT MGR ,ENAME ,EMPNO FROM EMP
+SP2-0734: unknown command beginning "SEELECT MG..." - rest of line ignored.
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT DNAME,MGR,ENAME,MGR
+  2  FROM EMP,DEPT
+  3* WHERE EMP.DEPTNO=DEPT.DEPTNO AND EMP.MGR=7839
+SQL> SELECT * FROM EMP;
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------
+      7369 SMITH      CLERK           7902 17-DEC-80        800                    20
+      7499 ALLEN      SALESMAN        7698 20-FEB-81       1600        300         30
+      7521 WARD       SALESMAN        7698 22-FEB-81       1250        500         30
+      7566 JONES      MANAGER         7839 02-APR-81       2975                    20
+      7654 MARTIN     SALESMAN        7698 28-SEP-81       1250       1400         30
+      7698 BLAKE      MANAGER         7839 01-MAY-81       2850                    30
+      7782 CLARK      MANAGER         7839 09-JUN-81       2450                    10
+      7788 SCOTT      ANALYST         7566 19-APR-87       3000                    20
+      7839 KING       PRESIDENT            17-NOV-81       5000                    10
+      7844 TURNER     SALESMAN        7698 08-SEP-81       1500          0         30
+      7876 ADAMS      CLERK           7788 23-MAY-87       1100                    20
+      7900 JAMES      CLERK           7698 03-DEC-81        950                    30
+      7902 FORD       ANALYST         7566 03-DEC-81       3000                    20
+      7934 MILLER     CLERK           7782 23-JAN-82       1300                    10
+
+14 rows selected.
+
+SQL> SELECT * FROM EMP
+  2  WHERE MGR=7839;
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------
+      7566 JONES      MANAGER         7839 02-APR-81       2975                    20
+      7698 BLAKE      MANAGER         7839 01-MAY-81       2850                    30
+      7782 CLARK      MANAGER         7839 09-JUN-81       2450                    10
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT * FROM EMP
+  2* WHERE MGR=7839
+SQL> SELECT DNAME,MGR,ENAME,MGR
+  2  FROM EMP,DEPT
+  3  WHERE EMP.DEPTNO=DEPT.DEPTNO AND EMP.MGR=7839/
+  4  /
+WHERE EMP.DEPTNO=DEPT.DEPTNO AND EMP.MGR=7839/
+                                             *
+ERROR at line 3:
+ORA-00936: missing expression
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT DNAME,MGR,ENAME,MGR
+  2  FROM EMP,DEPT
+  3* WHERE EMP.DEPTNO=DEPT.DEPTNO AND MGR=7839
+SQL> /
+
+DNAME                 MGR ENAME             MGR
+-------------- ---------- ---------- ----------
+RESEARCH             7839 JONES            7839
+SALES                7839 BLAKE            7839
+ACCOUNTING           7839 CLARK            7839
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT DNAME,HIREDATE
+  2  FROM EMP,DEPT
+  3* WHERE EMP.DEPTNO=DEPT.DEPTNO AND HIREDATE>'31DEC83' AND DNAME='RESEARCH'
+SQL> /
+
+DNAME          HIREDATE
+-------------- ---------
+RESEARCH       19-APR-87
+RESEARCH       23-MAY-87
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT ENAME,DNAME
+  2  FROM EMP,DEPT
+  3* WHERE EMP.DEPTNO=DEPT.DEPTNO AND COMM IS NOT NULL AND DEPTNO IN(10,30)
+SQL> /
+WHERE EMP.DEPTNO=DEPT.DEPTNO AND COMM IS NOT NULL AND DEPTNO IN(10,30)
+                                                      *
+ERROR at line 3:
+ORA-00918: column ambiguously defined
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT ENAME,DNAME
+  2  FROM EMP,DEPT
+  3* WHERE EMP.DEPTNO=DEPT.DEPTNO AND COMM IS NOT NULL AND EMP.DEPTNO IN(10,30)
+SQL> /
+
+ENAME      DNAME
+---------- --------------
+ALLEN      SALES
+WARD       SALES
+MARTIN     SALES
+TURNER     SALES
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT ENAME,DNAME,EMP.DEPTNO
+  2  FROM EMP,DEPT
+  3* WHERE EMP.DEPTNO=DEPT.DEPTNO AND COMM IS NOT NULL AND EMP.DEPTNO IN(10,30)
+SQL> /
+
+ENAME      DNAME              DEPTNO
+---------- -------------- ----------
+ALLEN      SALES                  30
+WARD       SALES                  30
+MARTIN     SALES                  30
+TURNER     SALES                  30
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT ENAME,DNAME,EMP.DEPTNO
+  2  FROM EMP,DEPT
+  3  WHERE EMP.DEPTNO=DEPT.DEPTNO AND COMM IS NOT NULL AND (EMP.DEPTNO =10 OR
+  4* EMP.DEPTNO=30)
+SQL> /
+
+ENAME      DNAME              DEPTNO
+---------- -------------- ----------
+ALLEN      SALES                  30
+WARD       SALES                  30
+MARTIN     SALES                  30
+TURNER     SALES                  30
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT ENAME,DNAME,EMP.DEPTNO,COMM
+  2  FROM EMP,DEPT
+  3  WHERE EMP.DEPTNO=DEPT.DEPTNO AND COMM IS NOT NULL AND (EMP.DEPTNO =10 OR
+  4* EMP.DEPTNO=30)
+SQL> /
+
+ENAME      DNAME              DEPTNO       COMM
+---------- -------------- ---------- ----------
+ALLEN      SALES                  30        300
+WARD       SALES                  30        500
+MARTIN     SALES                  30       1400
+TURNER     SALES                  30          0
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT ENAME,DNAME,EMP.DEPTNO,COMM
+  2  FROM EMP,DEPT
+  3* WHERE EMP.DEPTNO=DEPT.DEPTNO AND COMM IS NOT NULL AND EMP.DEPTNO =10
+SQL> /
+
+no rows selected
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT ENAME,DNAME,EMP.DEPTNO,COMM
+  2  FROM EMP,DEPT
+  3* WHERE EMP.DEPTNO=DEPT.DEPTNO AND COMM IS NOT NULL AND EMP.DEPTNO IN (10,30)
+SQL> /
+
+ENAME      DNAME              DEPTNO       COMM
+---------- -------------- ---------- ----------
+ALLEN      SALES                  30        300
+WARD       SALES                  30        500
+MARTIN     SALES                  30       1400
+TURNER     SALES                  30          0
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT DNAME,EMPNO
+  2  FROM EMP,DEPT
+  3* WHERE EMP.DEPTNO=DEPT.DEPTNO AND EMPNO IN (7839,7902) AND LOC=' NEW YORK'
+SQL> /
+
+no rows selected
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT DNAME,EMPNO
+  2  FROM EMP,DEPT
+  3* WHERE EMP.DEPTNO=DEPT.DEPTNO AND EMPNO IN (7839,7902) AND LOC='NEW YORK'
+SQL> /
+
+DNAME               EMPNO
+-------------- ----------
+ACCOUNTING           7839
+
+SQL> 

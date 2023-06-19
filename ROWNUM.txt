@@ -1,0 +1,42 @@
+SQL*Plus: Release 10.2.0.1.0 - Production on Tue Mar 28 08:41:52 2023
+
+Copyright (c) 1982, 2005, Oracle.  All rights reserved.
+
+
+Connected to:
+Oracle Database 10g Enterprise Edition Release 10.2.0.1.0 - Production
+With the Partitioning, OLAP and Data Mining options
+
+SQL> set lines 100 pages
+SQL> set lines 100 pages 100
+SQL> SELECT SAL
+  2  FROM (SELECT ROWNUM SLNO,SAL
+  3        FROM (SELECT DISTINCT SAL
+  4              FROM EMP
+  5              ORDER BY SAL DESC))
+  6  WHERE SLNO=10;
+
+       SAL
+----------
+      1100
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT SAL
+  2  FROM (SELECT ROWNUM SLNO,SAL
+  3        FROM (SELECT DISTINCT SAL
+  4              FROM EMP
+  5              ORDER BY SAL DESC))
+  6* WHERE SLNO IN (1,3,4,9,2)
+SQL> /
+
+       SAL
+----------
+      5000
+      3000
+      2975
+      2850
+      1250
+
+SQL> 

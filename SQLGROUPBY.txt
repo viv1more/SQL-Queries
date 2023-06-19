@@ -1,0 +1,282 @@
+
+SQL*Plus: Release 10.2.0.1.0 - Production on Sun Feb 26 20:44:25 2023
+
+Copyright (c) 1982, 2005, Oracle.  All rights reserved.
+
+
+Connected to:
+Oracle Database 10g Enterprise Edition Release 10.2.0.1.0 - Production
+With the Partitioning, OLAP and Data Mining options
+
+SQL> set lines 100 pages 100
+SQL> SELECT COUNT 
+  2  
+SQL> SELECT COUNT(*),DEPTNO
+  2  FROM EMP
+  3  WHERE JOB IN 'PRESIDENT'
+  4  GROUP BY DEPTNO;
+
+  COUNT(*)     DEPTNO
+---------- ----------
+         1         10
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT COUNT(*),JOB,DEPTNO
+  2  FROM EMP
+  3  WHERE JOB IN 'PRESIDENT'
+  4* GROUP BY DEPTNO
+SQL> /
+SELECT COUNT(*),JOB,DEPTNO
+                *
+ERROR at line 1:
+ORA-00979: not a GROUP BY expression
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT COUNT(*),DEPTNO
+  2  FROM EMP
+  3  WHERE JOB NOT IN 'PRESIDENT'
+  4* GROUP BY DEPTNO
+SQL> /
+
+  COUNT(*)     DEPTNO
+---------- ----------
+         6         30
+         5         20
+         2         10
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT SUM(SAL),JOB
+  2  FROM EMP
+  3* GROUP BY JOB
+SQL> /
+
+  SUM(SAL) JOB
+---------- ---------
+      4150 CLERK
+      5600 SALESMAN
+      5000 PRESIDENT
+      8275 MANAGER
+      6000 ANALYST
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT COUNT(*), DEPTNO
+  2  FROM EMP
+  3  WHERE JOB IN 'MANAGER'
+  4* GROUP BY DEPTNO
+SQL> /
+
+  COUNT(*)     DEPTNO
+---------- ----------
+         1         30
+         1         20
+         1         10
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT AVG(SAL), DEPTNO
+  2  FROM EMP
+  3  WHERE DEPTNO!=20
+  4* GROUP BY DEPTNO
+SQL> /
+
+  AVG(SAL)     DEPTNO
+---------- ----------
+1566.66667         30
+2916.66667         10
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT AVG(SAL), JOB
+  2  FROM EMP
+  3  WHERE ENAME LIKE '%A%'
+  4* GROUP BY JOB
+SQL> /
+
+  AVG(SAL) JOB
+---------- ---------
+1366.66667 SALESMAN
+      1025 CLERK
+      2650 MANAGER
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT COUNT(*), JOB
+  2  FROM EMP
+  3  WHERE ENAME LIKE '%A%'
+  4* GROUP BY JOB
+SQL> /
+
+  COUNT(*) JOB
+---------- ---------
+         3 SALESMAN
+         2 CLERK
+         2 MANAGER
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT COUNT(*),AVG(SAL), DEPTNO
+  2  FROM SAL>2000
+  3* GROUP BY DEPTNO
+SQL> /
+FROM SAL>2000
+        *
+ERROR at line 2:
+ORA-00933: SQL command not properly ended
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT COUNT(*),AVG(SAL), DEPTNO
+  2  FROM EMP
+  3  WHERE SAL>2000
+  4* GROUP BY DEPTNO
+SQL> /
+
+  COUNT(*)   AVG(SAL)     DEPTNO
+---------- ---------- ----------
+         1       2850         30
+         3 2991.66667         20
+         2       3725         10
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT SUM(SAL),COUNT(*) DEPTNO
+  2  FROM EMP
+  3  WHERE JOB IN 'SALESMAN'
+  4* GROUP BY DEPTNO
+SQL> /'
+
+  SUM(SAL)     DEPTNO
+---------- ----------
+      5600          4
+
+SQL> SELECT * FROM EMP
+  2  WHERE JOB IN 'SALESMAN';
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------
+      7499 ALLEN      SALESMAN        7698 20-FEB-81       1600        300         30
+      7521 WARD       SALESMAN        7698 22-FEB-81       1250        500         30
+      7654 MARTIN     SALESMAN        7698 28-SEP-81       1250       1400         30
+      7844 TURNER     SALESMAN        7698 08-SEP-81       1500          0         30
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT * FROM EMP
+  2* WHERE JOB IN 'SALESMAN'
+SQL> SELECT SUM(SAL),COUNT(*) DEPTNO
+  2  FROM EMP
+  3  WHERE JOB IN 'SALESMAN'
+  4  GROUP BY DEPTNO;
+
+  SUM(SAL)     DEPTNO
+---------- ----------
+      5600          4
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT COUNT(*) ,MAX(SAL) , JOB
+  2* FROM EMP GROUP BY DEPTNO
+SQL> /
+SELECT COUNT(*) ,MAX(SAL) , JOB
+                            *
+ERROR at line 1:
+ORA-00979: not a GROUP BY expression
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT COUNT(*) ,MAX(SAL) , JOB
+  2* FROM EMP GROUP BY JOB
+SQL> /
+
+  COUNT(*)   MAX(SAL) JOB
+---------- ---------- ---------
+         4       1300 CLERK
+         4       1600 SALESMAN
+         1       5000 PRESIDENT
+         3       2975 MANAGER
+         2       3000 ANALYST
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT MAX(SAL) , DEPTNO
+  2  FROM EMP
+  3* GROUP BY DEPTNO
+SQL> /
+
+  MAX(SAL)     DEPTNO
+---------- ----------
+      2850         30
+      3000         20
+      5000         10
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT COUNT(SAL)
+  2* FROM EMP
+  3  /
+
+COUNT(SAL)
+----------
+        14
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT COUNT(*),SSAL
+  2  FROM EMP
+  3* GROUP BY SAL
+SQL> /
+SELECT COUNT(*),SSAL
+                *
+ERROR at line 1:
+ORA-00904: "SSAL": invalid identifier
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT COUNT(*),SAL
+  2  FROM EMP
+  3* GROUP BY SAL
+SQL> /
+
+  COUNT(*)        SAL
+---------- ----------
+         1       2450
+         1       5000
+         1       1300
+         2       1250
+         1       2850
+         1       2975
+         1       1100
+         2       3000
+         1        800
+         1       1600
+         1       1500
+         1        950
+
+12 rows selected.
+
+SQL> 

@@ -1,0 +1,696 @@
+
+SQL*Plus: Release 10.2.0.1.0 - Production on Sat Mar 25 08:42:27 2023
+
+Copyright (c) 1982, 2005, Oracle.  All rights reserved.
+
+ERROR:
+ORA-01017: invalid username/password; logon denied
+
+
+
+Connected to:
+Oracle Database 10g Enterprise Edition Release 10.2.0.1.0 - Production
+With the Partitioning, OLAP and Data Mining options
+
+SQL> SHOW USER ;
+USER is "SCOTT"
+SQL> GRANT SELECT ON CITY TO HR;
+
+Grant succeeded.
+
+SQL> CONNECT
+Enter user-name: HR
+Enter password: ******
+ERROR:
+ORA-01017: invalid username/password; logon denied
+
+
+Warning: You are no longer connected to ORACLE.
+SQL> CONNECT
+Enter user-name: HR
+Enter password: *****
+Connected.
+SQL> SELECT * FROM SCOTT.CITY;
+
+CITY_NAME        C_PINCODE C_PPOPULATION
+--------------- ---------- -------------
+PUNE                411048      12000000
+MUMBAI              400010     123000000
+CHALISGAON          424101        100000
+JALGAON             424112       3200000
+
+SQL> .........................
+SP2-0734: unknown command beginning "............." - rest of line ignored.
+SQL> GRANT UPDATE ON CITY TO HR;
+GRANT UPDATE ON CITY TO HR
+                *
+ERROR at line 1:
+ORA-00942: table or view does not exist
+
+
+SQL> EEED
+SP2-0042: unknown command "EEED" - rest of line ignored.
+SQL> CONNECT
+Enter user-name: SCOTT
+Enter password: *****
+Connected.
+SQL> GRANT UPDATE ON CITY TO HR;
+
+Grant succeeded.
+
+SQL> CONNECT
+Enter user-name: HR
+Enter password: *****
+Connected.
+SQL> UPDATE SCOTT.CITY
+  2  SET CITY_NAME='NASHIK'
+  3  WHERE CITY_NAME='MUMBAI';
+
+1 row updated.
+
+SQL> SELECT * FROM SCOTT.CITY
+  2  ;
+
+CITY_NAME        C_PINCODE C_PPOPULATION
+--------------- ---------- -------------
+PUNE                411048      12000000
+NASHIK              400010     123000000
+CHALISGAON          424101        100000
+JALGAON             424112       3200000
+
+SQL> 
+SQL> REVOKE UPDATE ON CITY FROM HR;
+REVOKE UPDATE ON CITY FROM HR
+                 *
+ERROR at line 1:
+ORA-00942: table or view does not exist
+
+
+SQL> CONNECT
+Enter user-name: SCOTT
+Enter password: *****
+Connected.
+SQL> REVOKE UPDATE ON CITY FROM HR;
+
+Revoke succeeded.
+
+SQL> CONNECT
+Enter user-name: HR
+Enter password: *****
+Connected.
+SQL> DESC SCOTT.CITY;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ CITY_NAME                                 NOT NULL VARCHAR2(15)
+ C_PINCODE                                 NOT NULL NUMBER(6)
+ C_PPOPULATION                             NOT NULL NUMBER(10)
+
+SQL> UPDATE SCOTT.CITY
+  2  SET CITY_NAME='NASHIK'
+  3  WHERE CITY_NAME='MUMBAI';
+UPDATE SCOTT.CITY
+             *
+ERROR at line 1:
+ORA-01031: insufficient privileges
+
+
+SQL> EAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAA
+SP2-0734: unknown command beginning "EAAAAAAAAA..." - rest of line ignored.
+SQL> SELECT * FROM USERS;
+SELECT * FROM USERS
+              *
+ERROR at line 1:
+ORA-00942: table or view does not exist
+
+
+SQL> SELECT * FROM USER
+  2  ;
+SELECT * FROM USER
+              *
+ERROR at line 1:
+ORA-00903: invalid table name
+
+
+SQL> SELECT * FROM ALL_USERS;
+
+USERNAME                          USER_ID CREATED
+------------------------------ ---------- ---------
+BI                                     60 15-FEB-23
+PM                                     59 15-FEB-23
+SH                                     58 15-FEB-23
+IX                                     57 15-FEB-23
+OE                                     56 15-FEB-23
+HR                                     55 15-FEB-23
+SCOTT                                  54 30-AUG-05
+MGMT_VIEW                              53 30-AUG-05
+MDDATA                                 50 30-AUG-05
+SYSMAN                                 51 30-AUG-05
+MDSYS                                  46 30-AUG-05
+
+USERNAME                          USER_ID CREATED
+------------------------------ ---------- ---------
+SI_INFORMTN_SCHEMA                     45 30-AUG-05
+ORDPLUGINS                             44 30-AUG-05
+ORDSYS                                 43 30-AUG-05
+OLAPSYS                                47 30-AUG-05
+ANONYMOUS                              39 30-AUG-05
+XDB                                    38 30-AUG-05
+CTXSYS                                 36 30-AUG-05
+EXFSYS                                 34 30-AUG-05
+WMSYS                                  25 30-AUG-05
+DBSNMP                                 24 30-AUG-05
+TSMSYS                                 21 30-AUG-05
+
+USERNAME                          USER_ID CREATED
+------------------------------ ---------- ---------
+DMSYS                                  35 30-AUG-05
+DIP                                    19 30-AUG-05
+OUTLN                                  11 30-AUG-05
+SYSTEM                                  5 30-AUG-05
+SYS                                     0 30-AUG-05
+
+27 rows selected.
+
+SQL> CONNECT
+Enter user-name: SCOTT
+Enter password: *****
+Connected.
+SQL> SELECT * FROM ALL_USERS;
+
+USERNAME                          USER_ID CREATED
+------------------------------ ---------- ---------
+BI                                     60 15-FEB-23
+PM                                     59 15-FEB-23
+SH                                     58 15-FEB-23
+IX                                     57 15-FEB-23
+OE                                     56 15-FEB-23
+HR                                     55 15-FEB-23
+SCOTT                                  54 30-AUG-05
+MGMT_VIEW                              53 30-AUG-05
+MDDATA                                 50 30-AUG-05
+SYSMAN                                 51 30-AUG-05
+MDSYS                                  46 30-AUG-05
+
+USERNAME                          USER_ID CREATED
+------------------------------ ---------- ---------
+SI_INFORMTN_SCHEMA                     45 30-AUG-05
+ORDPLUGINS                             44 30-AUG-05
+ORDSYS                                 43 30-AUG-05
+OLAPSYS                                47 30-AUG-05
+ANONYMOUS                              39 30-AUG-05
+XDB                                    38 30-AUG-05
+CTXSYS                                 36 30-AUG-05
+EXFSYS                                 34 30-AUG-05
+WMSYS                                  25 30-AUG-05
+DBSNMP                                 24 30-AUG-05
+TSMSYS                                 21 30-AUG-05
+
+USERNAME                          USER_ID CREATED
+------------------------------ ---------- ---------
+DMSYS                                  35 30-AUG-05
+DIP                                    19 30-AUG-05
+OUTLN                                  11 30-AUG-05
+SYSTEM                                  5 30-AUG-05
+SYS                                     0 30-AUG-05
+
+27 rows selected.
+
+SQL> SELECT * FROM SCOTT;
+SELECT * FROM SCOTT
+              *
+ERROR at line 1:
+ORA-00942: table or view does not exist
+
+
+SQL> SELECT * FROM TAB;
+
+TNAME                          TABTYPE  CLUSTERID
+------------------------------ ------- ----------
+DEPT                           TABLE
+EMP                            TABLE
+BONUS                          TABLE
+SALGRADE                       TABLE
+MOVIE                          TABLE
+STUDENT                        TABLE
+CITY                           TABLE
+FOOD                           TABLE
+VIV1                           TABLE
+CAR                            TABLE
+CARS                           TABLE
+
+11 rows selected.
+
+SQL> CREATE TABLE CAFE
+  2  (
+  3  C_ID NUMBER(10) PRIMARY KEY,
+  4  C_NAME VARCHAR(20) NOT NULL,
+  5  C_ADD VARCHAR(20),
+  6  C_NO NUMBER(10) CHECK(LENGTH(C_NO)=10),
+  7  C_MENU VARCHAR(10)
+  8  );
+
+Table created.
+
+SQL> INSERT INTO CAFE VALUES(1,'GOODLUCK','FCROAD',2345123421,'SANDWITCH');
+
+1 row created.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* INSERT INTO CAFE VALUES(1,'BADLUCK','SROAD',2332823421,'VADAPAV')
+SQL> /
+INSERT INTO CAFE VALUES(1,'BADLUCK','SROAD',2332823421,'VADAPAV')
+*
+ERROR at line 1:
+ORA-00001: unique constraint (SCOTT.SYS_C005485) violated
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* INSERT INTO CAFE VALUES(2,'BADLUCK','SROAD',2332823421,'VADAPAV')
+SQL> /
+
+1 row created.
+
+SQL> SELECT * FROM CAFE;
+
+      C_ID C_NAME               C_ADD                      C_NO C_MENU
+---------- -------------------- -------------------- ---------- ----------
+         1 GOODLUCK             FCROAD               2345123421 SANDWITCH
+         2 BADLUCK              SROAD                2332823421 VADAPAV
+
+SQL> GRANT SELECT ON CAFE TO PM;
+
+Grant succeeded.
+
+SQL> SHOW USER;
+USER is "SCOTT"
+SQL> CONNECT
+Enter user-name: PM
+Enter password: ******
+ERROR:
+ORA-28000: the account is locked
+
+
+Warning: You are no longer connected to ORACLE.
+SQL> CONNECT
+Enter user-name: PM
+Enter password: *****
+ERROR:
+ORA-28000: the account is locked
+
+
+SQL> CONNET 
+SP2-0042: unknown command "CONNET" - rest of line ignored.
+SQL> CONNECT
+Enter user-name: SYSTEM
+Enter password: *****
+Connected.
+SQL> ALTER USER PM ACCOUNT UNLOCK;
+
+User altered.
+
+SQL> ALTER USER PM IDENTIFIED BY TIGER;
+
+User altered.
+
+SQL> CONNECT
+Enter user-name: PM
+Enter password: *****
+Connected.
+SQL> CREATE USER VIVEK IDENTIFIED BY TIGER;
+CREATE USER VIVEK IDENTIFIED BY TIGER
+                                *
+ERROR at line 1:
+ORA-01031: insufficient privileges
+
+
+SQL> CONNECT
+Enter user-name: SYSTEM
+Enter password: *****
+Connected.
+SQL> CREATE USER VIVEK IDENTIFIED BY TIGER;
+
+User created.
+
+SQL> CONNECT 
+Enter user-name: VIVEK
+Enter password: *****
+ERROR:
+ORA-01045: user VIVEK lacks CREATE SESSION privilege; logon denied
+
+
+Warning: You are no longer connected to ORACLE.
+SQL> CONNECT
+Enter user-name: VIVEK
+Enter password: *****
+ERROR:
+ORA-01045: user VIVEK lacks CREATE SESSION privilege; logon denied
+
+
+SQL> SELECT * FROM ALL_USERS;
+SP2-0640: Not connected
+SQL> CONNECT;
+Enter user-name: SCOTT
+Enter password: *****
+Connected.
+SQL> SELECT * FROM ALL_USERS;
+
+USERNAME                          USER_ID CREATED
+------------------------------ ---------- ---------
+VIVEK                                  61 25-MAR-23
+BI                                     60 15-FEB-23
+PM                                     59 15-FEB-23
+SH                                     58 15-FEB-23
+IX                                     57 15-FEB-23
+OE                                     56 15-FEB-23
+HR                                     55 15-FEB-23
+SCOTT                                  54 30-AUG-05
+MGMT_VIEW                              53 30-AUG-05
+MDDATA                                 50 30-AUG-05
+SYSMAN                                 51 30-AUG-05
+
+USERNAME                          USER_ID CREATED
+------------------------------ ---------- ---------
+MDSYS                                  46 30-AUG-05
+SI_INFORMTN_SCHEMA                     45 30-AUG-05
+ORDPLUGINS                             44 30-AUG-05
+ORDSYS                                 43 30-AUG-05
+OLAPSYS                                47 30-AUG-05
+ANONYMOUS                              39 30-AUG-05
+XDB                                    38 30-AUG-05
+CTXSYS                                 36 30-AUG-05
+EXFSYS                                 34 30-AUG-05
+WMSYS                                  25 30-AUG-05
+DBSNMP                                 24 30-AUG-05
+
+USERNAME                          USER_ID CREATED
+------------------------------ ---------- ---------
+TSMSYS                                 21 30-AUG-05
+DMSYS                                  35 30-AUG-05
+DIP                                    19 30-AUG-05
+OUTLN                                  11 30-AUG-05
+SYSTEM                                  5 30-AUG-05
+SYS                                     0 30-AUG-05
+
+28 rows selected.
+
+SQL> CONNECT
+Enter user-name: VIVEK
+Enter password: *****
+ERROR:
+ORA-01045: user VIVEK lacks CREATE SESSION privilege; logon denied
+
+
+Warning: You are no longer connected to ORACLE.
+SQL> CONNECT
+Enter user-name: SYSTEM 
+Enter password: *****
+Connected.
+SQL> CREATE USER VIV1 IDENTIFIED BY TIGER;
+
+User created.
+
+SQL> CONNECT
+Enter user-name: VIV1
+Enter password: *****
+ERROR:
+ORA-01045: user VIV1 lacks CREATE SESSION privilege; logon denied
+
+
+Warning: You are no longer connected to ORACLE.
+SQL> CONNECT
+Enter user-name: 
+ERROR:
+ORA-01017: invalid username/password; logon denied
+
+
+SQL> VIV1
+SP2-0042: unknown command "VIV1" - rest of line ignored.
+SQL> CONNECT 
+Enter user-name: VIVEK
+Enter password: ******
+ERROR:
+ORA-01017: invalid username/password; logon denied
+
+
+SQL> CONNECT
+Enter user-name: VIVEK
+Enter password: *****
+ERROR:
+ORA-01045: user VIVEK lacks CREATE SESSION privilege; logon denied
+
+
+SQL> GRANT DBA TO SYSTEM;
+SP2-0640: Not connected
+SQL> GRANT DBA TO VIVEK;
+SP2-0640: Not connected
+SQL> CONNECT
+Enter user-name: SYSTEM
+Enter password: *****
+Connected.
+SQL> GRANT DBA TO VIVEK;
+
+Grant succeeded.
+
+SQL> CONNECT
+Enter user-name: VIVEK
+Enter password: ******
+ERROR:
+ORA-01017: invalid username/password; logon denied
+
+
+Warning: You are no longer connected to ORACLE.
+SQL> CONNECT
+Enter user-name: VIVEK
+Enter password: *****
+Connected.
+SQL> CREATE TABLE ABC
+  2  (
+  3  A1 NUMBER(5) PRIMARY KEY,
+  4  A2NAME VARCHAR(10),
+  5  A3ADD VARCHAR (100),
+  6  A4DOB DATE
+  7  );
+
+Table created.
+
+SQL> DESC ABC;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ A1                                        NOT NULL NUMBER(5)
+ A2NAME                                             VARCHAR2(10)
+ A3ADD                                              VARCHAR2(100)
+ A4DOB                                              DATE
+
+SQL> INSERT INTO ABC VALUES (1,'VIVEKMAHTO','LATUR','11-MAR-2000');
+
+1 row created.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* INSERT INTO ABC VALUES (2,'BOBBY','GONDIA','22-MAY-99')
+SQL> /
+
+1 row created.
+
+SQL> SELECT * FROM ABC;
+
+        A1 A2NAME
+---------- ----------
+A3ADD
+--------------------------------------------------------------------------------
+A4DOB
+---------
+         1 VIVEKMAHTO
+LATUR
+11-MAR-00
+
+         2 BOBBY
+GONDIA
+22-MAY-99
+
+        A1 A2NAME
+---------- ----------
+A3ADD
+--------------------------------------------------------------------------------
+A4DOB
+---------
+
+
+SQL> SET LINES 1000 PAGES 1000;
+SQL> SELECT * FROM ABC;
+
+        A1 A2NAME     A3ADD                                                                             
+---------- ---------- ------------------------------------------------------------------------------
+         1 VIVEKMAHTO LATUR                                                                             
+         2 BOBBY      GONDIA                                                                            
+
+SQL> GRANT SELECT ON ABC TO SCOTT;
+
+Grant succeeded.
+
+SQL> CONNECT 
+Enter user-name: SCOTT
+Enter password: *****
+Connected.
+SQL> SELECT * FROM VIVEK.ABC;
+
+        A1 A2NAME     A3ADD                                                                             
+---------- ---------- ------------------------------------------------------------------------------
+         1 VIVEKMAHTO LATUR                                                                             
+         2 BOBBY      GONDIA                                                                            
+
+SQL> SHOW USER;
+USER is "SCOTT"
+SQL> CONNECT
+Enter user-name: VIVEK
+Enter password: *****
+Connected.
+SQL> GRANT ALTER ON ABC TO SCOTT;
+
+Grant succeeded.
+
+SQL> CONNECT
+Enter user-name: SCOTT
+Enter password: *****
+Connected.
+SQL> ALTER TABLE VIVEK
+  2  ADD A6 NUMBER(20) NOT NULL;
+ALTER TABLE VIVEK
+*
+ERROR at line 1:
+ORA-00942: table or view does not exist
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  ALTER TABLE VIVEK.ABC
+  2* ADD A6 NUMBER(20) NOT NULL
+SQL> /
+ALTER TABLE VIVEK.ABC
+                  *
+ERROR at line 1:
+ORA-01758: table must be empty to add mandatory (NOT NULL) column
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  ALTER TABLE VIVEK.ABC
+  2* ADD COLUMN A6 NUMBER(20) NOT NULL
+SQL> /
+ADD COLUMN A6 NUMBER(20) NOT NULL
+    *
+ERROR at line 2:
+ORA-00904: : invalid identifier
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  ALTER TABLE VIVEK.ABC
+  2* ADD A6 VARCHAR(10)
+SQL> /
+
+Table altered.
+
+SQL> SELECT * FROM VIVEK.ABC;
+
+        A1 A2NAME     A3ADD                                                                             
+---------- ---------- ------------------------------------------------------------------------------
+         1 VIVEKMAHTO LATUR                                                                             
+         2 BOBBY      GONDIA                                                                            
+
+SQL> INSERT
+  2  INTO
+  3  '
+  4  /
+ERROR:
+ORA-01756: quoted string not properly terminated
+
+
+SQL> 
+SQL> CONNECT
+Enter user-name: VIVEK 
+Enter password: *****
+Connected.
+SQL> GRANT INSERT ON ABC TO SCOTT;
+
+Grant succeeded.
+
+SQL> GRANT UPDATE ON ABC TO SCOTT;
+
+Grant succeeded.
+
+SQL> CONNECT
+Enter user-name: SCOTT;
+Enter password: *****
+ERROR:
+ORA-01017: invalid username/password; logon denied
+
+
+Warning: You are no longer connected to ORACLE.
+SQL> CONNECT
+Enter user-name: SCOTT
+Enter password: *****
+Connected.
+SQL> INSERT INTO VIVEK.ABC VALUES (1,'VISHAL','SHRIGONDA','SJL');
+INSERT INTO VIVEK.ABC VALUES (1,'VISHAL','SHRIGONDA','SJL')
+                  *
+ERROR at line 1:
+ORA-00947: not enough values
+
+
+SQL> DESC VIVEK.ABC;
+ Name                                                                                                   
+ ---------------------------------------------------------------------------------------------------
+ A1                                                                                                     
+ A2NAME                                                                                                 
+ A3ADD                                                                                                  
+ A4DOB                                                                                                  
+ A6                                                                                                     
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* INSERT INTO VIVEK.ABC VALUES (1,'VISHAL','SHRIGONDA','12-SEP-2000','PIPADNHJB')
+SQL> /
+INSERT INTO VIVEK.ABC VALUES (1,'VISHAL','SHRIGONDA','12-SEP-2000','PIPADNHJB')
+*
+ERROR at line 1:
+ORA-00001: unique constraint (VIVEK.SYS_C005486) violated
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* INSERT INTO VIVEK.ABC VALUES (3,'VISHAL','SHRIGONDA','12-SEP-2000','PIPADNHJB')
+SQL> /
+
+1 row created.
+
+SQL> SELECT * FROM VIVEK.ABC;
+
+        A1 A2NAME     A3ADD                                                                             
+---------- ---------- ------------------------------------------------------------------------------
+         1 VIVEKMAHTO LATUR                                                                             
+         2 BOBBY      GONDIA                                                                            
+         3 VISHAL     SHRIGONDA                                                                         
+
+SQL> SET LINES 200 PAGES 200
+SQL> SELECT * FROM VIVEK.ABC;
+
+        A1 A2NAME     A3ADD                                                                             
+---------- ---------- ------------------------------------------------------------------------------
+         1 VIVEKMAHTO LATUR                                                                             
+         2 BOBBY      GONDIA                                                                            
+         3 VISHAL     SHRIGONDA                                                                         
+
+SQL> 

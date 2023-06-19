@@ -1,0 +1,868 @@
+SQL*Plus: Release 10.2.0.1.0 - Production on Wed Mar 1 21:51:39 2023
+
+Copyright (c) 1982, 2005, Oracle.  All rights reserved.
+
+
+Connected to:
+Oracle Database 10g Enterprise Edition Release 10.2.0.1.0 - Production
+With the Partitioning, OLAP and Data Mining options
+
+SQL> SET LINES 100 PAGES 100
+SQL> SELECT ENAME , SAL FROM EMP
+  2  WHERE SAL>(SELECT SAL FROM EMP
+  3             WHERE ENAME IN 'ADAMS');
+
+ENAME             SAL
+---------- ----------
+ALLEN            1600
+WARD             1250
+JONES            2975
+MARTIN           1250
+BLAKE            2850
+CLARK            2450
+SCOTT            3000
+KING             5000
+TURNER           1500
+FORD             3000
+MILLER           1300
+
+11 rows selected.
+
+SQL> SELECT SAL FROM EMP WHERE ENAME IN 'ADAMS';
+
+       SAL
+----------
+      1100
+
+SQL>  SELECT ENAME , SAL FROM EMP
+  2   WHERE SAL>(SELECT SAL FROM EMP
+  3              WHERE ENAME IN 'ADAMS');/
+  4  /
+            WHERE ENAME IN 'ADAMS');/
+                                   *
+ERROR at line 3:
+ORA-00911: invalid character
+
+
+SQL> EED
+SP2-0042: unknown command "EED" - rest of line ignored.
+SQL> ED
+Wrote file afiedt.buf
+
+  1   SELECT ENAME , SAL FROM EMP
+  2   WHERE SAL>(SELECT SAL FROM EMP
+  3*             WHERE ENAME IN 'ADAMS')
+SQL> /
+
+ENAME             SAL
+---------- ----------
+ALLEN            1600
+WARD             1250
+JONES            2975
+MARTIN           1250
+BLAKE            2850
+CLARK            2450
+SCOTT            3000
+KING             5000
+TURNER           1500
+FORD             3000
+MILLER           1300
+
+11 rows selected.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1   SELECT ENAME , SAL FROM EMP
+  2   WHERE SAL<(SELECT SAL FROM EMP
+  3*             WHERE ENAME IN 'KING')
+SQL> /
+
+ENAME             SAL
+---------- ----------
+SMITH             800
+ALLEN            1600
+WARD             1250
+JONES            2975
+MARTIN           1250
+BLAKE            2850
+CLARK            2450
+SCOTT            3000
+TURNER           1500
+ADAMS            1100
+JAMES             950
+FORD             3000
+MILLER           1300
+
+13 rows selected.
+
+SQL>  ED
+Wrote file afiedt.buf
+
+  1   SELECT ENAME , DEPTNO FROM EMP
+  2   WHERE DEPTNO=(SELECT DEPTNO FROM EMP
+  3*             WHERE ENAME IN 'JONES')
+SQL> /
+
+ENAME          DEPTNO
+---------- ----------
+SMITH              20
+JONES              20
+SCOTT              20
+ADAMS              20
+FORD               20
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1   SELECT ENAME , JOB FROM EMP
+  2   WHERE JOB=(SELECT JOB FROM EMP
+  3*                           WHERE ENAME IN 'JONES')
+SQL> /
+
+ENAME      JOB
+---------- ---------
+JONES      MANAGER
+BLAKE      MANAGER
+CLARK      MANAGER
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1   SELECT ENAME , JOB FROM EMP
+  2   WHERE JOB=(SELECT JOB FROM EMP
+  3*                           WHERE ENAME IN 'JAMES')
+SQL> /
+
+ENAME      JOB
+---------- ---------
+SMITH      CLERK
+ADAMS      CLERK
+JAMES      CLERK
+MILLER     CLERK
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1   SELECT EMPNO,ENAME , SAL*12 AS ANNUALSAL
+  2   FROM EMP
+  3   WHERE SAL*12> (SELECT SAL FROM EMP
+  4*                           WHERE ENAME IN 'WARD')
+SQL> /
+
+     EMPNO ENAME       ANNUALSAL
+---------- ---------- ----------
+      7369 SMITH            9600
+      7499 ALLEN           19200
+      7521 WARD            15000
+      7566 JONES           35700
+      7654 MARTIN          15000
+      7698 BLAKE           34200
+      7782 CLARK           29400
+      7788 SCOTT           36000
+      7839 KING            60000
+      7844 TURNER          18000
+      7876 ADAMS           13200
+      7900 JAMES           11400
+      7902 FORD            36000
+      7934 MILLER          15600
+
+14 rows selected.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1   SELECT EMPNO,ENAME , SAL*12 AS ANNUALSAL
+  2   FROM EMP
+  3   WHERE SAL*12> (SELECT SAL*12 FROM EMP
+  4*                           WHERE ENAME IN 'WARD')
+SQL> /
+
+     EMPNO ENAME       ANNUALSAL
+---------- ---------- ----------
+      7499 ALLEN           19200
+      7566 JONES           35700
+      7698 BLAKE           34200
+      7782 CLARK           29400
+      7788 SCOTT           36000
+      7839 KING            60000
+      7844 TURNER          18000
+      7902 FORD            36000
+      7934 MILLER          15600
+
+9 rows selected.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1   SELECT ENAME,HIREDATE
+  2   FROM EMP
+  3   WHERE HIREDATE > (SELECT HIREDATE FROM EMP
+  4*                           WHERE ENAME IN 'SCOTT')
+SQL> /
+
+ENAME      HIREDATE
+---------- ---------
+ADAMS      23-MAY-87
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1   SELECT ENAME,HIREDATE
+  2   FROM EMP
+  3   WHERE HIREDATE < (SELECT HIREDATE FROM EMP
+  4*                           WHERE ENAME IN 'SCOTT')
+SQL> /
+
+ENAME      HIREDATE
+---------- ---------
+SMITH      17-DEC-80
+ALLEN      20-FEB-81
+WARD       22-FEB-81
+JONES      02-APR-81
+MARTIN     28-SEP-81
+BLAKE      01-MAY-81
+CLARK      09-JUN-81
+KING       17-NOV-81
+TURNER     08-SEP-81
+JAMES      03-DEC-81
+FORD       03-DEC-81
+MILLER     23-JAN-82
+
+12 rows selected.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1   SELECT ENAME,HIREDATE
+  2   FROM EMP
+  3   WHERE HIREDATE > (SELECT HIREDATE FROM EMP
+  4*                           WHERE JOB IN 'PRESIDENT')
+SQL> /
+
+ENAME      HIREDATE
+---------- ---------
+SCOTT      19-APR-87
+ADAMS      23-MAY-87
+JAMES      03-DEC-81
+FORD       03-DEC-81
+MILLER     23-JAN-82
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1   SELECT ENAME,HIREDATE ,JOB
+  2   FROM EMP
+  3   WHERE HIREDATE > (SELECT HIREDATE FROM EMP
+  4*                           WHERE JOB IN 'PRESIDENT')
+SQL> /
+
+ENAME      HIREDATE  JOB
+---------- --------- ---------
+SCOTT      19-APR-87 ANALYST
+ADAMS      23-MAY-87 CLERK
+JAMES      03-DEC-81 CLERK
+FORD       03-DEC-81 ANALYST
+MILLER     23-JAN-82 CLERK
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1   SELECT ENAME,HIREDATE ,JOB
+  2   FROM EMP
+  3   WHERE HIREDATE = (SELECT HIREDATE FROM EMP
+  4*                           WHERE JOB IN 'PRESIDENT')
+SQL> /
+
+ENAME      HIREDATE  JOB
+---------- --------- ---------
+KING       17-NOV-81 PRESIDENT
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1   SELECT ENAME,HIREDATE ,JOB
+  2   FROM EMP
+  3   WHERE HIREDATE > (SELECT HIREDATE FROM EMP
+  4*                           WHERE JOB IN 'PRESIDENT')
+SQL> /
+
+ENAME      HIREDATE  JOB
+---------- --------- ---------
+SCOTT      19-APR-87 ANALYST
+ADAMS      23-MAY-87 CLERK
+JAMES      03-DEC-81 CLERK
+FORD       03-DEC-81 ANALYST
+MILLER     23-JAN-82 CLERK
+
+SQL> 0ED
+SP2-0042: unknown command "0ED" - rest of line ignored.
+SQL> ED
+Wrote file afiedt.buf
+
+  1   SELECT EMPNO, ENAME,SAL
+  2   FROM EMP
+  3   WHERE SAL< (SELECT SAL FROM EMP
+  4*                           WHERE EMPNO = 7839)
+SQL> /
+
+     EMPNO ENAME             SAL
+---------- ---------- ----------
+      7369 SMITH             800
+      7499 ALLEN            1600
+      7521 WARD             1250
+      7566 JONES            2975
+      7654 MARTIN           1250
+      7698 BLAKE            2850
+      7782 CLARK            2450
+      7788 SCOTT            3000
+      7844 TURNER           1500
+      7876 ADAMS            1100
+      7900 JAMES             950
+      7902 FORD             3000
+      7934 MILLER           1300
+
+13 rows selected.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1   SELECT EMPNO, ENAME,SAL
+  2   FROM EMP
+  3   WHERE SAL< (SELECT EMPNO FROM EMP
+  4*                           WHERE EMPNO = 7839)
+SQL> /
+
+     EMPNO ENAME             SAL
+---------- ---------- ----------
+      7369 SMITH             800
+      7499 ALLEN            1600
+      7521 WARD             1250
+      7566 JONES            2975
+      7654 MARTIN           1250
+      7698 BLAKE            2850
+      7782 CLARK            2450
+      7788 SCOTT            3000
+      7839 KING             5000
+      7844 TURNER           1500
+      7876 ADAMS            1100
+      7900 JAMES             950
+      7902 FORD             3000
+      7934 MILLER           1300
+
+14 rows selected.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1   SELECT EMPNO, ENAME,SAL
+  2   FROM EMP
+  3   WHERE SAL< (SELECT SAL FROM EMP
+  4*                           WHERE EMPNO = 7839)
+SQL> /
+
+     EMPNO ENAME             SAL
+---------- ---------- ----------
+      7369 SMITH             800
+      7499 ALLEN            1600
+      7521 WARD             1250
+      7566 JONES            2975
+      7654 MARTIN           1250
+      7698 BLAKE            2850
+      7782 CLARK            2450
+      7788 SCOTT            3000
+      7844 TURNER           1500
+      7876 ADAMS            1100
+      7900 JAMES             950
+      7902 FORD             3000
+      7934 MILLER           1300
+
+13 rows selected.
+
+SQL> SELECT * FROM EMP
+  2  WHERE HIREDATE<(SELECT HIREDATE FROM EMP
+  3                  WHERE ENAME='MILLER');
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------
+      7369 SMITH      CLERK           7902 17-DEC-80        800                    20
+      7499 ALLEN      SALESMAN        7698 20-FEB-81       1600        300         30
+      7521 WARD       SALESMAN        7698 22-FEB-81       1250        500         30
+      7566 JONES      MANAGER         7839 02-APR-81       2975                    20
+      7654 MARTIN     SALESMAN        7698 28-SEP-81       1250       1400         30
+      7698 BLAKE      MANAGER         7839 01-MAY-81       2850                    30
+      7782 CLARK      MANAGER         7839 09-JUN-81       2450                    10
+      7839 KING       PRESIDENT            17-NOV-81       5000                    10
+      7844 TURNER     SALESMAN        7698 08-SEP-81       1500          0         30
+      7900 JAMES      CLERK           7698 03-DEC-81        950                    30
+      7902 FORD       ANALYST         7566 03-DEC-81       3000                    20
+
+11 rows selected.
+
+SQL> SELECT * FROM EMP;
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------
+      7369 SMITH      CLERK           7902 17-DEC-80        800                    20
+      7499 ALLEN      SALESMAN        7698 20-FEB-81       1600        300         30
+      7521 WARD       SALESMAN        7698 22-FEB-81       1250        500         30
+      7566 JONES      MANAGER         7839 02-APR-81       2975                    20
+      7654 MARTIN     SALESMAN        7698 28-SEP-81       1250       1400         30
+      7698 BLAKE      MANAGER         7839 01-MAY-81       2850                    30
+      7782 CLARK      MANAGER         7839 09-JUN-81       2450                    10
+      7788 SCOTT      ANALYST         7566 19-APR-87       3000                    20
+      7839 KING       PRESIDENT            17-NOV-81       5000                    10
+      7844 TURNER     SALESMAN        7698 08-SEP-81       1500          0         30
+      7876 ADAMS      CLERK           7788 23-MAY-87       1100                    20
+      7900 JAMES      CLERK           7698 03-DEC-81        950                    30
+      7902 FORD       ANALYST         7566 03-DEC-81       3000                    20
+      7934 MILLER     CLERK           7782 23-JAN-82       1300                    10
+
+14 rows selected.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* SELECT * FROM EMP
+SQL>  SELECT * FROM EMP
+  2   WHERE HIREDATE<(SELECT HIREDATE FROM EMP
+  3                   WHERE ENAME='MILLER');
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------
+      7369 SMITH      CLERK           7902 17-DEC-80        800                    20
+      7499 ALLEN      SALESMAN        7698 20-FEB-81       1600        300         30
+      7521 WARD       SALESMAN        7698 22-FEB-81       1250        500         30
+      7566 JONES      MANAGER         7839 02-APR-81       2975                    20
+      7654 MARTIN     SALESMAN        7698 28-SEP-81       1250       1400         30
+      7698 BLAKE      MANAGER         7839 01-MAY-81       2850                    30
+      7782 CLARK      MANAGER         7839 09-JUN-81       2450                    10
+      7839 KING       PRESIDENT            17-NOV-81       5000                    10
+      7844 TURNER     SALESMAN        7698 08-SEP-81       1500          0         30
+      7900 JAMES      CLERK           7698 03-DEC-81        950                    30
+      7902 FORD       ANALYST         7566 03-DEC-81       3000                    20
+
+11 rows selected.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT  ENAME, EMPNO ,SAL
+  2  FROM EMP
+  3  WHERE SAL>(SELECT SAL FROM EMP
+  4*                  WHERE ENAME='ALLEN')
+SQL> /
+
+ENAME           EMPNO        SAL
+---------- ---------- ----------
+JONES            7566       2975
+BLAKE            7698       2850
+CLARK            7782       2450
+SCOTT            7788       3000
+KING             7839       5000
+FORD             7902       3000
+
+6 rows selected.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT  ENAME, SAL
+  2  FROM EMP
+  3  WHERE SAL>(SELECT SAL FROM EMP
+  4                   WHERE ENAME='MILLER')
+  5     AND SAL<(SELECT SAL FROM EMP
+  6*                  WHERE ENAME='ALLEN')
+SQL> /
+
+ENAME             SAL
+---------- ----------
+TURNER           1500
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT * FROM EMP
+  2  WHERE DEPTNO=20 AND JOB=(SELECT JOB FROM EMP
+  3*                  WHERE ENAME='SMITH')
+SQL> /
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------
+      7369 SMITH      CLERK           7902 17-DEC-80        800                    20
+      7876 ADAMS      CLERK           7788 23-MAY-87       1100                    20
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT * FROM EMP
+  2  WHERE JOB='MANAGER' AND DEPTNO=(SELECT DEPTNO FROM EMP
+  3*                  WHERE ENAME='TURNER')
+SQL> /
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------
+      7698 BLAKE      MANAGER         7839 01-MAY-81       2850                    30
+
+SQL> SELECT * FROM EMP;
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------
+      7369 SMITH      CLERK           7902 17-DEC-80        800                    20
+      7499 ALLEN      SALESMAN        7698 20-FEB-81       1600        300         30
+      7521 WARD       SALESMAN        7698 22-FEB-81       1250        500         30
+      7566 JONES      MANAGER         7839 02-APR-81       2975                    20
+      7654 MARTIN     SALESMAN        7698 28-SEP-81       1250       1400         30
+      7698 BLAKE      MANAGER         7839 01-MAY-81       2850                    30
+      7782 CLARK      MANAGER         7839 09-JUN-81       2450                    10
+      7788 SCOTT      ANALYST         7566 19-APR-87       3000                    20
+      7839 KING       PRESIDENT            17-NOV-81       5000                    10
+      7844 TURNER     SALESMAN        7698 08-SEP-81       1500          0         30
+      7876 ADAMS      CLERK           7788 23-MAY-87       1100                    20
+      7900 JAMES      CLERK           7698 03-DEC-81        950                    30
+      7902 FORD       ANALYST         7566 03-DEC-81       3000                    20
+      7934 MILLER     CLERK           7782 23-JAN-82       1300                    10
+
+14 rows selected.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* SELECT * FROM EMP
+SQL> SELECT ENAME,HIREDATE FROM EMP
+  2  WHERE HIREDATE>'31JAN1980' AND HIREDATE<(SELECT HIREDATE FROM EMP
+  3                                           WHERE ENAME ='KING');
+
+ENAME      HIREDATE
+---------- ---------
+SMITH      17-DEC-80
+ALLEN      20-FEB-81
+WARD       22-FEB-81
+JONES      02-APR-81
+MARTIN     28-SEP-81
+BLAKE      01-MAY-81
+CLARK      09-JUN-81
+TURNER     08-SEP-81
+
+8 rows selected.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT ENAME,HIREDATE FROM EMP
+  2  WHERE HIREDATE>'31DEC1980' AND HIREDATE<(SELECT HIREDATE FROM EMP
+  3*                                          WHERE ENAME ='KING')
+SQL> /
+
+ENAME      HIREDATE
+---------- ---------
+ALLEN      20-FEB-81
+WARD       22-FEB-81
+JONES      02-APR-81
+MARTIN     28-SEP-81
+BLAKE      01-MAY-81
+CLARK      09-JUN-81
+TURNER     08-SEP-81
+
+7 rows selected.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT ENAME,SAL , SAL*12 ANNUALSAL
+  2  FROM EMP
+  3  WHERE SAL>3500 AND SAL<(SELECT SAL FROM EMP
+  4*                                          WHERE ENAME ='BLAKE')
+SQL> /
+
+no rows selected
+
+SQL> SELECT * FROM EMP;
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------
+      7369 SMITH      CLERK           7902 17-DEC-80        800                    20
+      7499 ALLEN      SALESMAN        7698 20-FEB-81       1600        300         30
+      7521 WARD       SALESMAN        7698 22-FEB-81       1250        500         30
+      7566 JONES      MANAGER         7839 02-APR-81       2975                    20
+      7654 MARTIN     SALESMAN        7698 28-SEP-81       1250       1400         30
+      7698 BLAKE      MANAGER         7839 01-MAY-81       2850                    30
+      7782 CLARK      MANAGER         7839 09-JUN-81       2450                    10
+      7788 SCOTT      ANALYST         7566 19-APR-87       3000                    20
+      7839 KING       PRESIDENT            17-NOV-81       5000                    10
+      7844 TURNER     SALESMAN        7698 08-SEP-81       1500          0         30
+      7876 ADAMS      CLERK           7788 23-MAY-87       1100                    20
+      7900 JAMES      CLERK           7698 03-DEC-81        950                    30
+      7902 FORD       ANALYST         7566 03-DEC-81       3000                    20
+      7934 MILLER     CLERK           7782 23-JAN-82       1300                    10
+
+14 rows selected.
+
+SQL> SELECT ENAME,SAL , SAL*12 ANNUALSAL
+  2  FROM EMP
+  3  WHERE SAL>3500 ;
+
+ENAME             SAL  ANNUALSAL
+---------- ---------- ----------
+KING             5000      60000
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT * FROM EMP
+  2  WHERE SAL>(SELECT SAL FROM EMP
+  3            WHERE ENAME='SCOTT')
+  4     AND SAL<(SELECT SAL FROM EMP
+  5*           WHERE ENAME='KING')
+SQL> /
+
+no rows selected
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT ENAME, DEPTNO FROM EMP
+  2  WHERE DEPTNO =(SELECT DEPTNO FROM EMP
+  3             WHERE ENAME='BLAKE')
+  4             AND ENAME=(SELECT ENAME FROM EMP
+  5*               WHERE ENAME LIKE 'A%' )
+SQL> /
+                AND ENAME=(SELECT ENAME FROM EMP
+                           *
+ERROR at line 4:
+ORA-01427: single-row subquery returns more than one row
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT ENAME, DEPTNO FROM EMP
+  2  WHERE  WHERE ENAME LIKE 'A%' AND DEPTNO =(SELECT DEPTNO FROM EMP
+  3*            WHERE ENAME='BLAKE')
+  4  /
+WHERE  WHERE ENAME LIKE 'A%' AND DEPTNO =(SELECT DEPTNO FROM EMP
+       *
+ERROR at line 2:
+ORA-00936: missing expression
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT ENAME, DEPTNO FROM EMP
+  2  WHERE ENAME LIKE 'A%' AND DEPTNO =(SELECT DEPTNO FROM EMP
+  3*            WHERE ENAME='BLAKE')
+SQL> /
+
+ENAME          DEPTNO
+---------- ----------
+ALLEN              30
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT ENAME, COMM FROM EMP
+  2  WHERE COMM IS NOT NULL  AND JOB =(SELECT JOB FROM EMP
+  3*            WHERE ENAME='SMITH')
+SQL> SELECT ENAME, COMM FROM EMP
+  2  WHERE COMM IS NOT NULL  AND JOB =(SELECT JOB FROM EMP
+  3             WHERE ENAME='SMITH')
+  4  /
+
+no rows selected
+
+SQL> SELECT COMM,JOB,ENAME FROM EMP
+  2  WHERE COMM IS NOT NULL'
+  3  ;
+ERROR:
+ORA-01756: quoted string not properly terminated
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT COMM,JOB,ENAME FROM EMP
+  2* WHERE COMM IS NOT NULL
+  3  /
+
+      COMM JOB       ENAME
+---------- --------- ----------
+       300 SALESMAN  ALLEN
+       500 SALESMAN  WARD
+      1400 SALESMAN  MARTIN
+         0 SALESMAN  TURNER
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT COMM,JOB,ENAME FROM EMP
+  2* WHERE COMM IS NOT NULL
+SQL> /
+
+      COMM JOB       ENAME
+---------- --------- ----------
+       300 SALESMAN  ALLEN
+       500 SALESMAN  WARD
+      1400 SALESMAN  MARTIN
+         0 SALESMAN  TURNER
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT * FROM EMP
+  2  WHERE JOB='CLERK' AND DEPTNO=(SELECT DEPTNO FROM EMP
+  3*                               WHERE  ENAME IN 'TURNER')
+SQL> /
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------
+      7900 JAMES      CLERK           7698 03-DEC-81        950                    30
+
+SQL> SELECT COMM,JOB,ENAME FROM EMP
+  2  WHERE COMM IS NOT NULL ANS DEPTNO=30;
+WHERE COMM IS NOT NULL ANS DEPTNO=30
+                       *
+ERROR at line 2:
+ORA-00933: SQL command not properly ended
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT COMM,JOB,ENAME FROM EMP
+  2* WHERE COMM IS NOT NULL AND DEPTNO=30
+SQL> /
+
+      COMM JOB       ENAME
+---------- --------- ----------
+       300 SALESMAN  ALLEN
+       500 SALESMAN  WARD
+      1400 SALESMAN  MARTIN
+         0 SALESMAN  TURNER
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT COMM,JOB,ENAME,DEPTNO  FROM EMP
+  2* WHERE DEPTNO=30
+SQL> /
+
+      COMM JOB       ENAME          DEPTNO
+---------- --------- ---------- ----------
+       300 SALESMAN  ALLEN              30
+       500 SALESMAN  WARD               30
+      1400 SALESMAN  MARTIN             30
+           MANAGER   BLAKE              30
+         0 SALESMAN  TURNER             30
+           CLERK     JAMES              30
+
+6 rows selected.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT ENAME,SAL,JOB ,SAL*12 ANNUALSAL
+  2  FROM EMP
+  3  WHERE SAL*12>(SELECT SAL FROM
+  4                 WHERE ENAME='SMITH')
+  5          AND SAL*12<(SELECT SAL FROM
+  6*                WHERE ENAME='KING')
+SQL> /
+                    WHERE ENAME='SMITH')
+                    *
+ERROR at line 4:
+ORA-00903: invalid table name
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT ENAME,SAL,JOB ,SAL*12 ANNUALSAL FROM EMP
+  2  WHERE SAL*12>(SELECT SAL FROM
+  3                 WHERE ENAME='SMITH')
+  4          AND SAL*12<(SELECT SAL FROM
+  5*                WHERE ENAME='KING')
+SQL> /
+                    WHERE ENAME='SMITH')
+                    *
+ERROR at line 3:
+ORA-00903: invalid table name
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT ENAME,SAL,JOB ,SAL*12 ANNUALSAL FROM EMP
+  2  WHERE SAL*12>(SELECT SAL FROM EMP
+  3                 WHERE ENAME='SMITH')
+  4          AND SAL*12<(SELECT SAL FROM EMP
+  5*                WHERE ENAME='KING')
+SQL> /
+
+no rows selected
+
+SQL>  SELECT ENAME,SAL,JOB ,SAL*12 ANNUALSAL FROM EMP
+  2   WHERE SAL*12>(SELECT SAL FROM EMP
+  3                  WHERE ENAME='SMITH');
+
+ENAME             SAL JOB        ANNUALSAL
+---------- ---------- --------- ----------
+SMITH             800 CLERK           9600
+ALLEN            1600 SALESMAN       19200
+WARD             1250 SALESMAN       15000
+JONES            2975 MANAGER        35700
+MARTIN           1250 SALESMAN       15000
+BLAKE            2850 MANAGER        34200
+CLARK            2450 MANAGER        29400
+SCOTT            3000 ANALYST        36000
+KING             5000 PRESIDENT      60000
+TURNER           1500 SALESMAN       18000
+ADAMS            1100 CLERK          13200
+JAMES             950 CLERK          11400
+FORD             3000 ANALYST        36000
+MILLER           1300 CLERK          15600
+
+14 rows selected.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1   SELECT ENAME,SAL,JOB ,SAL*12 ANNUALSAL FROM EMP
+  2   WHERE SAL*12>(SELECT SAL FROM EMP
+  3*                 WHERE ENAME='SMITH')
+SQL>  SELECT ENAME,SAL,JOB ,SAL*12 ANNUALSAL FROM EMP
+  2   WHERE SAL*12>(SELECT SAL FROM EMP
+  3                  WHERE ENAME='SMITH')
+  4           AND SAL*12<(SELECT SAL FROM EMP
+  5                  WHERE ENAME='KING');
+
+no rows selected
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1   SELECT ENAME,SAL,JOB ,SAL*12 ANNUALSAL FROM EMP
+  2   WHERE SAL*12>(SELECT SAL*12 FROM EMP
+  3                  WHERE ENAME='SMITH')
+  4           AND SAL*12<(SELECT SAL*12 FROM EMP
+  5*                 WHERE ENAME='KING')
+SQL> /
+
+ENAME             SAL JOB        ANNUALSAL
+---------- ---------- --------- ----------
+ALLEN            1600 SALESMAN       19200
+WARD             1250 SALESMAN       15000
+JONES            2975 MANAGER        35700
+MARTIN           1250 SALESMAN       15000
+BLAKE            2850 MANAGER        34200
+CLARK            2450 MANAGER        29400
+SCOTT            3000 ANALYST        36000
+TURNER           1500 SALESMAN       18000
+ADAMS            1100 CLERK          13200
+JAMES             950 CLERK          11400
+FORD             3000 ANALYST        36000
+MILLER           1300 CLERK          15600
+
+12 rows selected.
+
+SQL> 

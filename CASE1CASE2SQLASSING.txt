@@ -1,0 +1,729 @@
+
+SQL*Plus: Release 10.2.0.1.0 - Production on Thu Mar 2 21:29:25 2023
+
+Copyright (c) 1982, 2005, Oracle.  All rights reserved.
+
+
+Connected to:
+Oracle Database 10g Enterprise Edition Release 10.2.0.1.0 - Production
+With the Partitioning, OLAP and Data Mining options
+
+SQL> SET LINES 100 PAGES 100
+SQL> SELECT ENAME,SAL,HIREDATE,COMM FROM EMP 
+  2  WHERE DEPTNO IN (SELECT DEPTNO FROM EMP 
+  3                   WHERE ENAME IN 'MILLER) AND
+  4                  SAL>(SELECT SAL FROM EMP
+  5                       WHERE ENAME IN 'JONES')
+  6                 AND SAL<(SELECT SAL FROM EMP
+  7                           WHERE ENAME IN 'KING')
+  8                 AND HIREDATE (SELECT HIREDATE FROM EMP
+  9                               WHERE HIREDATE BETWEEN '01JAN1981' AND '31DEC1981')
+ 10                 AND DEPTNO (SELECT DEPTNO FROM DEPT
+ 11                             WHERE LOCATION IN ('NEW YORK','DALLAS','CHICAGO','BOSTON');
+ERROR:
+ORA-01756: quoted string not properly terminated
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT ENAME,SAL,HIREDATE,COMM FROM EMP
+  2  WHERE DEPTNO IN (SELECT DEPTNO FROM EMP
+  3                   WHERE ENAME IN 'MILLER) AND
+  4                  SAL>(SELECT SAL FROM EMP
+  5                       WHERE ENAME IN 'JONES')
+  6                 AND SAL<(SELECT SAL FROM EMP
+  7                           WHERE ENAME IN 'KING')
+  8                 AND HIREDATE (SELECT HIREDATE FROM EMP
+  9                               WHERE HIREDATE BETWEEN '01JAN1981' AND '31DEC1981')
+ 10                 AND DEPTNO (SELECT DEPTNO FROM DEPT
+ 11*                            WHERE LOCATION IN ('NEW YORK','DALLAS','CHICAGO','BOSTON'))
+SQL> 
+SQL> /
+ERROR:
+ORA-01756: quoted string not properly terminated
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT ENAME,SAL,HIREDATE,COMM FROM EMP
+  2  WHERE DEPTNO IN (SELECT DEPTNO FROM EMP
+  3                   WHERE ENAME IN 'MILLER)
+  4                 AND
+  5                  SAL>(SELECT SAL FROM EMP
+  6                       WHERE ENAME IN 'JONES')
+  7                 AND
+  8                 SAL<(SELECT SAL FROM EMP
+  9                           WHERE ENAME IN 'KING')
+ 10                 AND
+ 11                 HIREDATE =(SELECT HIREDATE FROM EMP
+ 12                                  WHERE HIREDATE BETWEEN '01JAN1981' AND '31DEC1981')
+ 13                 AND
+ 14                  DEPTNO (SELECT DEPTNO FROM DEPT
+ 15*                            WHERE LOCATION IN ('NEW YORK','DALLAS','CHICAGO','BOSTON'))
+SQL> /
+ERROR:
+ORA-01756: quoted string not properly terminated
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT ENAME,SAL,HIREDATE,COMM FROM EMP
+  2  WHERE DEPTNO IN (SELECT DEPTNO FROM EMP
+  3                   WHERE ENAME IN 'MILLER)
+  4                 AND
+  5                  SAL>(SELECT SAL FROM EMP
+  6                       WHERE ENAME IN 'JONES')
+  7                 AND
+  8                 SAL<(SELECT SAL FROM EMP
+  9                           WHERE ENAME IN 'KING')
+ 10                 AND
+ 11                 HIREDATE BETWEEN '01JAN81' AND '31DEC81'
+ 12                 AND
+ 13                  DEPTNO (SELECT DEPTNO FROM DEPT
+ 14*                            WHERE LOCATION IN ('NEW YORK','DALLAS','CHICAGO','BOSTON'))
+SQL> /
+ERROR:
+ORA-01756: quoted string not properly terminated
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT ENAME,SAL,HIREDATE,COMM FROM EMP
+  2  WHERE DEPTNO = (SELECT DEPTNO FROM EMP
+  3                   WHERE ENAME IN 'MILLER)
+  4                 AND
+  5                  SAL>(SELECT SAL FROM EMP
+  6                       WHERE ENAME IN 'JONES')
+  7                 AND
+  8                 SAL<(SELECT SAL FROM EMP
+  9                           WHERE ENAME IN 'KING')
+ 10                 AND
+ 11                 HIREDATE BETWEEN '01JAN81' AND '31DEC81'
+ 12                 AND
+ 13                   DEPTNO IN (SELECT DEPTNO FROM DEPT
+ 14*                            WHERE LOCATION IN ('NEW YORK','DALLAS','CHICAGO','BOSTON'))
+SQL> /
+ERROR:
+ORA-01756: quoted string not properly terminated
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT ENAME,SAL,HIREDATE,COMM FROM EMP
+  2  WHERE DEPTNO = (SELECT DEPTNO FROM EMP
+  3                   WHERE ENAME IN 'MILLER')
+  4                 AND
+  5                  SAL>(SELECT SAL FROM EMP
+  6                       WHERE ENAME IN 'JONES')
+  7                 AND
+  8                 SAL<(SELECT SAL FROM EMP
+  9                           WHERE ENAME IN 'KING')
+ 10                 AND
+ 11                 HIREDATE BETWEEN '01JAN81' AND '31DEC81'
+ 12                 AND
+ 13                   DEPTNO IN (SELECT DEPTNO FROM DEPT
+ 14*                            WHERE LOCATION IN ('NEW YORK','DALLAS','CHICAGO','BOSTON'))
+SQL> /
+                           WHERE LOCATION IN ('NEW YORK','DALLAS','CHICAGO','BOSTON'))
+                                 *
+ERROR at line 14:
+ORA-00904: "LOCATION": invalid identifier
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT ENAME,SAL,HIREDATE,COMM FROM EMP
+  2  WHERE DEPTNO = (SELECT DEPTNO FROM EMP
+  3                   WHERE ENAME IN 'MILLER')
+  4                 AND
+  5                  SAL>(SELECT SAL FROM EMP
+  6                       WHERE ENAME IN 'JONES')
+  7                 AND
+  8                 SAL<(SELECT SAL FROM EMP
+  9                           WHERE ENAME IN 'KING')
+ 10                 AND
+ 11                 HIREDATE BETWEEN '01JAN81' AND '31DEC81'
+ 12                 AND
+ 13                   DEPTNO IN (SELECT DEPTNO FROM DEPT
+ 14*                            WHERE LOC IN ('NEW YORK','DALLAS','CHICAGO','BOSTON'))
+SQL> /
+
+no rows selected
+
+SQL> SELECT ENAME FROM EMP
+  2  WHERE DEPTNO IN (SELECT DEPTNO FROM EMP
+  3  
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT ENAME FROM EMP
+  2  WHERE DEPTNO IN (SELECT DEPTNO FROM DEPT
+  3*            WHERE ENAME IN 'SCOTT')
+SQL> 
+SQL> /
+
+ENAME
+----------
+SCOTT
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT ENAME FROM EMP
+  2  WHERE SAL>(SELECT SAL FROM EMP
+  3*           WHERE ENAME  IN 'SCOTT')
+  4  /
+
+ENAME
+----------
+KING
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT ENAME FROM EMP
+  2  WHERE SAL>(SELECT SAL FROM EMP
+  3            WHERE ENAME  IN 'SCOTT')
+  4*                AND DNAME='ACCOUNTING'
+SQL> /
+               AND DNAME='ACCOUNTING'
+                   *
+ERROR at line 4:
+ORA-00904: "DNAME": invalid identifier
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT ENAME FROM EMP
+  2  WHERE SAL>(SELECT SAL FROM EMP
+  3            WHERE ENAME  IN 'SCOTT')
+  4                 AND DEPTNO IN (SELECT DEPTNO FROM DEPT
+  5*                       WHERE DNAME IN 'ACCOUNTING')
+SQL> /
+
+ENAME
+----------
+KING
+
+SQL> SELECT * FROM DEPT;
+
+    DEPTNO DNAME          LOC
+---------- -------------- -------------
+        10 ACCOUNTING     NEW YORK
+        20 RESEARCH       DALLAS
+        30 SALES          CHICAGO
+        40 OPERATIONS     BOSTON
+
+SQL> 
+SQL>  SELECT ENAME FROM EMP
+  2   WHERE SAL>(SELECT SAL FROM EMP
+  3             WHERE ENAME  IN 'SCOTT')
+  4                  AND DEPTNO IN (SELECT DEPTNO FROM DEPT
+  5                         WHERE DNAME IN 'ACCOUNTING')
+  6  /
+
+ENAME
+----------
+KING
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1   SELECT ENAME , DNAME FROM EMP
+  2   WHERE SAL>(SELECT SAL FROM EMP
+  3             WHERE ENAME  IN 'SCOTT')
+  4                  AND DEPTNO IN (SELECT DEPTNO FROM DEPT
+  5*                        WHERE DNAME IN 'ACCOUNTING')
+SQL> /
+ SELECT ENAME , DNAME FROM EMP
+                *
+ERROR at line 1:
+ORA-00904: "DNAME": invalid identifier
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1   SELECT ENAME , DEPTNO FROM EMP
+  2   WHERE SAL>(SELECT SAL FROM EMP
+  3             WHERE ENAME  IN 'SCOTT')
+  4                  AND DEPTNO IN (SELECT DEPTNO FROM DEPT
+  5*                        WHERE DNAME IN 'ACCOUNTING')
+SQL> /
+
+ENAME          DEPTNO
+---------- ----------
+KING               10
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1   SELECT * FROM EMP
+  2   WHERE JOB IN MANAGER
+  3                  AND DEPTNO IN (SELECT DEPTNO FROM DEPT
+  4*                        WHERE LOC IN 'CHICAGO')
+SQL> /
+ WHERE JOB IN MANAGER
+              *
+ERROR at line 2:
+ORA-00904: "MANAGER": invalid identifier
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1   SELECT * FROM EMP
+  2   WHERE JOB IN ('MANAGER')
+  3                  AND DEPTNO IN (SELECT DEPTNO FROM DEPT
+  4*                        WHERE LOC IN 'CHICAGO')
+SQL> /
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------
+      7698 BLAKE      MANAGER         7839 01-MAY-81       2850                    30
+
+SQL> SELECT * FROM DEPT;
+
+    DEPTNO DNAME          LOC
+---------- -------------- -------------
+        10 ACCOUNTING     NEW YORK
+        20 RESEARCH       DALLAS
+        30 SALES          CHICAGO
+        40 OPERATIONS     BOSTON
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* SELECT * FROM DEPT
+SQL> SELECT * FROM EMP
+  2  WHERE JOB IN ('MANAGER')
+  3                 AND DEPTNO IN (SELECT DEPTNO FROM DEPT
+  4                        WHERE LOC IN 'CHICAGO')/
+  5  /
+                      WHERE LOC IN 'CHICAGO')/
+                                             *
+ERROR at line 4:
+ORA-00933: SQL command not properly ended
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT * FROM EMP
+  2  WHERE JOB IN ('MANAGER')
+  3                 AND DEPTNO IN (SELECT DEPTNO FROM DEPT
+  4*                       WHERE LOC IN 'CHICAGO')
+SQL> /
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------
+      7698 BLAKE      MANAGER         7839 01-MAY-81       2850                    30
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT ENAME ,SAL FROM EMP
+  2  WHERE SAL>(SELECT SAL FROM EMP
+  3            WHERE ENAME IN 'KING')
+  4                 AND DEPTNO IN (SELECT DEPTNO FROM DEPT
+  5*                       WHERE DNAME IN 'ACCOUNTING')
+SQL> /
+
+no rows selected
+
+SQL> SELECT * FROM EMP;
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------
+      7369 SMITH      CLERK           7902 17-DEC-80        800                    20
+      7499 ALLEN      SALESMAN        7698 20-FEB-81       1600        300         30
+      7521 WARD       SALESMAN        7698 22-FEB-81       1250        500         30
+      7566 JONES      MANAGER         7839 02-APR-81       2975                    20
+      7654 MARTIN     SALESMAN        7698 28-SEP-81       1250       1400         30
+      7698 BLAKE      MANAGER         7839 01-MAY-81       2850                    30
+      7782 CLARK      MANAGER         7839 09-JUN-81       2450                    10
+      7788 SCOTT      ANALYST         7566 19-APR-87       3000                    20
+      7839 KING       PRESIDENT            17-NOV-81       5000                    10
+      7844 TURNER     SALESMAN        7698 08-SEP-81       1500          0         30
+      7876 ADAMS      CLERK           7788 23-MAY-87       1100                    20
+      7900 JAMES      CLERK           7698 03-DEC-81        950                    30
+      7902 FORD       ANALYST         7566 03-DEC-81       3000                    20
+      7934 MILLER     CLERK           7782 23-JAN-82       1300                    10
+
+14 rows selected.
+
+SQL> SELECT * FROM DEPT;
+
+    DEPTNO DNAME          LOC
+---------- -------------- -------------
+        10 ACCOUNTING     NEW YORK
+        20 RESEARCH       DALLAS
+        30 SALES          CHICAGO
+        40 OPERATIONS     BOSTON
+
+SQL>  SELECT ENAME ,SAL FROM EMP
+  2   WHERE SAL>(SELECT SAL FROM EMP
+  3             WHERE ENAME IN 'KING')
+  4                  AND DEPTNO IN (SELECT DEPTNO FROM DEPT
+  5                         WHERE DNAME IN 'ACCOUNTING')/
+  6  /
+                       WHERE DNAME IN 'ACCOUNTING')/
+                                                   *
+ERROR at line 5:
+ORA-00933: SQL command not properly ended
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1   SELECT ENAME ,SAL FROM EMP
+  2   WHERE SAL>(SELECT SAL FROM EMP
+  3             WHERE ENAME IN 'KING')
+  4                  AND DEPTNO IN (SELECT DEPTNO FROM DEPT
+  5*                        WHERE DNAME IN 'ACCOUNTING')
+SQL> /
+
+no rows selected
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1   SELECT * FROM EMP
+  2   WHERE JOB IN 'SALESMAN'
+  3                  AND DEPTNO IN (SELECT DEPTNO FROM DEPT
+  4*                        WHERE DNAME IN 'SALES')
+SQL> /
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------
+      7499 ALLEN      SALESMAN        7698 20-FEB-81       1600        300         30
+      7521 WARD       SALESMAN        7698 22-FEB-81       1250        500         30
+      7654 MARTIN     SALESMAN        7698 28-SEP-81       1250       1400         30
+      7844 TURNER     SALESMAN        7698 08-SEP-81       1500          0         30
+
+SQL> ED'
+
+SQL> EDE
+SP2-0042: unknown command "EDE" - rest of line ignored.
+SQL> ED
+Wrote file afiedt.buf
+
+  1   SELECT ENAME,SAL,JOB ,HIREDATE FROM EMP
+  2   WHERE HIREDATE <(SELECT HIREDATE FROM EMP
+  3              WHERE ENAME IN 'KING')
+  4                  AND DEPTNO IN (SELECT DEPTNO FROM DEPT
+  5*                        WHERE DNAME IN 'OPERATIONS')
+SQL> /
+
+no rows selected
+
+SQL> SELECT * FROM EMP;
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------
+      7369 SMITH      CLERK           7902 17-DEC-80        800                    20
+      7499 ALLEN      SALESMAN        7698 20-FEB-81       1600        300         30
+      7521 WARD       SALESMAN        7698 22-FEB-81       1250        500         30
+      7566 JONES      MANAGER         7839 02-APR-81       2975                    20
+      7654 MARTIN     SALESMAN        7698 28-SEP-81       1250       1400         30
+      7698 BLAKE      MANAGER         7839 01-MAY-81       2850                    30
+      7782 CLARK      MANAGER         7839 09-JUN-81       2450                    10
+      7788 SCOTT      ANALYST         7566 19-APR-87       3000                    20
+      7839 KING       PRESIDENT            17-NOV-81       5000                    10
+      7844 TURNER     SALESMAN        7698 08-SEP-81       1500          0         30
+      7876 ADAMS      CLERK           7788 23-MAY-87       1100                    20
+      7900 JAMES      CLERK           7698 03-DEC-81        950                    30
+      7902 FORD       ANALYST         7566 03-DEC-81       3000                    20
+      7934 MILLER     CLERK           7782 23-JAN-82       1300                    10
+
+14 rows selected.
+
+SQL> SELECT * FROM DEPT;
+
+    DEPTNO DNAME          LOC
+---------- -------------- -------------
+        10 ACCOUNTING     NEW YORK
+        20 RESEARCH       DALLAS
+        30 SALES          CHICAGO
+        40 OPERATIONS     BOSTON
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* SELECT * FROM DEPT
+SQL> SELECT ENAME,SAL,JOB ,HIREDATE FROM EMP
+  2  WHERE HIREDATE <(SELECT HIREDATE FROM EMP
+  3             WHERE ENAME IN 'KING')
+  4                 AND DEPTNO IN (SELECT DEPTNO FROM DEPT
+  5                        WHERE DNAME IN 'OPERATIONS')
+  6  /
+
+no rows selected
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT ENAME FROM EMP
+  2  WHERE DEPTNO IN (SELECT DEPTNO FROM DEPT
+  3*            WHERE DNAME LIKE '%S' )
+  4  /
+
+ENAME
+----------
+ALLEN
+WARD
+MARTIN
+BLAKE
+TURNER
+JAMES
+
+6 rows selected.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT DNAME,LOC  FROM DEPT
+  2  WHERE DEPTNO IN (SELECT DEPTNO FROM EMP
+  3*            WHERE SAL>800)
+SQL> /
+
+DNAME          LOC
+-------------- -------------
+ACCOUNTING     NEW YORK
+RESEARCH       DALLAS
+SALES          CHICAGO
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT DNAME  FROM DEPT
+  2  WHERE DEPTNO IN (SELECT DEPTNO FROM EMP
+  3*            WHERE ENAME LIKE '%A%')
+SQL> /
+
+DNAME
+--------------
+ACCOUNTING
+RESEARCH
+SALES
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT DNAME  FROM DEPT
+  2  WHERE DEPTNO IN (SELECT DEPTNO FROM EMP
+  3*            WHERE COMM IS NOT NULL)
+SQL> /
+
+DNAME
+--------------
+SALES
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT LOC  FROM DEPT
+  2  WHERE DEPTNO = 40
+  3                               AND DEPTNO IN(SELECT  DEPTNO FROM EMP
+  4*            WHERE COMM IS NOT NULL)
+  5  /
+
+no rows selected
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT DNAME  FROM DEPT
+  2  WHERE DEPTNO IN(SELECT  DEPTNO FROM EMP
+  3*            WHERE ENAME IN 'SMITH')
+SQL> /
+
+DNAME
+--------------
+RESEARCH
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT DNAME  ,LOC FROM DEPT
+  2  WHERE DEPTNO IN(SELECT  DEPTNO FROM EMP
+  3*            WHERE ENAME IN 'KING')
+SQL> /
+
+DNAME          LOC
+-------------- -------------
+ACCOUNTING     NEW YORK
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT LOC FROM DEPT
+  2  WHERE DEPTNO IN(SELECT  DEPTNO FROM EMP
+  3*            WHERE EMPNO IN 7902)
+SQL> /
+
+LOC
+-------------
+DALLAS
+
+SQL> ED]
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT DNAME, LOC FROM DEPT
+  2  WHERE DEPTNO IN(SELECT  DEPTNO FROM EMP
+  3*            WHERE ENAME LIKE '%R')
+SQL> /
+
+DNAME          LOC
+-------------- -------------
+ACCOUNTING     NEW YORK
+SALES          CHICAGO
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT DNAME, LOC FROM DEPT
+  2  WHERE DEPTNO IN(SELECT  DEPTNO FROM EMP
+  3*            WHEREJOB IN 'PRESIDENT')
+SQL> /
+                WHEREJOB IN 'PRESIDENT')
+                         *
+ERROR at line 3:
+ORA-00907: missing right parenthesis
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT DNAME, LOC FROM DEPT
+  2  WHERE DEPTNO IN(SELECT  DEPTNO
+  3             FROM EMP
+  4*            WHERE JOB IN 'PRESIDENT')
+SQL> /
+
+DNAME          LOC
+-------------- -------------
+ACCOUNTING     NEW YORK
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT ENAME FROM EMP
+  2  WHERE DEPTNO IN(SELECT  DEPTNO FROM DEPT
+  3*            WHERE DNAME IN 'ACCOUNTING')
+SQL> /
+
+ENAME
+----------
+CLARK
+KING
+MILLER
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT ENAME ,SAL FROM EMP
+  2  WHERE DEPTNO IN(SELECT  DEPTNO FROM DEPT
+  3*            WHERE LOC IN 'CHICAGO')
+SQL> /
+
+ENAME             SAL
+---------- ----------
+ALLEN            1600
+WARD             1250
+MARTIN           1250
+BLAKE            2850
+TURNER           1500
+JAMES             950
+
+6 rows selected.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT ENAME ,SAL FROM EMP
+  2  WHERE DEPTNO IN(SELECT  DEPTNO FROM DEPT
+  3*            WHERE DNAME IN 'SALES')
+SQL> /
+
+ENAME             SAL
+---------- ----------
+ALLEN            1600
+WARD             1250
+MARTIN           1250
+BLAKE            2850
+TURNER           1500
+JAMES             950
+
+6 rows selected.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT * FROM EMP
+  2  WHERE DEPTNO IN(SELECT  DEPTNO FROM DEPT
+  3*            WHERE DNAME IN 'SALES')
+SQL> /
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------
+      7499 ALLEN      SALESMAN        7698 20-FEB-81       1600        300         30
+      7521 WARD       SALESMAN        7698 22-FEB-81       1250        500         30
+      7654 MARTIN     SALESMAN        7698 28-SEP-81       1250       1400         30
+      7698 BLAKE      MANAGER         7839 01-MAY-81       2850                    30
+      7844 TURNER     SALESMAN        7698 08-SEP-81       1500          0         30
+      7900 JAMES      CLERK           7698 03-DEC-81        950                    30
+
+6 rows selected.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT EMP.*,SAL*12 ANNUALSAL FROM EMP
+  2  WHERE DEPTNO IN(SELECT  DEPTNO FROM DEPT
+  3*            WHERE LOC IN 'NEW YORK')
+SQL> /
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO  ANNUALSAL
+---------- ---------- --------- ---------- --------- ---------- ---------- ---------- ----------
+      7782 CLARK      MANAGER         7839 09-JUN-81       2450                    10      29400
+      7839 KING       PRESIDENT            17-NOV-81       5000                    10      60000
+      7934 MILLER     CLERK           7782 23-JAN-82       1300                    10      15600
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT ENAME FROM EMP
+  2  WHERE DEPTNO IN(SELECT  DEPTNO FROM DEPT
+  3*            WHERE DNAME IN 'OPERATIONS')
+SQL> /
+
+no rows selected
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT ENAME FROM EMP
+  2  WHERE DEPTNO IN(SELECT  DEPTNO FROM DEPT
+  3*            WHERE DNAME IN 'OPERATIONS')
+SQL> /
+
+no rows selected
+
+SQL> SELECT * FROM DEPT;
+
+    DEPTNO DNAME          LOC
+---------- -------------- -------------
+        10 ACCOUNTING     NEW YORK
+        20 RESEARCH       DALLAS
+        30 SALES          CHICAGO
+        40 OPERATIONS     BOSTON

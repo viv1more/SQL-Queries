@@ -1,0 +1,316 @@
+SQL*Plus: Release 10.2.0.1.0 - Production on Mon Feb 27 22:12:36 2023
+
+Copyright (c) 1982, 2005, Oracle.  All rights reserved.
+
+
+Connected to:
+Oracle Database 10g Enterprise Edition Release 10.2.0.1.0 - Production
+With the Partitioning, OLAP and Data Mining options
+
+SQL> SET LINES 100 PAGES 100
+SQL> SELECT DEPTNO,COUNT(*)
+  2  FROM EMP
+  3  GROUP BY DEPTNO
+  4  HAVING COUNT(*)=2;
+
+no rows selected
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT DEPTNO,COUNT(*)
+  2  FROM EMP
+  3  WHERE JOB IN 'MANAGER'
+  4  GROUP BY DEPTNO
+  5* HAVING COUNT(*)=2
+SQL> /
+
+no rows selected
+
+SQL> SELECT DEPTNO,JOB FROM EMP;
+
+    DEPTNO JOB
+---------- ---------
+        20 CLERK
+        30 SALESMAN
+        30 SALESMAN
+        20 MANAGER
+        30 SALESMAN
+        30 MANAGER
+        10 MANAGER
+        20 ANALYST
+        10 PRESIDENT
+        30 SALESMAN
+        20 CLERK
+        30 CLERK
+        20 ANALYST
+        10 CLERK
+
+14 rows selected.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* SELECT DEPTNO,JOB FROM EMP
+SQL> SELECT JOB ,MIN(SAL),MAX(SAL) FROM EMP
+  2  GROUP BY JOB
+  3  HAVING MIN(SAL)>1000 AND MAX(SAL)<5000;
+
+JOB         MIN(SAL)   MAX(SAL)
+--------- ---------- ----------
+SALESMAN        1250       1600
+MANAGER         2450       2975
+ANALYST         3000       3000
+
+SQL>                                                                   ED
+Wrote file afiedt.buf
+
+  1  SELECT DEPTNO,FROM EMP
+  2  WHERE ENAME LIKE '%A%' OR ENAME LIKE '%S%'
+  3  GROUP BY DEPTNO
+  4* HAVING COUNT(*)>=3
+SQL> /
+SELECT DEPTNO,FROM EMP
+              *
+ERROR at line 1:
+ORA-00936: missing expression
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT DEPTNO,COUNT(*)
+  2  FROM EMP
+  3  WHERE ENAME LIKE '%A%' OR ENAME LIKE '%S%'
+  4  GROUP BY DEPTNO
+  5* HAVING COUNT(*)>=3
+SQL> /
+
+    DEPTNO   COUNT(*)
+---------- ----------
+        30          5
+        20          4
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT ENAME,DEPTNO,COUNT(*)
+  2  FROM EMP
+  3  WHERE ENAME LIKE '%A%' OR ENAME LIKE '%S%'
+  4  GROUP BY DEPTNO
+  5* HAVING COUNT(*)>=3
+SQL> /
+SELECT ENAME,DEPTNO,COUNT(*)
+       *
+ERROR at line 1:
+ORA-00979: not a GROUP BY expression
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT DEPTNO,COUNT(*)
+  2  FROM EMP
+  3  WHERE ENAME LIKE '%A%' OR ENAME LIKE '%S%'
+  4  GROUP BY DEPTNO
+  5* HAVING COUNT(*)>=3
+SQL> /
+
+    DEPTNO   COUNT(*)
+---------- ----------
+        30          5
+        20          4
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT DEPTNO,AVG(SAL)
+  2  FROM EMP
+  3  GROUP BY DEPTNO
+  4* HAVING AVG(SAL)<3000
+SQL> /
+
+    DEPTNO   AVG(SAL)
+---------- ----------
+        30 1566.66667
+        20       2175
+        10 2916.66667
+
+SQL> ED\
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT HIREDATE,COUNT(*)
+  2  FROM EMP
+  3* GROUP BY HIREDATE
+  4  /
+
+HIREDATE    COUNT(*)
+--------- ----------
+23-MAY-87          1
+17-NOV-81          1
+03-DEC-81          2
+23-JAN-82          1
+22-FEB-81          1
+17-DEC-80          1
+09-JUN-81          1
+20-FEB-81          1
+02-APR-81          1
+19-APR-87          1
+01-MAY-81          1
+08-SEP-81          1
+28-SEP-81          1
+
+13 rows selected.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT HIREDATE,COUNT(*)
+  2  FROM EMP
+  3  GROUP BY HIREDATE
+  4* HAVING COUNT(*)<=2
+SQL> /
+
+HIREDATE    COUNT(*)
+--------- ----------
+23-MAY-87          1
+17-NOV-81          1
+03-DEC-81          2
+23-JAN-82          1
+22-FEB-81          1
+17-DEC-80          1
+09-JUN-81          1
+20-FEB-81          1
+02-APR-81          1
+19-APR-87          1
+01-MAY-81          1
+08-SEP-81          1
+28-SEP-81          1
+
+13 rows selected.
+
+SQL> EEEEEEEEEEEEEEEEEEEEEEED
+SP2-0734: unknown command beginning "EEEEEEEEEE..." - rest of line ignored.
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT HIREDATE,COUNT(*)
+  2  FROM EMP
+  3  GROUP BY HIREDATE
+  4* HAVING COUNT(*)>=2
+SQL> /
+
+HIREDATE    COUNT(*)
+--------- ----------
+03-DEC-81          2
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT SAL,COUNT(*)
+  2  FROM EMP
+  3  GROUP BY SAL
+  4* HAVING COUNT(*)>=2
+SQL> /
+
+       SAL   COUNT(*)
+---------- ----------
+      1250          2
+      3000          2
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT JOB ,MAX(SAL)
+  2  FROM EMP
+  3  GROUP BY JOB
+  4* HAVING MAX(SAL)>2600
+SQL> /
+
+JOB         MAX(SAL)
+--------- ----------
+PRESIDENT       5000
+MANAGER         2975
+ANALYST         3000
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT DEPTNO,COUNT(*)
+  2  FROM EMP
+  3  GROUP BY DEPTNO
+  4* HAVING COUNT(*)=2
+SQL> /
+
+no rows selected
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT DEPTNO,SUM(SAL)
+  2  FROM EMP
+  3  GROUP BY DEPTNO
+  4* HAVING COUNT(*)>=4
+SQL> /
+
+    DEPTNO   SUM(SAL)
+---------- ----------
+        30       9400
+        20      10875
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT DEPTNO,SUM(SAL)
+  2  FROM EMP
+  3  GROUP BY DEPTNO
+  4* HAVING COUNT(*)=4
+SQL> /
+
+no rows selected
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT DEPTNO,SUM(SAL)
+  2  FROM EMP
+  3  GROUP BY DEPTNO
+  4* HAVING COUNT(*)>=4
+SQL> /
+
+    DEPTNO   SUM(SAL)
+---------- ----------
+        30       9400
+        20      10875
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT DEPTNO,COUNT(*)
+  2  FROM EMP
+  3  WHERE JOB IN 'CLERK'
+  4  GROUP BY DEPTNO
+  5* HAVING COUNT(*)>=2
+SQL> /\
+
+    DEPTNO   COUNT(*)
+---------- ----------
+        20          2
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT DEPTNO,COUNT(*)
+  2  FROM EMP
+  3  WHERE JOB IN 'CLERK'
+  4  GROUP BY DEPTNO
+  5* HAVING COUNT(*)>=2
+SQL> /
+
+    DEPTNO   COUNT(*)
+---------- ----------
+        20          2
+
+SQL> 

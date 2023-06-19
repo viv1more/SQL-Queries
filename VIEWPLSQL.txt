@@ -1,0 +1,80 @@
+
+SQL*Plus: Release 10.2.0.1.0 - Production on Wed Mar 29 08:48:55 2023
+
+Copyright (c) 1982, 2005, Oracle.  All rights reserved.
+
+Enter password: *****
+
+Connected to:
+Oracle Database 10g Enterprise Edition Release 10.2.0.1.0 - Production
+With the Partitioning, OLAP and Data Mining options
+
+SQL> grant dba to scott
+  2  ;
+
+Grant succeeded.
+
+SQL> connect
+Enter user-name: scott
+Enter password: *****
+Connected.
+SQL> SELECT ENAME,JOB
+  2  ;
+
+*
+ERROR at line 2:
+ORA-00923: FROM keyword not found where expected
+
+
+SQL> SELECT * FROM TAB;
+
+TNAME                          TABTYPE  CLUSTERID
+------------------------------ ------- ----------
+DEPT                           TABLE
+EMP                            TABLE
+BONUS                          TABLE
+SALGRADE                       TABLE
+MOVIE                          TABLE
+STUDENT                        TABLE
+CITY                           TABLE
+FOOD                           TABLE
+VIV1                           TABLE
+CAR                            TABLE
+CARS                           TABLE
+
+TNAME                          TABTYPE  CLUSTERID
+------------------------------ ------- ----------
+CAFE                           TABLE
+
+12 rows selected.
+
+SQL> CREATE VIEW EMP_VIEW AS
+  2  SELECT ENAME /
+  3  /
+SELECT ENAME /
+             *
+ERROR at line 2:
+ORA-00936: missing expression
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  CREATE VIEW PEDM30_VIEW AS
+  2* SELECT DNAME,LOC  FROM DEPT
+SQL> /
+
+View created.
+
+SQL> SELECT DNAME,LOC FROM PEDM30;
+SELECT DNAME,LOC FROM PEDM30
+                      *
+ERROR at line 1:
+ORA-00942: table or view does not exist
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* SELECT DNAME,LOC FROM PEDM30
+SQL> 
